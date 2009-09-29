@@ -1,0 +1,22 @@
+==================================================================
+ _____                      _____ _                 _            
+/  ___|                    /  ___| |               | |           
+\ `--. _ __   __ _  ___ ___\ `--.| |__   ___   ___ | |_ ___ _ __ 
+ `--. \ '_ \ / _` |/ __/ _ \`--. \ '_ \ / _ \ / _ \| __/ _ \ '__|
+/\__/ / |_) | (_| | (_|  __/\__/ / | | | (_) | (_) | ||  __/ |   
+\____/| .__/ \__,_|\___\___\____/|_| |_|\___/ \___/ \__\___|_|   
+      | |                                                        
+      |_|                                                        
+==================================================================
+
+by Alessandro Ghedini <al3xbio[at]gmail[dot]com>, copyright 2009
+web: http://alexbio.ath.cx
+
+This software is released under GNU GPL licence v.3
+
+SpaceShooter is a basic example of the use of Allegro library in C for 2D game programming.
+
+To be compiled it needs Allegro shared library (liballegro4.2) and its development files (liballegro4.2-dev).
+
+For installation:
+$ make
