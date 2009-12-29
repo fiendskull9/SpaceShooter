@@ -14,7 +14,7 @@ web: http://alexbio.ath.cx
 
 This software is released under GNU GPL licence v.3
 
-SpaceShooter is a basic example of the use of Allegro library in C for 2D game programming.
+SpaceShooter is an old-school space shooter game in 2D.
 
 To be compiled it needs Allegro shared library (liballegro4.2) and its development files (liballegro4.2-dev).
 
