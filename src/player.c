@@ -28,7 +28,10 @@ void load_player() {
 
 void draw_player() {
 	player.x = mouse_x;
-	player.y = mouse_y;
+
+	if ( (mouse_y + PLAYER_HEIGHT) <= SCREEN_HEIGHT) player.y = mouse_y;
+	else player.y = SCREEN_HEIGHT - PLAYER_HEIGHT;
+	
 	draw_sprite(buf, player.bmp, player.x, player.y);
 }
 
@@ -45,7 +48,8 @@ void player_fire() {
 		draw_sprite(buf, player.bullet, player.bullet_x, player.bullet_y);
 		player.bullet_x += 3;
 			
-		if (player.bullet_x >= SCREEN_WIDTH) player.fire = 0;
+		if (player.bullet_x > SCREEN_WIDTH)
+			player.fire = 0;
 	}
 }
 

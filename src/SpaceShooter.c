@@ -65,31 +65,25 @@ int main(){
    			xscroll = 0;
 				
 		textprintf_ex(buf, font, 10, SCREEN_HEIGHT-15, makecol(138, 153, 200), 
-			-1, "Press ESC to exit.");
-			
-		/* Game Over */
-		if (player.death == 1) {
-			textprintf_ex(buf, font, SCREEN_WIDTH/2-70, SCREEN_HEIGHT/2, 
-				makecol(138, 153, 200), -1, "Game Over! Score: %d.", score);
-			textprintf_ex(buf, font, SCREEN_WIDTH/2-90, SCREEN_HEIGHT/2+15, 
-				makecol(138, 153, 200), -1, "Press ENTER to continue.");
-			
-			if(key[KEY_ENTER]) reset_variables();
+			-1, "Press ESC to exit or P to pause.");
 
-			continue;	
-		}
-		
-		if((start != 1) && (player.death !=1)) {
-			textprintf_ex(buf, font, SCREEN_WIDTH/2-70, SCREEN_HEIGHT/2, 
-				makecol(138, 153, 200), -1, "Press ENTER to start.");
-			if(key[KEY_ENTER]) start = 1;
-		
+		/* Game pause */
+
+		if(key[KEY_P])
+			SET_GAME_STATUS(STATUS_PAUSE);
+
+		/* Game Over */
+		if (player.death == 1) 
+			SET_GAME_STATUS(STATUS_GAMEOVER);	
+
+		if (game_status != STATUS_RUN) {
+			check_game_status();
 			continue;
 		}
 		
 		/* Show scores */
 		textprintf_ex(buf, font, 10, 10, makecol(138, 153, 200), -1, "Score: %d", score);
-		
+
 		/* Draw spaceship sprite at mouse position */
 		draw_player();
 		
@@ -109,8 +103,7 @@ int main(){
 
 			/* ...then draw enemies... */
 			draw_enemy(i);
-			
-		
+					
 			/* ...move them... */
 			enemy_motion(i);
 
@@ -119,6 +112,7 @@ int main(){
 
 			/* ...and die. */
 			enemy_collision(i);
+
 		}
 
 	}
@@ -140,7 +134,6 @@ END_OF_MAIN ();
 void reset_variables() {
 	int i;
 	
-	start = 0;
 	score = 0;
 	xscroll = 0;
 
@@ -151,4 +144,45 @@ void reset_variables() {
 		enemies[i].death = 1;
 	}
 
+	SET_GAME_STATUS(STATUS_START);
+
+}
+
+void check_game_status() {
+
+	switch (game_status) {
+		case STATUS_START:
+			textprintf_ex(buf, font, SCREEN_WIDTH/2-70, SCREEN_HEIGHT/2, 
+				makecol(138, 153, 200), -1, "Press ENTER to start.");
+
+			if(key[KEY_ENTER])
+				SET_GAME_STATUS(STATUS_RUN);
+
+			break;
+
+		case STATUS_PAUSE:
+			textprintf_ex(buf, font, SCREEN_WIDTH/2 - 50, SCREEN_HEIGHT/2, 
+				makecol(138, 153, 200), -1, "Game paused.");
+			textprintf_ex(buf, font, SCREEN_WIDTH/2 - 90, SCREEN_HEIGHT/2 + 15, 
+				makecol(138, 153, 200), -1, "Press ENTER to resume.");
+
+			if(key[KEY_ENTER])
+				SET_GAME_STATUS(STATUS_RUN);
+
+			break;
+
+		case STATUS_GAMEOVER:
+			textprintf_ex(buf, font, SCREEN_WIDTH/2-70, SCREEN_HEIGHT/2, 
+				makecol(138, 153, 200), -1, "Game Over! Score: %d.", score);
+			textprintf_ex(buf, font, SCREEN_WIDTH/2-90, SCREEN_HEIGHT/2+15, 
+				makecol(138, 153, 200), -1, "Press ENTER to continue.");
+
+			if(key[KEY_ENTER]) {
+				reset_variables();
+				SET_GAME_STATUS(STATUS_RUN)
+			}
+			
+			break;
+	}
+	
 }

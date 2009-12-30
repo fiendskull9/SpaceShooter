@@ -31,13 +31,13 @@ void draw_enemy(int n) {
 }
 
 void enemy_respawn(int n) {
-	enemies[n].x = SCREEN_WIDTH-64; 
+	enemies[n].x = SCREEN_WIDTH - ENEMY_HEIGHT; 
 	enemies[n].y = rand() % (SCREEN_HEIGHT);
 	enemies[n].death = 0;
 }
 
 void enemy_motion(int n) {
-	if (enemies[n].y >= 448) enemies[n].motion = 0;
+	if (enemies[n].y >= SCREEN_HEIGHT - ENEMY_HEIGHT) enemies[n].motion = 0;
 		
 	if (enemies[n].y <= 0) enemies[n].motion = 1;
 		

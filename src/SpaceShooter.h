@@ -18,8 +18,16 @@
 
 #include <stdio.h>
 #include <allegro.h>
+#include <semaphore.h>
 
 #include "entities.h"
+
+#define SET_GAME_STATUS(STATUS) game_status = STATUS;
+
+#define STATUS_RUN 0
+#define STATUS_START 1
+#define STATUS_PAUSE 2
+#define STATUS_GAMEOVER 3
 
 const int SCREEN_WIDTH = 512;
 const int SCREEN_HEIGHT = 512;
@@ -27,6 +35,7 @@ const int SCREEN_HEIGHT = 512;
 BITMAP *buf, *background;
 PALETTE colors;
 
-int start, score, xscroll;
+int game_status, score, xscroll;
 
 void reset_variables();
+void check_game_status();
