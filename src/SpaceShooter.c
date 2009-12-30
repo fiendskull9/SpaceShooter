@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "main.h"
+#include "SpaceShooter.h"
 
 int main(){
 
@@ -29,14 +29,17 @@ int main(){
 	/* Set-up input devices */
 	install_keyboard();
 	install_mouse();
+
+	/* Set-up sound card */
+	install_sound(DIGI_AUTODETECT, MIDI_AUTODETECT, 0);
 	
 	/* Set colors*/
 	set_color_depth(32);
 	set_palette(colors);
 	
 	/* Set screen */
-	set_gfx_mode(GFX_AUTODETECT_WINDOWED, screen_width, screen_height, 0, 0);
-	buf = create_bitmap(screen_width, screen_height);
+	set_gfx_mode(GFX_AUTODETECT_WINDOWED, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0);
+	buf = create_bitmap(SCREEN_WIDTH, SCREEN_HEIGHT);
 	clear(buf);
 	
 	/* Load bitmaps */
@@ -51,24 +54,24 @@ int main(){
 	while (!key[KEY_ESC]) {
 
 		/* Update screen */
-		blit(buf, screen, 0, 0, 0, 0, screen_width, screen_height);
+		blit(buf, screen, 0, 0, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 		clear(buf);
 		
 		/* Set backgound */
-		blit(background, buf, xscroll, 0, 0, 0, screen_width, screen_height);		
+		blit(background, buf, xscroll, 0, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);		
 		xscroll++;
 
-		if (xscroll>screen_width-1)
+		if (xscroll > SCREEN_WIDTH-1)
    			xscroll = 0;
 				
-		textprintf_ex(buf, font, 10, screen_height-15, makecol(138, 153, 200), 
+		textprintf_ex(buf, font, 10, SCREEN_HEIGHT-15, makecol(138, 153, 200), 
 			-1, "Press ESC to exit.");
 			
 		/* Game Over */
 		if (player.death == 1) {
-			textprintf_ex(buf, font, screen_width/2-70, screen_height/2, 
+			textprintf_ex(buf, font, SCREEN_WIDTH/2-70, SCREEN_HEIGHT/2, 
 				makecol(138, 153, 200), -1, "Game Over! Score: %d.", score);
-			textprintf_ex(buf, font, screen_width/2-90, screen_height/2+15, 
+			textprintf_ex(buf, font, SCREEN_WIDTH/2-90, SCREEN_HEIGHT/2+15, 
 				makecol(138, 153, 200), -1, "Press ENTER to continue.");
 			
 			if(key[KEY_ENTER]) reset_variables();
@@ -77,7 +80,7 @@ int main(){
 		}
 		
 		if((start != 1) && (player.death !=1)) {
-			textprintf_ex(buf, font, screen_width/2-70, screen_height/2, 
+			textprintf_ex(buf, font, SCREEN_WIDTH/2-70, SCREEN_HEIGHT/2, 
 				makecol(138, 153, 200), -1, "Press ENTER to start.");
 			if(key[KEY_ENTER]) start = 1;
 		
@@ -101,7 +104,7 @@ int main(){
 		for (i = 0; i < ENEMIES; i++) {
 
 			/* Check for respawn... */
-			if (enemies[i].respawn == 1)
+			if (enemies[i].death == 1)
 				enemy_respawn(i);
 
 			/* ...then draw enemies... */
@@ -145,7 +148,7 @@ void reset_variables() {
 
 	for (i = 0; i < ENEMIES; i++) {
 		enemies[i].fire = 0;
-		enemies[i].respawn = 1;
+		enemies[i].death = 1;
 	}
 
 }

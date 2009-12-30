@@ -16,12 +16,14 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "enemies.h"
-#include "player.h"
+#include "entities.h"
 
 void load_enemy(int n) {
 	enemies[n].bmp = load_bmp("data/sprites/enemy.bmp", colors);
 	enemies[n].bullet = load_bmp("data/sprites/rocket.bmp", colors);
+
+	enemies[n].snd_fire = load_sample("data/sounds/rocket.wav");
+	enemies[n].snd_death = load_sample("data/sounds/explosion.wav");
 }
 
 void draw_enemy(int n) {
@@ -29,9 +31,9 @@ void draw_enemy(int n) {
 }
 
 void enemy_respawn(int n) {
-	enemies[n].x = screen_width-64; 
-	enemies[n].y = rand() % (screen_height);
-	enemies[n].respawn = 0;
+	enemies[n].x = SCREEN_WIDTH-64; 
+	enemies[n].y = rand() % (SCREEN_HEIGHT);
+	enemies[n].death = 0;
 }
 
 void enemy_motion(int n) {
@@ -45,7 +47,7 @@ void enemy_motion(int n) {
 	enemies[n].x--;
 		
 	if (enemies[n].x <= -64){
-		enemies[n].respawn = 1;
+		enemies[n].death = 1;
 		score--;
 	}
 }
@@ -55,6 +57,7 @@ void enemy_fire(int n) {
 		enemies[n].bullet_x = enemies[n].x;
 		enemies[n].bullet_y = enemies[n].y+32;
 		enemies[n].fire = 1;
+		play_sample(enemies[n].snd_fire, 255,128,1000, FALSE);
 	}
 		
 	if (enemies[n].fire == 1) {
@@ -72,10 +75,10 @@ void enemy_collision(int n) {
 
 	if ( ((player.bullet_x + PLAYER_BULLET_WIDTH) >= enemies[n].x) && (player.bullet_x <= (enemies[n].x + ENEMY_WIDTH)) )
 		if ( ((player.bullet_y + PLAYER_BULLET_HEIGHT) >= enemies[n].y) && ((player.bullet_y <= enemies[n].y + ENEMY_HEIGHT) )) {
-			enemies[n].respawn = 1;
+			enemies[n].death = 1;
 			player.fire = 0;
 			score++;
-			printf("morto %i", n);
+			play_sample(enemies[n].snd_death, 255,128,1000, FALSE);
 		}
 }
 

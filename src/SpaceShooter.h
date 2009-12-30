@@ -19,11 +19,10 @@
 #include <stdio.h>
 #include <allegro.h>
 
-#include "player.h"
-#include "enemies.h"
+#include "entities.h"
 
-const int screen_width = 512;
-const int screen_height = 512;
+const int SCREEN_WIDTH = 512;
+const int SCREEN_HEIGHT = 512;
 
 BITMAP *buf, *background;
 PALETTE colors;

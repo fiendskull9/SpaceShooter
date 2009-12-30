@@ -20,29 +20,46 @@
 
 #define ENEMIES 3
 
+#define PLAYER_WIDTH 59
+#define PLAYER_HEIGHT 48
+
 #define ENEMY_WIDTH 64
 #define ENEMY_HEIGHT 64
+
+#define PLAYER_BULLET_WIDTH 7
+#define PLAYER_BULLET_HEIGHT 7
 
 #define ENEMY_BULLET_WIDTH 16
 #define ENEMY_BULLET_HEIGHT 16
 
-extern const int screen_width;
-extern const int screen_height;
+extern const int SCREEN_WIDTH;
+extern const int SCREEN_HEIGHT;
 
 extern PALETTE colors;
 extern BITMAP *buf;
 extern int score;
 
-struct enemy {
+typedef struct {
 	int x, y;
 	int fire;
 	int motion;
-	int respawn;
+	int death;
 	BITMAP *bmp;
+
+	SAMPLE *snd_fire, *snd_death;
 
 	int bullet_x, bullet_y;
 	BITMAP *bullet;
-} enemies[ENEMIES];
+} entity;
+
+entity player;
+entity enemies[ENEMIES];
+
+void load_player();
+void draw_player();
+void player_fire();
+void player_collision(int n);
+void destroy_player();
 
 void load_enemy(int n);
 void draw_enemy(int n);
