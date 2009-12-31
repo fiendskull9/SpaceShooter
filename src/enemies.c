@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "entities.h"
+#include "SpaceShooter.h"
 
 void load_enemy(int n) {
 	enemies[n].bmp = load_bmp("data/sprites/enemy.bmp", colors);
@@ -34,6 +34,8 @@ void enemy_respawn(int n) {
 	enemies[n].x = SCREEN_WIDTH - ENEMY_HEIGHT; 
 	enemies[n].y = rand() % (SCREEN_HEIGHT);
 	enemies[n].death = 0;
+	enemies[n].speed = (rand() % ENEMY_MAX_SPEED) + ENEMY_MIN_SPEED;
+	enemies[n].bullet_speed = ENEMY_BULLET_SPEED;
 }
 
 void enemy_motion(int n) {
@@ -44,7 +46,7 @@ void enemy_motion(int n) {
 	if (enemies[n].motion == 0) enemies[n].y--;
 	else enemies[n].y++;
 		
-	enemies[n].x--;
+	enemies[n].x -= enemies[n].speed;
 		
 	if (enemies[n].x <= -64){
 		enemies[n].death = 1;
@@ -62,7 +64,7 @@ void enemy_fire(int n) {
 		
 	if (enemies[n].fire == 1) {
 		draw_sprite(buf, enemies[n].bullet, enemies[n].bullet_x, enemies[n].bullet_y);
-		enemies[n].bullet_x -= 2;
+		enemies[n].bullet_x -= enemies[n].bullet_speed;
 
 		if(player.y > enemies[n].bullet_y) enemies[n].bullet_y++;
 		else enemies[n].bullet_y--;

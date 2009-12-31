@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "entities.h"
+#include "SpaceShooter.h"
 
 void load_player() {
 	player.bmp = load_bmp("data/sprites/spaceship.bmp", colors);
@@ -24,6 +24,8 @@ void load_player() {
 
 	player.snd_fire = load_sample("data/sounds/fire.wav");
 	player.snd_death = load_sample("data/sounds/death.wav");
+
+	player.bullet_speed = PLAYER_BULLET_SPEED;
 }
 
 void draw_player() {
@@ -46,7 +48,7 @@ void player_fire() {
 		
 	if (player.fire == 1) {
 		draw_sprite(buf, player.bullet, player.bullet_x, player.bullet_y);
-		player.bullet_x += 3;
+		player.bullet_x += player.bullet_speed;
 			
 		if (player.bullet_x > SCREEN_WIDTH)
 			player.fire = 0;

@@ -42,8 +42,9 @@ int main(){
 	buf = create_bitmap(SCREEN_WIDTH, SCREEN_HEIGHT);
 	clear(buf);
 	
-	/* Load bitmaps */
+	/* Load data */
 	background = load_bmp("data/sprites/background-double.bmp", colors);
+	snd_pause = load_sample("data/sounds/pause.wav");
 
 	load_player();
 
@@ -69,8 +70,10 @@ int main(){
 
 		/* Game pause */
 
-		if(key[KEY_P])
+		if(key[KEY_P]) {
 			SET_GAME_STATUS(STATUS_PAUSE);
+			play_sample(snd_pause, 255,128,1000, FALSE);
+		}
 
 		/* Game Over */
 		if (player.death == 1) 
@@ -179,7 +182,7 @@ void check_game_status() {
 
 			if(key[KEY_ENTER]) {
 				reset_variables();
-				SET_GAME_STATUS(STATUS_RUN)
+				SET_GAME_STATUS(STATUS_RUN);
 			}
 			
 			break;
