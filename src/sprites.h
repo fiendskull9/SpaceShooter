@@ -25,8 +25,8 @@
 
 #define ENEMY_WIDTH 64
 #define ENEMY_HEIGHT 64
-#define ENEMY_MAX_SPEED 14
-#define ENEMY_MIN_SPEED 6
+#define ENEMY_MAX_SPEED 7
+#define ENEMY_MIN_SPEED 3
 
 #define PLAYER_BULLET_WIDTH 7
 #define PLAYER_BULLET_HEIGHT 7
@@ -34,7 +34,7 @@
 
 #define ENEMY_BULLET_WIDTH 16
 #define ENEMY_BULLET_HEIGHT 16
-#define ENEMY_BULLET_SPEED 12
+#define ENEMY_BULLET_SPEED 8
 
 typedef struct {
 	int x, y;

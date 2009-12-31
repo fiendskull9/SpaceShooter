@@ -28,8 +28,8 @@
 #define STATUS_PAUSE 2
 #define STATUS_GAMEOVER 3
 
-#define SCREEN_WIDTH 1024
-#define SCREEN_HEIGHT 768
+#define SCREEN_WIDTH 768
+#define SCREEN_HEIGHT 536
 
 BITMAP *buf, *background;
 PALETTE colors;

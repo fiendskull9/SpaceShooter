@@ -31,7 +31,10 @@ int main(){
 	install_mouse();
 
 	/* Set-up sound card */
-	install_sound(DIGI_AUTODETECT, MIDI_AUTODETECT, 0);
+	reserve_voices(8, 0);
+	set_volume_per_voice(2);
+	install_sound(DIGI_AUTODETECT, MIDI_NONE, NULL);
+	set_volume(255, -1);
 	
 	/* Set colors*/
 	set_color_depth(32);
@@ -40,10 +43,11 @@ int main(){
 	/* Set screen */
 	set_gfx_mode(GFX_AUTODETECT_WINDOWED, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0);
 	buf = create_bitmap(SCREEN_WIDTH, SCREEN_HEIGHT);
+	set_window_title("SpaceShooter");
 	clear(buf);
 	
 	/* Load data */
-	background = load_bmp("data/sprites/background-double.bmp", colors);
+	background = load_bmp("data/sprites/background.bmp", colors);
 	snd_pause = load_sample("data/sounds/pause.wav");
 
 	load_player();
