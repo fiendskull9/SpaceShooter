@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <allegro.h>
 
+#include "data.h"
 #include "sprites.h"
 
 #define SET_GAME_STATUS(STATUS) game_status = STATUS;
@@ -31,6 +32,10 @@
 #define SCREEN_WIDTH 768
 #define SCREEN_HEIGHT 536
 
+#define DATA_PATH "/opt/SpaceShooter/SpaceShooter.dat"
+
+DATAFILE *dat;
+
 BITMAP *buf, *background;
 PALETTE colors;
 
@@ -40,3 +45,4 @@ int game_status, score, xscroll;
 
 void reset_variables();
 void check_game_status();
+void unload_data();

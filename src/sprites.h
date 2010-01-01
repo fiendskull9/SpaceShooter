@@ -25,7 +25,7 @@
 
 #define ENEMY_WIDTH 64
 #define ENEMY_HEIGHT 64
-#define ENEMY_MAX_SPEED 7
+#define ENEMY_MAX_SPEED 5
 #define ENEMY_MIN_SPEED 3
 
 #define PLAYER_BULLET_WIDTH 7

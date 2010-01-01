@@ -19,11 +19,11 @@
 #include "SpaceShooter.h"
 
 void load_enemy(int n) {
-	enemies[n].bmp = load_bmp("data/sprites/enemy.bmp", colors);
-	enemies[n].bullet = load_bmp("data/sprites/rocket.bmp", colors);
+	enemies[n].bmp = dat[BMP_ENEMY].dat;
+	enemies[n].bullet = dat[BMP_ROCKET].dat;
 
-	enemies[n].snd_fire = load_sample("data/sounds/rocket.wav");
-	enemies[n].snd_death = load_sample("data/sounds/explosion.wav");
+	enemies[n].snd_fire = dat[SND_ROCKET].dat;
+	enemies[n].snd_death = dat[SND_EXPLOSION].dat;
 }
 
 void draw_enemy(int n) {

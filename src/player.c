@@ -19,11 +19,11 @@
 #include "SpaceShooter.h"
 
 void load_player() {
-	player.bmp = load_bmp("data/sprites/spaceship.bmp", colors);
-	player.bullet = load_bmp("data/sprites/bullet.bmp", colors);
+	player.bmp = dat[BMP_SPACESHIP].dat;
+	player.bullet = dat[BMP_BULLET].dat;
 
-	player.snd_fire = load_sample("data/sounds/fire.wav");
-	player.snd_death = load_sample("data/sounds/death.wav");
+	player.snd_fire = dat[SND_FIRE].dat;
+	player.snd_death = dat[SND_DEATH].dat;
 
 	player.bullet_speed = PLAYER_BULLET_SPEED;
 }

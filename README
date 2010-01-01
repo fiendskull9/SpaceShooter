@@ -10,7 +10,7 @@
 ==================================================================
 
 by Alessandro Ghedini <al3xbio[at]gmail[dot]com>, copyright 2009
-web: http://alexbio.ath.cx
+web: http://alexbio.ath.cx/projects/spaceshooter
 
 This software is released under GNU GPL licence v.3
 
@@ -20,3 +20,7 @@ To be compiled it needs Allegro shared library (liballegro4.2) and its developme
 
 For installation:
 $ make
+# make install
+
+Now you can run the game:
+$ SpaceShooter

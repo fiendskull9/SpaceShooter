@@ -47,8 +47,10 @@ int main(){
 	clear(buf);
 	
 	/* Load data */
-	background = load_bmp("data/sprites/background.bmp", colors);
-	snd_pause = load_sample("data/sounds/pause.wav");
+	dat = load_datafile(DATA_PATH);
+	
+	background = dat[BMP_BACKGROUND].dat;
+	snd_pause = dat[SND_PAUSE].dat;
 
 	load_player();
 
@@ -124,14 +126,8 @@ int main(){
 
 	}
 
-	/* Destroy bitmaps */
-	destroy_bitmap(buf);
-	destroy_bitmap(background);
-
-	destroy_player();
-
-	for (i = 0; i < ENEMIES; i++)
-		destroy_enemy(i);
+	/* Unload datafile, bitmaps and sounds */
+	unload_data();
 	
 	return 0;
 }
@@ -192,4 +188,18 @@ void check_game_status() {
 			break;
 	}
 	
+}
+
+void unload_data() {
+	int i;
+	
+	unload_datafile(dat);
+
+	destroy_bitmap(buf);
+	destroy_bitmap(background);
+
+	destroy_player();
+
+	for (i = 0; i < ENEMIES; i++)
+		destroy_enemy(i);
 }

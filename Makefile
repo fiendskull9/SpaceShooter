@@ -1,13 +1,18 @@
-CC = gcc
-RM = rm
+CC = `which gcc`
+RM = `which rm`
+MKDIR = `which mkdir`
+CP = `which cp`
+LN = `which ln`
 
 LFLAGS = `allegro-config --libs`
 CFLAGS = -Wall -O3 -fomit-frame-pointer `allegro-config --cflags`
 
 SRCDIR = src
 BINDIR = bin
+INSTALLDIR = /opt/SpaceShooter
 
 BINARY = SpaceShooter
+GAMESDIR = /usr/games
 
 all:
 	
@@ -19,10 +24,14 @@ clean:
 rebuild: clean all
 
 install:
-	@echo "Sorry, not yet implemented."
+	$(MKDIR) $(INSTALLDIR)
+	$(CP) $(BINDIR)/$(BINARY) $(INSTALLDIR)
+	$(CP) $(BINDIR)/$(BINARY).dat $(INSTALLDIR)
+	$(LN) -s $(INSTALLDIR)/$(BINARY) $(GAMESDIR)/$(BINARY)
 
 uninstall:
-	@echo "Sorry, not yet implemented."
+	$(RM) -r $(INSTALLDIR)
+	$(RM) $(GAMESDIR)/$(BINARY)
 
 release:
 	@echo "Sorry, not yet implemented."
@@ -35,5 +44,4 @@ help:
 	@echo "    rebuild   :  clean and build"
 	@echo "    install   :  install project to local filesystem"
 	@echo "    uninstall :  remove project from local filesystem"
-	@echo "    release   :  build source tarfile"
 	@echo "    help      :  print this message"
