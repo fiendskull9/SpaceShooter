@@ -32,7 +32,15 @@
 #define SCREEN_WIDTH 768
 #define SCREEN_HEIGHT 536
 
-#define DATA_PATH "/opt/SpaceShooter/SpaceShooter.dat"
+#define DEBUG 0
+
+#if (DEBUG == 1)
+	#define DATA_PATH "SpaceShooter.dat"
+#endif
+
+#if (DEBUG == 0)
+	#define DATA_PATH "/opt/SpaceShooter/SpaceShooter.dat"
+#endif
 
 DATAFILE *dat;
 
