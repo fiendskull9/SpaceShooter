@@ -35,6 +35,12 @@ int main(){
 	set_volume_per_voice(2);
 	install_sound(DIGI_AUTODETECT, MIDI_NONE, NULL);
 	set_volume(255, -1);
+
+	/* Set-up and initialize timer */
+	install_timer();
+	LOCK_VARIABLE(ticks);
+	LOCK_FUNCTION(ticker);
+	install_int_ex(ticker, BPS_TO_TIMER(UPDATES_PER_SECOND));
 	
 	/* Set colors*/
 	set_color_depth(32);
@@ -60,7 +66,12 @@ int main(){
 	/* Main loop */
 	while (!key[KEY_ESC]) {
 
-		update_screen();
+		while (ticks == 0) {
+			rest(100 / UPDATES_PER_SECOND);
+		}
+
+		while (ticks > 0) 
+			update_screen();
 				
 		print_basic();
 
@@ -82,9 +93,6 @@ int main(){
 			continue;
 		}
 		
-		/* Show scores */
-		textprintf_ex(buf, font, 10, 10, makecol(138, 153, 200), -1, "Score: %d", score);
-		
 		/* For each enemy do... */
 		for (i = 0; i < ENEMIES; i++) {
 
@@ -98,6 +106,9 @@ int main(){
 
 		}
 
+		/* Show scores */
+		textprintf_ex(buf, font, 10, 10, makecol(138, 153, 200), -1, "Score: %d", score);
+		
 		/* Draw spaceship sprite at mouse position */
 		draw_player();
 		
@@ -193,6 +204,10 @@ void check_game_status() {
 			break;
 	}
 	
+}
+
+void ticker() {
+	ticks++;
 }
 
 void unload_data() {

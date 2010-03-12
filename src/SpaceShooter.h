@@ -32,6 +32,8 @@
 #define SCREEN_WIDTH 768
 #define SCREEN_HEIGHT 536
 
+#define UPDATES_PER_SECOND 60
+
 #define DEBUG 0
 
 #if (DEBUG == 1)
@@ -50,9 +52,11 @@ PALETTE colors;
 SAMPLE *snd_pause;
 
 int game_status, score, xscroll;
+volatile int ticks;
 
 void reset_variables();
 void update_screen();
 void print_basic();
 void check_game_status();
+void ticker();
 void unload_data();
