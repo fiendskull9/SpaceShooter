@@ -58,6 +58,7 @@ void load_player();
 void draw_player();
 void player_fire();
 void player_collision(int n);
+void player_death();
 void destroy_player();
 
 void load_enemy(int n);

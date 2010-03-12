@@ -60,22 +60,14 @@ int main(){
 	/* Main loop */
 	while (!key[KEY_ESC]) {
 
-		/* Update screen */
-		blit(buf, screen, 0, 0, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-		clear(buf);
-		
-		/* Set backgound */
-		blit(background, buf, xscroll, 0, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);		
-		xscroll++;
+		update_screen();
+				
+		print_basic();
 
 		if (xscroll > SCREEN_WIDTH-1)
-   			xscroll = 0;
-				
-		textprintf_ex(buf, font, 10, SCREEN_HEIGHT-15, makecol(138, 153, 200), 
-			-1, "Press ESC to exit or P to pause.");
+			xscroll = 0;
 
 		/* Game pause */
-
 		if(key[KEY_P]) {
 			SET_GAME_STATUS(STATUS_PAUSE);
 			play_sample(snd_pause, 255,128,1000, FALSE);
@@ -92,6 +84,19 @@ int main(){
 		
 		/* Show scores */
 		textprintf_ex(buf, font, 10, 10, makecol(138, 153, 200), -1, "Score: %d", score);
+		
+		/* For each enemy do... */
+		for (i = 0; i < ENEMIES; i++) {
+
+			/* Check for respawn... */
+			if (enemies[i].death == 1)
+				enemy_respawn(i);
+	
+			enemy_motion(i);
+
+			enemy_collision(i);
+
+		}
 
 		/* Draw spaceship sprite at mouse position */
 		draw_player();
@@ -102,26 +107,11 @@ int main(){
 		/* Player collision with each enemy */
 		for (i = 0; i < ENEMIES; i++)
 			player_collision(i);
-		
-		/* For each enemy do... */
+
+		/* Draw enemies */
 		for (i = 0; i < ENEMIES; i++) {
-
-			/* Check for respawn... */
-			if (enemies[i].death == 1)
-				enemy_respawn(i);
-
-			/* ...then draw enemies... */
 			draw_enemy(i);
-					
-			/* ...move them... */
-			enemy_motion(i);
-
-			/* ...make them kill... */
 			enemy_fire(i);
-
-			/* ...and die. */
-			enemy_collision(i);
-
 		}
 
 	}
@@ -133,6 +123,21 @@ int main(){
 }
 
 END_OF_MAIN ();
+
+void update_screen() {
+	blit(buf, screen, 0, 0, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+	clear(buf);
+}
+
+void print_basic() {
+	/* Set backgound */
+	blit(background, buf, xscroll, 0, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);		
+	xscroll++;
+
+	/* Print help */
+	textprintf_ex(buf, font, 10, SCREEN_HEIGHT-15, makecol(138, 153, 200), 
+		-1, "Press ESC to exit or P to pause.");
+}
 
 void reset_variables() {
 	int i;

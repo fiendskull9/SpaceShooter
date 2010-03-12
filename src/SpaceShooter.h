@@ -52,5 +52,7 @@ SAMPLE *snd_pause;
 int game_status, score, xscroll;
 
 void reset_variables();
+void update_screen();
+void print_basic();
 void check_game_status();
 void unload_data();
