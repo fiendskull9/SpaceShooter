@@ -75,11 +75,13 @@ void enemy_fire(int n) {
 
 void enemy_collision(int n) {
 
-	if ( ((player.bullet_x + PLAYER_BULLET_WIDTH) >= enemies[n].x) && (player.bullet_x <= (enemies[n].x + ENEMY_WIDTH)) )
-		if ( ((player.bullet_y + PLAYER_BULLET_HEIGHT) >= enemies[n].y) && ((player.bullet_y <= enemies[n].y + ENEMY_HEIGHT) )) {
+	if (((player.bullet_x + PLAYER_BULLET_WIDTH) >= enemies[n].x) && (player.bullet_x <= (enemies[n].x + ENEMY_WIDTH)))
+		if (((player.bullet_y + PLAYER_BULLET_HEIGHT) >= enemies[n].y) && (player.bullet_y <= (enemies[n].y + ENEMY_HEIGHT))) {
 			enemies[n].death = 1;
 			player.fire = 0;
 			score++;
+			player.bullet_x = 0;
+			player.bullet_y = 0;
 			play_sample(enemies[n].snd_death, 255,128,1000, FALSE);
 		}
 }

@@ -157,6 +157,9 @@ void reset_variables() {
 	score = 0;
 	player.x = 0;
 	player.y = 0;
+	player.fire = 0;
+	player.bullet_x = 0;
+	player.bullet_y = 0;
 	player.death = 0;
 
 	for (i = 0; i < ENEMIES; i++) {
@@ -179,7 +182,7 @@ void check_game_status() {
 			textprintf_ex(buf, font, SCREEN_WIDTH/2-70, SCREEN_HEIGHT/2, 
 				makecol(138, 153, 200), -1, "Press FIRE to start.");
 			
-			if(mouse_b)
+			if(mouse_b & 1)
 				SET_GAME_STATUS(STATUS_RUN);
 
 			break;
@@ -200,10 +203,11 @@ void check_game_status() {
 				makecol(138, 153, 200), -1, "Game Over! Score: %d.", score);
 			textprintf_ex(buf, font, SCREEN_WIDTH/2-90, SCREEN_HEIGHT/2+15, 
 				makecol(138, 153, 200), -1, "Press ENTER to continue.");
+			
 
 			if(key[KEY_ENTER]) {
 				reset_variables();
-				SET_GAME_STATUS(STATUS_START);
+				//SET_GAME_STATUS(STATUS_START);
 			}
 			
 			break;
