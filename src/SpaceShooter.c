@@ -65,10 +65,9 @@ int main(){
 	
 	/* Main loop */
 	while (!key[KEY_ESC]) {
-
-		while (ticks == 0) {
+		
+		while (ticks == 0) 
 			rest(100 / UPDATES_PER_SECOND);
-		}
 
 		while (ticks > 0) {
 			update_screen();
@@ -154,15 +153,17 @@ void print_basic() {
 
 void reset_variables() {
 	int i;
-	
-	score = 0;
-	//xscroll = 0;
 
+	score = 0;
+	player.x = 0;
+	player.y = 0;
 	player.death = 0;
 
 	for (i = 0; i < ENEMIES; i++) {
 		enemies[i].fire = 0;
 		enemies[i].death = 1;
+		enemies[i].bullet_x = SCREEN_WIDTH;
+		enemies[i].bullet_y = SCREEN_WIDTH;
 	}
 
 	SET_GAME_STATUS(STATUS_START);
@@ -173,10 +174,12 @@ void check_game_status() {
 
 	switch (game_status) {
 		case STATUS_START:
+			draw_player();
+			
 			textprintf_ex(buf, font, SCREEN_WIDTH/2-70, SCREEN_HEIGHT/2, 
-				makecol(138, 153, 200), -1, "Press ENTER to start.");
-
-			if(key[KEY_ENTER])
+				makecol(138, 153, 200), -1, "Press FIRE to start.");
+			
+			if(mouse_b)
 				SET_GAME_STATUS(STATUS_RUN);
 
 			break;
@@ -200,7 +203,7 @@ void check_game_status() {
 
 			if(key[KEY_ENTER]) {
 				reset_variables();
-				SET_GAME_STATUS(STATUS_RUN);
+				SET_GAME_STATUS(STATUS_START);
 			}
 			
 			break;
