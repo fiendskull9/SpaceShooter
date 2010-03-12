@@ -1,6 +1,6 @@
 /*
     This file is part of SpaceShooter.
-    Copyright (C) 2009 Alessandro Ghedini
+    Copyright (C) 2010 Alessandro Ghedini
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,12 +22,15 @@
 #include "data.h"
 #include "sprites.h"
 
+#define VERSION "2.0"
+
 #define SET_GAME_STATUS(STATUS) game_status = STATUS;
 
 #define STATUS_RUN 0
 #define STATUS_START 1
 #define STATUS_PAUSE 2
 #define STATUS_GAMEOVER 3
+#define STATUS_HELP 4
 
 #define SCREEN_WIDTH 768
 #define SCREEN_HEIGHT 536

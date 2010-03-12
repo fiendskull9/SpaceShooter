@@ -1,6 +1,6 @@
 /*
     SpaceShooter is an old-school space shooter game in 2D.
-    Copyright (C) 2009 Alessandro Ghedini
+    Copyright (C) 2010 Alessandro Ghedini
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,10 +18,10 @@
 
 #include "SpaceShooter.h"
 
-int main(){
+int main(int argc, char **argv) {
 
 	int i;
-	
+
 	/* Initialize Allegro and variables*/
 	allegro_init();
 	reset_variables();
@@ -80,7 +80,7 @@ int main(){
 			xscroll = 0;
 
 		/* Game pause */
-		if(key[KEY_P] && (game_status != STATUS_PAUSE)) {
+		if(key[KEY_P] && (game_status == STATUS_RUN)) {
 			SET_GAME_STATUS(STATUS_PAUSE);
 			play_sample(snd_pause, 255,128,1000, FALSE);
 		}
@@ -179,36 +179,62 @@ void check_game_status() {
 		case STATUS_START:
 			draw_player();
 			
-			textprintf_ex(buf, font, SCREEN_WIDTH/2-70, SCREEN_HEIGHT/2, 
-				makecol(138, 153, 200), -1, "Press FIRE to start.");
+			textout_centre_ex(buf, font, "SpaceShooter version "VERSION, SCREEN_WIDTH/2,
+				SCREEN_HEIGHT/2-15, makecol(138, 153, 200), makecol(0, 0, 0));
+				
+			textout_centre_ex(buf, font, "Press FIRE to start or H for help.", SCREEN_WIDTH/2,
+				SCREEN_HEIGHT/2, makecol(138, 153, 200), makecol(0, 0, 0));
 			
-			if(mouse_b & 1)
+			if (mouse_b & 1)
 				SET_GAME_STATUS(STATUS_RUN);
+			if (key[KEY_H])
+				SET_GAME_STATUS(STATUS_HELP);
+
+			break;
+
+		case STATUS_HELP:
+			textout_centre_ex(buf, font, "MOUSE = Control spaceship", SCREEN_WIDTH/2,
+				SCREEN_HEIGHT/2-75, makecol(138, 153, 200), makecol(0, 0, 0));
+
+			textout_centre_ex(buf, font, "LEFT BTN = Fire", SCREEN_WIDTH/2,
+				SCREEN_HEIGHT/2-60, makecol(138, 153, 200), makecol(0, 0, 0));
+
+			textout_centre_ex(buf, font, "P = Pause", SCREEN_WIDTH/2,
+				SCREEN_HEIGHT/2-45, makecol(138, 153, 200), makecol(0, 0, 0));
+				
+			textout_centre_ex(buf, font, "ESC = Quit", SCREEN_WIDTH/2,
+				SCREEN_HEIGHT/2-30, makecol(138, 153, 200), makecol(0, 0, 0));
+
+			textout_centre_ex(buf, font, "Press ENTER to continue.", SCREEN_WIDTH/2,
+				SCREEN_HEIGHT/2, makecol(138, 153, 200), makecol(0, 0, 0));
+
+			if(key[KEY_ENTER])
+				SET_GAME_STATUS(STATUS_START);
 
 			break;
 
 		case STATUS_PAUSE:
-			textprintf_ex(buf, font, SCREEN_WIDTH/2 - 50, SCREEN_HEIGHT/2, 
-				makecol(138, 153, 200), -1, "Game paused.");
-			textprintf_ex(buf, font, SCREEN_WIDTH/2 - 90, SCREEN_HEIGHT/2 + 15, 
-				makecol(138, 153, 200), -1, "Press ENTER to resume.");
+			textout_centre_ex(buf, font, "Game paused.", SCREEN_WIDTH/2,
+				SCREEN_HEIGHT/2-15, makecol(138, 153, 200), makecol(0, 0, 0));
 
-			if(key[KEY_ENTER])
+			textout_centre_ex(buf, font, "Press ENTER to resume.", SCREEN_WIDTH/2,
+				SCREEN_HEIGHT/2-15, makecol(138, 153, 200), makecol(0, 0, 0));
+
+			if (key[KEY_ENTER]) 
 				SET_GAME_STATUS(STATUS_RUN);
 
 			break;
 
 		case STATUS_GAMEOVER:
-			textprintf_ex(buf, font, SCREEN_WIDTH/2-70, SCREEN_HEIGHT/2, 
-				makecol(138, 153, 200), -1, "Game Over! Score: %d.", score);
-			textprintf_ex(buf, font, SCREEN_WIDTH/2-90, SCREEN_HEIGHT/2+15, 
-				makecol(138, 153, 200), -1, "Press ENTER to continue.");
+			textprintf_ex(buf, font, SCREEN_WIDTH/2-80, SCREEN_HEIGHT/2-15, 
+				makecol(138, 153, 200), -1, "Game Over! Score: %d", score);
+
+			textout_centre_ex(buf, font, "Press ENTER to continue.", SCREEN_WIDTH/2,
+				SCREEN_HEIGHT/2, makecol(138, 153, 200), makecol(0, 0, 0));
 			
 
-			if(key[KEY_ENTER]) {
+			if(key[KEY_ENTER])
 				reset_variables();
-				//SET_GAME_STATUS(STATUS_START);
-			}
 			
 			break;
 	}
