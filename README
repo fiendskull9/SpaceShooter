@@ -9,18 +9,21 @@
       |_|                                                        
 ==================================================================
 
-by Alessandro Ghedini <al3xbio[at]gmail[dot]com>, copyright 2009
-web: http://alexbio.ath.cx/projects/spaceshooter
+SpaceShooter is an old-school space shooter game in 2D.
+Copyright (C) 2010 Alessandro Ghedini <al3xbio@gmail.com>
+
+Version 2.0
 
 This software is released under GNU GPL licence v.3
+This program comes with ABSOLUTELY NO WARRANTY. This is free software, 
+and you are welcome to redistribute it under certain conditions.
 
-SpaceShooter is an old-school space shooter game in 2D.
+To be compiled it needs Allegro shared library (liballegro4.2) 
+and its development files (liballegro4.2-dev).
 
-To be compiled it needs Allegro shared library (liballegro4.2) and its development files (liballegro4.2-dev).
-
-For installation:
+=== Compile & Install ===
 $ make
 # make install
 
-Now you can run the game:
+=== Run ===
 $ SpaceShooter
