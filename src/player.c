@@ -68,8 +68,8 @@ void player_collision(int n) {
 }
 
 void player_death() {
-	player.death = 1;
 	play_sample(player.snd_death, 255,128,1000, FALSE);
+	player.death = 1;
 }
 
 void destroy_player() {

@@ -70,8 +70,10 @@ int main(){
 			rest(100 / UPDATES_PER_SECOND);
 		}
 
-		while (ticks > 0) 
+		while (ticks > 0) {
 			update_screen();
+			ticks--;
+		}
 				
 		print_basic();
 
@@ -79,13 +81,13 @@ int main(){
 			xscroll = 0;
 
 		/* Game pause */
-		if(key[KEY_P]) {
+		if(key[KEY_P] && (game_status != STATUS_PAUSE)) {
 			SET_GAME_STATUS(STATUS_PAUSE);
 			play_sample(snd_pause, 255,128,1000, FALSE);
 		}
 
 		/* Game Over */
-		if (player.death == 1) 
+		if ((player.death == 1) && (game_status != STATUS_PAUSE)) 
 			SET_GAME_STATUS(STATUS_GAMEOVER);	
 
 		if (game_status != STATUS_RUN) {
@@ -154,7 +156,7 @@ void reset_variables() {
 	int i;
 	
 	score = 0;
-	xscroll = 0;
+	//xscroll = 0;
 
 	player.death = 0;
 
