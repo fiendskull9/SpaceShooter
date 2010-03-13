@@ -38,7 +38,7 @@ void draw_player() {
 }
 
 void player_fire() {
-	if (mouse_b & 1)
+	if ((mouse_b & 1) && (game_status == STATUS_RUN))
 		if (player.fire == 0) { 
 			player.fire = 1;
 			player.bullet_x = player.x+32;

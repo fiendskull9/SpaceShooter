@@ -79,17 +79,18 @@ int main(int argc, char **argv) {
 		if (xscroll > SCREEN_WIDTH-1)
 			xscroll = 0;
 
-		/* Game pause */
-		if(key[KEY_P] && (game_status == STATUS_RUN)) {
-			SET_GAME_STATUS(STATUS_PAUSE);
-			play_sample(snd_pause, 255,128,1000, FALSE);
-		}
-
-		/* Game Over */
-		if ((player.death == 1) && (game_status != STATUS_PAUSE)) 
-			SET_GAME_STATUS(STATUS_GAMEOVER);	
-
-		if (game_status != STATUS_RUN) {
+		if (game_status == STATUS_RUN) {
+			if(key[KEY_P]) {
+				/* Game pause */
+				if (DEBUG == 1)
+					printf("Gameover. Score %i\n", score);
+				SET_GAME_STATUS(STATUS_PAUSE);
+				play_sample(snd_pause, 255,128,1000, FALSE);
+			} else if (player.death == 1) {
+				/* Game Over */
+				SET_GAME_STATUS(STATUS_GAMEOVER);
+			} 
+		} else {
 			check_game_status();
 			continue;
 		}
@@ -108,7 +109,8 @@ int main(int argc, char **argv) {
 		}
 
 		/* Show scores */
-		textprintf_ex(buf, font, 10, 10, makecol(138, 153, 200), -1, "Score: %d", score);
+		textprintf_ex(buf, font, 10, 10, makecol(138, 153, 200), -1, "Score: %i", score);
+		textprintf_ex(buf, font, 10, 25, makecol(138, 153, 200), -1, "Record: %i", game_record);
 		
 		/* Draw spaceship sprite at mouse position */
 		draw_player();
@@ -130,6 +132,8 @@ int main(int argc, char **argv) {
 
 	/* Unload datafile, bitmaps and sounds */
 	unload_data();
+
+	set_record();
 	
 	return 0;
 }
@@ -148,7 +152,7 @@ void print_basic() {
 
 	/* Print help */
 	textprintf_ex(buf, font, 10, SCREEN_HEIGHT-15, makecol(138, 153, 200), 
-		-1, "Press ESC to exit or P to pause.");
+				-1, "Press ESC to exit or P to pause.");
 }
 
 void reset_variables() {
@@ -162,6 +166,8 @@ void reset_variables() {
 	player.bullet_y = 0;
 	player.death = 0;
 
+	record_is_broken = 0;
+
 	for (i = 0; i < ENEMIES; i++) {
 		enemies[i].fire = 0;
 		enemies[i].death = 1;
@@ -169,8 +175,9 @@ void reset_variables() {
 		enemies[i].bullet_y = SCREEN_WIDTH;
 	}
 
-	SET_GAME_STATUS(STATUS_START);
+	get_record();
 
+	SET_GAME_STATUS(STATUS_START);
 }
 
 void check_game_status() {
@@ -185,8 +192,10 @@ void check_game_status() {
 			textout_centre_ex(buf, font, "Press FIRE to start or H for help.", SCREEN_WIDTH/2,
 				SCREEN_HEIGHT/2, makecol(138, 153, 200), makecol(0, 0, 0));
 			
-			if (mouse_b & 1)
+			if (mouse_b & 1) {
 				SET_GAME_STATUS(STATUS_RUN);
+			}
+			
 			if (key[KEY_H])
 				SET_GAME_STATUS(STATUS_HELP);
 
@@ -218,7 +227,7 @@ void check_game_status() {
 				SCREEN_HEIGHT/2-15, makecol(138, 153, 200), makecol(0, 0, 0));
 
 			textout_centre_ex(buf, font, "Press ENTER to resume.", SCREEN_WIDTH/2,
-				SCREEN_HEIGHT/2-15, makecol(138, 153, 200), makecol(0, 0, 0));
+				SCREEN_HEIGHT/2, makecol(138, 153, 200), makecol(0, 0, 0));
 
 			if (key[KEY_ENTER]) 
 				SET_GAME_STATUS(STATUS_RUN);
@@ -226,6 +235,12 @@ void check_game_status() {
 			break;
 
 		case STATUS_GAMEOVER:
+			check_record();
+			if (record_is_broken == 1) {
+				textout_centre_ex(buf, font, "Congratulations! You've broken the record.", SCREEN_WIDTH/2,
+					SCREEN_HEIGHT/2-30, makecol(138, 153, 200), makecol(0, 0, 0));
+			}
+				
 			textprintf_ex(buf, font, SCREEN_WIDTH/2-80, SCREEN_HEIGHT/2-15, 
 				makecol(138, 153, 200), -1, "Game Over! Score: %d", score);
 

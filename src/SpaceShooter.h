@@ -17,12 +17,14 @@
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <allegro.h>
 
 #include "data.h"
 #include "sprites.h"
 
 #define VERSION "2.0"
+#define DEBUG 1
 
 #define SET_GAME_STATUS(STATUS) game_status = STATUS;
 
@@ -37,7 +39,7 @@
 
 #define UPDATES_PER_SECOND 60
 
-#define DEBUG 0
+#define RECORD_FILE ".SpaceShooter.record"
 
 #if (DEBUG == 1)
 	#define DATA_PATH "SpaceShooter.dat"
@@ -55,9 +57,13 @@ PALETTE colors;
 SAMPLE *snd_pause;
 
 int game_status, score, xscroll;
+int game_record, record_is_broken;
 volatile int ticks;
 
 void reset_variables();
+void get_record();
+void set_record();
+void check_record();
 void update_screen();
 void print_basic();
 void check_game_status();
