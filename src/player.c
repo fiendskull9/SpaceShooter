@@ -41,7 +41,7 @@ void player_fire() {
 	if ((mouse_b & 1) && (game_status == STATUS_RUN))
 		if (player.fire == 0) { 
 			player.fire = 1;
-			player.bullet_x = player.x+32;
+			player.bullet_x = player.x + PLAYER_WIDTH;
 			player.bullet_y = player.y;
 			play_sample(player.snd_fire, 255,128,1000, FALSE);
 		}
