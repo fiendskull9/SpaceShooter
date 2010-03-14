@@ -24,7 +24,7 @@
 #include "sprites.h"
 
 #define VERSION "2.0"
-#define DEBUG 0
+#define DEBUG 1
 
 #define SET_GAME_STATUS(STATUS) game_status = STATUS;
 

@@ -202,16 +202,16 @@ void check_game_status() {
 			break;
 
 		case STATUS_HELP:
-			textout_centre_ex(buf, font, "MOUSE = Control spaceship", SCREEN_WIDTH/2,
+			textout_ex(buf, font, "MOUSE = Control spaceship", SCREEN_WIDTH/2-100,
 				SCREEN_HEIGHT/2-75, makecol(138, 153, 200), makecol(0, 0, 0));
 
-			textout_centre_ex(buf, font, "LEFT BTN = Fire", SCREEN_WIDTH/2,
+			textout_ex(buf, font, "LEFT BTN = Fire", SCREEN_WIDTH/2-100,
 				SCREEN_HEIGHT/2-60, makecol(138, 153, 200), makecol(0, 0, 0));
 
-			textout_centre_ex(buf, font, "P = Pause", SCREEN_WIDTH/2,
+			textout_ex(buf, font, "P = Pause", SCREEN_WIDTH/2-100,
 				SCREEN_HEIGHT/2-45, makecol(138, 153, 200), makecol(0, 0, 0));
 				
-			textout_centre_ex(buf, font, "ESC = Quit", SCREEN_WIDTH/2,
+			textout_ex(buf, font, "ESC = Quit", SCREEN_WIDTH/2-100,
 				SCREEN_HEIGHT/2-30, makecol(138, 153, 200), makecol(0, 0, 0));
 
 			textout_centre_ex(buf, font, "Press ENTER to continue.", SCREEN_WIDTH/2,
@@ -241,7 +241,7 @@ void check_game_status() {
 					SCREEN_HEIGHT/2-30, makecol(138, 153, 200), makecol(0, 0, 0));
 			}
 				
-			textprintf_ex(buf, font, SCREEN_WIDTH/2-80, SCREEN_HEIGHT/2-15, 
+			textprintf_centre_ex(buf, font, SCREEN_WIDTH/2, SCREEN_HEIGHT/2-15, 
 				makecol(138, 153, 200), -1, "Game Over! Score: %d", score);
 
 			textout_centre_ex(buf, font, "Press ENTER to continue.", SCREEN_WIDTH/2,
