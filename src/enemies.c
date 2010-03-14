@@ -50,7 +50,7 @@ void enemy_motion(int n) {
 		
 	if (enemies[n].x <= -64){
 		enemies[n].death = 1;
-		score--;
+		score += ENEMY_OVERTAKE_SCORES;
 	}
 }
 
@@ -79,7 +79,7 @@ void enemy_collision(int n) {
 		if (((player.bullet_y + PLAYER_BULLET_HEIGHT) >= enemies[n].y) && (player.bullet_y <= (enemies[n].y + ENEMY_HEIGHT))) {
 			enemies[n].death = 1;
 			player.fire = 0;
-			score++;
+			score += ENEMY_DEATH_SCORES;
 			player.bullet_x = 0;
 			player.bullet_y = 0;
 			play_sample(enemies[n].snd_death, 255,128,1000, FALSE);
