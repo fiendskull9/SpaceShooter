@@ -24,7 +24,7 @@
 #include "sprites.h"
 
 #define VERSION "2.0"
-#define DEBUG 1
+#define DEBUG 0
 
 #define SET_GAME_STATUS(STATUS) game_status = STATUS;
 
@@ -41,13 +41,7 @@
 
 #define RECORD_FILE ".SpaceShooter.record"
 
-#if (DEBUG == 1)
-	#define DATA_PATH "SpaceShooter.dat"
-#endif
-
-#if (DEBUG == 0)
-	#define DATA_PATH "/opt/SpaceShooter/SpaceShooter.dat"
-#endif
+#define DATA_PATH "/opt/SpaceShooter/SpaceShooter.dat"
 
 DATAFILE *dat;
 
