@@ -1,0 +1,15 @@
+Version 2.1
+- Added record functions
+- Adjusted player bullet spawn position
+- Adjusted scores for enemy death and overtake
+- Adjusted text formatting
+- Removed DATA_PATH when DEBUG=1
+
+Version 2.0
+- Code re-write
+- Screen update using timer
+- Help screen
+- Bugfixes
+
+Version 1.0
+- First stable release
