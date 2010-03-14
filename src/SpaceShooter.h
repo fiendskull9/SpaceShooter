@@ -23,7 +23,7 @@
 #include "data.h"
 #include "sprites.h"
 
-#define VERSION "2.0"
+#define VERSION "2.1"
 #define DEBUG 0
 
 #define SET_GAME_STATUS(STATUS) game_status = STATUS;
