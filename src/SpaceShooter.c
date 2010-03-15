@@ -39,7 +39,10 @@ int main(int argc, char **argv) {
 	reserve_voices(8, 0);
 	set_volume_per_voice(2);
 	install_sound(DIGI_AUTODETECT, MIDI_NONE, NULL);
-	set_volume(255, -1);
+	if (disable_audio == 1) 
+		set_volume(0, -1);
+	else
+		set_volume(255, -1);
 	IF_DEBUG
 		printf(DEBUG_INFO"Sound card installed.\n");
 

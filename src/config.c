@@ -49,8 +49,13 @@ void read_config() {
 
 	while (fscanf(config_file, "%s %i", var, &val) > 0) {
 		if (strcmp(var, CONFIG_DEBUG) == 0) {
-			printf(DEBUG_INFO"Config debug = %i", val);
+			IF_DEBUG
+				printf(DEBUG_INFO"Config debug = %i\n", val);
 			debug = val;
+		} else if (strcmp(var, CONFIG_NO_AUDIO) == 0) {
+			IF_DEBUG
+				printf(DEBUG_INFO"Config disable_audio = %i\n", val);
+			disable_audio = val;
 		}
 	}
 	fclose(config_file);
@@ -75,7 +80,7 @@ void get_record() {
 	fclose(record_file);
 
 	IF_DEBUG
-		printf(DEBUG_INFO"Config record = %i", game_record);
+		printf(DEBUG_INFO"Config record = %i\n", game_record);
 }
 
 void set_record() {
