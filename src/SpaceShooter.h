@@ -36,6 +36,7 @@
 
 #define CONFIG_DEBUG "debug"
 #define CONFIG_NO_AUDIO "disable_audio"
+#define CONFIG_FPS "show_fps"
 
 #define STATUS_RUN 0
 #define STATUS_START 1
@@ -52,7 +53,7 @@
 #define CONFIG_FILE "config"
 #define RECORD_FILE "record"
 
-#define DATA_PATH "SpaceShooter.dat"//"/opt/SpaceShooter/SpaceShooter.dat"
+#define DATA_PATH "/opt/SpaceShooter/SpaceShooter.dat"
 
 DATAFILE *dat;
 
@@ -61,10 +62,10 @@ PALETTE colors;
 
 SAMPLE *snd_pause;
 
-int debug, disable_audio;
-int game_status, score, xscroll;
+int debug, disable_audio, show_fps;
+int game_status, score, xscroll, fps;
 int game_record, record_is_broken;
-volatile int ticks;
+volatile int ticks, game_ticks;
 
 void reset_variables();
 
@@ -78,4 +79,5 @@ void update_screen();
 void print_basic();
 void check_game_status();
 void ticker();
+void game_time_ticker();
 void unload_data();

@@ -20,6 +20,13 @@
 
 int main(int argc, char **argv) {
 	int i;
+	int frames_done = 0;
+	int old_time = 0;
+
+	int frames_array[10];
+	int frame_index = 0;
+	for (i = 0; i < 10; i++)
+		frames_array[i] = 0;
 
 	/* Initialize Allegro and variables*/
 	allegro_init();
@@ -46,13 +53,17 @@ int main(int argc, char **argv) {
 	IF_DEBUG
 		printf(DEBUG_INFO"Sound card installed.\n");
 
-	/* Set-up and initialize timer */
+	/* Set-up and initialize timers */
 	install_timer();
 	LOCK_VARIABLE(ticks);
 	LOCK_FUNCTION(ticker);
 	install_int_ex(ticker, BPS_TO_TIMER(UPDATES_PER_SECOND));
+
+	LOCK_VARIABLE(game_ticks);
+	LOCK_FUNCTION(game_time_ticker);
+	install_int_ex(game_time_ticker, BPS_TO_TIMER(10));
 	IF_DEBUG
-		printf(DEBUG_INFO"Timer installed and initialized.\n");
+		printf(DEBUG_INFO"Timers installed and initialized.\n");
 	
 	/* Set colors*/
 	set_color_depth(32);
@@ -89,7 +100,7 @@ int main(int argc, char **argv) {
 			update_screen();
 			ticks--;
 		}
-				
+		
 		print_basic();
 
 		if (xscroll > SCREEN_WIDTH-1)
@@ -122,9 +133,11 @@ int main(int argc, char **argv) {
 
 		}
 
-		/* Show scores */
+		/* Show scores, record, fps */
 		textprintf_ex(buf, font, 10, 10, makecol(138, 153, 200), -1, "Score: %i", score);
 		textprintf_ex(buf, font, 10, 25, makecol(138, 153, 200), -1, "Record: %i", game_record);
+		if (show_fps == 1)
+			textprintf_right_ex(buf, font, SCREEN_WIDTH-50, 10, makecol(138, 153, 200), -1, "FPS: %i", fps);
 		
 		/* Draw spaceship sprite at mouse position */
 		draw_player();
@@ -142,6 +155,18 @@ int main(int argc, char **argv) {
 			enemy_fire(i);
 		}
 
+		if(game_ticks >= old_time + 1) {
+			fps -= frames_array[frame_index];
+			frames_array[frame_index] = frames_done;
+			fps += frames_done;
+ 
+			frame_index = (frame_index + 1) % 10;
+ 
+			frames_done = 0;
+			old_time += 1;
+		}
+
+		frames_done++;
 	}
 
 	/* Unload datafile, bitmaps and sounds */
@@ -272,6 +297,10 @@ void check_game_status() {
 
 void ticker() {
 	ticks++;
+}
+
+void game_time_ticker() {
+	game_ticks++;
 }
 
 void unload_data() {

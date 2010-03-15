@@ -56,6 +56,10 @@ void read_config() {
 			IF_DEBUG
 				printf(DEBUG_INFO"Config disable_audio = %i\n", val);
 			disable_audio = val;
+		} else if (strcmp(var, CONFIG_FPS) == 0) {
+			IF_DEBUG
+				printf(DEBUG_INFO"Config show_fps = %i\n", val);
+			show_fps = val;
 		}
 	}
 	fclose(config_file);
