@@ -77,6 +77,8 @@ void enemy_collision(int n) {
 
 	if (((player.bullet_x + PLAYER_BULLET_WIDTH) >= enemies[n].x) && (player.bullet_x <= (enemies[n].x + ENEMY_WIDTH)))
 		if (((player.bullet_y + PLAYER_BULLET_HEIGHT) >= enemies[n].y) && (player.bullet_y <= (enemies[n].y + ENEMY_HEIGHT))) {
+			IF_DEBUG
+				printf(DEBUG_INFO"Enemy %i hit.\n", n);
 			enemies[n].death = 1;
 			player.fire = 0;
 			score += ENEMY_DEATH_SCORES;

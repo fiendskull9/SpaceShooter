@@ -19,28 +19,37 @@
 #include "SpaceShooter.h"
 
 int main(int argc, char **argv) {
-
 	int i;
 
 	/* Initialize Allegro and variables*/
 	allegro_init();
+	read_config();
 	reset_variables();
+	IF_DEBUG
+		printf(DEBUG_INFO"Allegro initialized.\n");
 	
 	/* Set-up input devices */
 	install_keyboard();
 	install_mouse();
+	IF_DEBUG
+		printf(DEBUG_INFO"Input devices installed.\n");
+
 
 	/* Set-up sound card */
 	reserve_voices(8, 0);
 	set_volume_per_voice(2);
 	install_sound(DIGI_AUTODETECT, MIDI_NONE, NULL);
 	set_volume(255, -1);
+	IF_DEBUG
+		printf(DEBUG_INFO"Sound card installed.\n");
 
 	/* Set-up and initialize timer */
 	install_timer();
 	LOCK_VARIABLE(ticks);
 	LOCK_FUNCTION(ticker);
 	install_int_ex(ticker, BPS_TO_TIMER(UPDATES_PER_SECOND));
+	IF_DEBUG
+		printf(DEBUG_INFO"Timer installed and initialized.\n");
 	
 	/* Set colors*/
 	set_color_depth(32);
@@ -51,18 +60,22 @@ int main(int argc, char **argv) {
 	buf = create_bitmap(SCREEN_WIDTH, SCREEN_HEIGHT);
 	set_window_title("SpaceShooter");
 	clear(buf);
+	IF_DEBUG
+		printf(DEBUG_INFO"Screen initialized.\n");
 	
 	/* Load data */
 	dat = load_datafile(DATA_PATH);
-	
+	IF_DEBUG
+		printf(DEBUG_INFO"Datafile loaded.\n");
+
 	background = dat[BMP_BACKGROUND].dat;
 	snd_pause = dat[SND_PAUSE].dat;
 
 	load_player();
-
+	
 	for (i = 0; i < ENEMIES; i++)
 		load_enemy(i);
-	
+
 	/* Main loop */
 	while (!key[KEY_ESC]) {
 		
@@ -82,8 +95,6 @@ int main(int argc, char **argv) {
 		if (game_status == STATUS_RUN) {
 			if(key[KEY_P]) {
 				/* Game pause */
-				if (DEBUG == 1)
-					printf("Gameover. Score %i\n", score);
 				SET_GAME_STATUS(STATUS_PAUSE);
 				play_sample(snd_pause, 255,128,1000, FALSE);
 			} else if (player.death == 1) {
