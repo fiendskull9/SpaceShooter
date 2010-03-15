@@ -19,7 +19,13 @@
 #include "SpaceShooter.h"
 
 void load_enemy(int n) {
-	enemies[n].bmp = dat[BMP_ENEMY].dat;
+	if (n == 0)
+		enemies[n].bmp = dat[BMP_ENEMY1].dat;
+	else if (n == 1)
+		enemies[n].bmp = dat[BMP_ENEMY2].dat;
+	else if (n == 2)
+		enemies[n].bmp = dat[BMP_ENEMY3].dat;
+		
 	enemies[n].bullet = dat[BMP_ROCKET].dat;
 
 	enemies[n].snd_fire = dat[SND_ROCKET].dat;
