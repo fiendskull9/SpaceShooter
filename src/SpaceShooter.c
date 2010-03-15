@@ -188,10 +188,6 @@ void print_basic() {
 	/* Set backgound */
 	blit(background, buf, xscroll, 0, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);		
 	xscroll++;
-
-	/* Print help */
-	textprintf_ex(buf, font, 10, SCREEN_HEIGHT-15, makecol(138, 153, 200), 
-				-1, "Press ESC to exit or P to pause.");
 }
 
 void reset_variables() {
