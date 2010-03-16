@@ -1,3 +1,10 @@
+Version 2.2
+- Added config file + improved debug
+- Added disable audio option
+- Show fps + config
+- Removed help on game run
+- New sprites for enemies
+
 Version 2.1
 - Added record functions
 - Adjusted player bullet spawn position
