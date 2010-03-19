@@ -60,6 +60,10 @@ void read_config() {
 			IF_DEBUG
 				printf(DEBUG_INFO"Config show_fps = %i\n", val);
 			show_fps = val;
+		} else if (strcmp(var, CONFIG_FULLSCREEN) == 0) {
+			IF_DEBUG
+				printf(DEBUG_INFO"Config fullscreen = %i\n", val);
+			fullscreen = val;
 		}
 	}
 	fclose(config_file);

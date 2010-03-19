@@ -37,6 +37,8 @@
 #define CONFIG_DEBUG "debug"
 #define CONFIG_NO_AUDIO "disable_audio"
 #define CONFIG_FPS "show_fps"
+#define CONFIG_FULLSCREEN "fullscreen"
+
 #define SCREENSHOT_FORMAT "bmp"
 
 #define STATUS_RUN 0
@@ -63,7 +65,7 @@ PALETTE colors;
 
 SAMPLE *snd_pause;
 
-int debug, disable_audio, show_fps;
+int debug, disable_audio, show_fps, fullscreen;
 int game_status, score, xscroll, fps;
 int game_record, record_is_broken;
 volatile int ticks, game_ticks;

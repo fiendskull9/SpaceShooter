@@ -70,7 +70,11 @@ int main(int argc, char **argv) {
 	set_palette(colors);
 	
 	/* Set screen */
-	set_gfx_mode(GFX_AUTODETECT_WINDOWED, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0);
+	if (fullscreen == 1)
+		set_gfx_mode(GFX_AUTODETECT_FULLSCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0);
+	else
+		set_gfx_mode(GFX_AUTODETECT_WINDOWED, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0);
+		
 	buf = create_bitmap(SCREEN_WIDTH, SCREEN_HEIGHT);
 	set_window_title("SpaceShooter");
 	clear(buf);
@@ -168,10 +172,11 @@ int main(int argc, char **argv) {
 		frames_done++;
 	}
 
+	/* Save record to file */
+	set_record();
+	
 	/* Unload datafile, bitmaps and sounds */
 	unload_data();
-
-	set_record();
 	
 	return 0;
 }
