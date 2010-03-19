@@ -101,11 +101,13 @@ void set_record() {
 	record_file = fopen(path, "w+");
 	if (record_file == NULL) {
 		IF_DEBUG
-			printf(DEBUG_WARN"Unable to open %s file.n", path);
+			printf(DEBUG_WARN"Unable to open %s file.\n", path);
 		return;
 	}
 	
-	fprintf(record_file, "%i", score);
+	if (fprintf(record_file, "%i", score) < 0)
+		IF_DEBUG
+			printf(DEBUG_WARN"Unable to write to %s file.\n", path);
 	fclose(record_file);
 }
 

@@ -171,9 +171,6 @@ int main(int argc, char **argv) {
 
 		frames_done++;
 	}
-
-	/* Save record to file */
-	set_record();
 	
 	/* Unload datafile, bitmaps and sounds */
 	//unload_data();
