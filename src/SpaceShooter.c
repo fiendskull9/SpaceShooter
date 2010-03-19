@@ -219,6 +219,7 @@ void reset_variables() {
 }
 
 void check_game_status() {
+	int align;
 
 	switch (game_status) {
 		case STATUS_START:
@@ -240,20 +241,26 @@ void check_game_status() {
 			break;
 
 		case STATUS_HELP:
-			textout_ex(buf, font, "MOUSE = Control spaceship", SCREEN_WIDTH/2-100,
+			align = SCREEN_WIDTH/2-100;
+			
+			textout_ex(buf, font, "MOUSE = Control spaceship", align,
 				SCREEN_HEIGHT/2-75, makecol(138, 153, 200), makecol(0, 0, 0));
 
-			textout_ex(buf, font, "LEFT BTN = Fire", SCREEN_WIDTH/2-100,
+			textout_ex(buf, font, "LEFT BTN = Fire", align,
 				SCREEN_HEIGHT/2-60, makecol(138, 153, 200), makecol(0, 0, 0));
 
-			textout_ex(buf, font, "P = Pause", SCREEN_WIDTH/2-100,
+			textout_ex(buf, font, "P = Pause", align,
 				SCREEN_HEIGHT/2-45, makecol(138, 153, 200), makecol(0, 0, 0));
-				
-			textout_ex(buf, font, "ESC = Quit", SCREEN_WIDTH/2-100,
-				SCREEN_HEIGHT/2-30, makecol(138, 153, 200), makecol(0, 0, 0));
 
+			textout_ex(buf, font, "S = Take a screenshot", align,
+				SCREEN_HEIGHT/2-30, makecol(138, 153, 200), makecol(0, 0, 0));
+								
+			textout_ex(buf, font, "ESC = Quit", align,
+				SCREEN_HEIGHT/2-15, makecol(138, 153, 200), makecol(0, 0, 0));
+
+				
 			textout_centre_ex(buf, font, "Press ENTER to continue.", SCREEN_WIDTH/2,
-				SCREEN_HEIGHT/2, makecol(138, 153, 200), makecol(0, 0, 0));
+				SCREEN_HEIGHT/2+15, makecol(138, 153, 200), makecol(0, 0, 0));
 
 			if(key[KEY_ENTER])
 				SET_GAME_STATUS(STATUS_START);
