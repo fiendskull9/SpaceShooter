@@ -176,7 +176,7 @@ int main(int argc, char **argv) {
 	set_record();
 	
 	/* Unload datafile, bitmaps and sounds */
-	unload_data();
+	//unload_data();
 	
 	return 0;
 }
@@ -322,14 +322,17 @@ void game_time_ticker() {
 
 void unload_data() {
 	int i;
-	
+
+	set_gfx_mode(GFX_TEXT, 0, 0, 0, 0);
+
 	unload_datafile(dat);
 
-	destroy_bitmap(buf);
 	destroy_bitmap(background);
 
+	destroy_bitmap(buf);
+		
 	destroy_player();
-
+	
 	for (i = 0; i < ENEMIES; i++)
 		destroy_enemy(i);
 }
