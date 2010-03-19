@@ -1,11 +1,11 @@
-CC = `which gcc`
-RM = `which rm`
-MKDIR = `which mkdir`
-CP = `which cp`
-LN = `which ln`
+CC = gcc
+RM = rm
+MKDIR = mkdir
+CP = cp
+LN = ln
 
 LFLAGS = `allegro-config --libs`
-CFLAGS = -Wall -O3 -fomit-frame-pointer `allegro-config --cflags`
+CFLAGS = -Wall -O3 -fomit-frame-pointer `allegro-config --cflags` #-g
 
 SRCDIR = src
 BINDIR = bin
