@@ -26,7 +26,7 @@
 #include "data.h"
 #include "sprites.h"
 
-#define VERSION "2.2"
+#define VERSION "2.3"
 #define IF_DEBUG if (debug == 1)
 #define DEBUG_INFO "INFO: "
 #define DEBUG_WARN "WARNING: "

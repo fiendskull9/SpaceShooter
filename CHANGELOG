@@ -1,3 +1,11 @@
+Version 2.3
+- Take screenshots pressing S
+- Updated many sounds
+- Increased player's bullet speed to 12
+- Modified makefile (command 'which' not needed)
+- Fullsscreen mode via config file
+- Many bugfixes
+
 Version 2.2
 - Added config file + improved debug
 - Added disable audio option
