@@ -79,6 +79,7 @@ void take_screenshot();
 
 void update_screen();
 void print_basic();
+void print_game_info();
 void check_game_status();
 void ticker();
 void game_time_ticker();

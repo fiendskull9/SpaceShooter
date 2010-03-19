@@ -189,9 +189,7 @@ void print_basic() {
 	xscroll++;
 }
 
-void print game_info () {
-	int i;
-	
+void print_game_info () {
 	/* Show scores... */
 	textprintf_ex(buf, font, 10, 10, makecol(138, 153, 200), -1, "Score: %i", score);
 	/* ..record...*/
