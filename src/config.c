@@ -111,3 +111,21 @@ void check_record() {
 		record_is_broken = 1;
 	}
 }
+
+void take_screenshot() {
+	char path[strlen(getenv("HOME")) + strlen(CONFIG_DIR) + strlen("screen-00.xxx")];
+	FILE *screenshot_file;
+	int i = 0;
+	BITMAP *shot = screen;
+
+	check_config_dir();
+	do {
+		sprintf(path, "%s/%s/screen-%i.%s", getenv("HOME"), CONFIG_DIR, i, SCREENSHOT_FORMAT);
+		i++;
+		rest(100);
+	} while (fopen(path, "r") != NULL);
+	
+	screenshot_file = fopen(path, "w+");
+	save_bitmap(path, shot, colors);
+	fclose(screenshot_file);
+}

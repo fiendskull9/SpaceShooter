@@ -106,6 +106,9 @@ int main(int argc, char **argv) {
 		if (xscroll > SCREEN_WIDTH-1)
 			xscroll = 0;
 
+		if(key[KEY_S])
+			take_screenshot();
+		
 		if (game_status == STATUS_RUN) {
 			if(key[KEY_P]) {
 				/* Game pause */

@@ -37,6 +37,7 @@
 #define CONFIG_DEBUG "debug"
 #define CONFIG_NO_AUDIO "disable_audio"
 #define CONFIG_FPS "show_fps"
+#define SCREENSHOT_FORMAT "bmp"
 
 #define STATUS_RUN 0
 #define STATUS_START 1
@@ -74,6 +75,7 @@ void read_config();
 void get_record();
 void set_record();
 void check_record();
+void take_screenshot();
 
 void update_screen();
 void print_basic();
