@@ -136,11 +136,7 @@ int main(int argc, char **argv) {
 
 		}
 
-		/* Show scores, record, fps */
-		textprintf_ex(buf, font, 10, 10, makecol(138, 153, 200), -1, "Score: %i", score);
-		textprintf_ex(buf, font, 10, 25, makecol(138, 153, 200), -1, "Record: %i", game_record);
-		if (show_fps == 1)
-			textprintf_right_ex(buf, font, SCREEN_WIDTH-50, 10, makecol(138, 153, 200), -1, "FPS: %i", fps);
+		print_game_info();
 		
 		/* Draw spaceship sprite at mouse position */
 		draw_player();
@@ -191,6 +187,18 @@ void print_basic() {
 	/* Set backgound */
 	blit(background, buf, xscroll, 0, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);		
 	xscroll++;
+}
+
+void print game_info () {
+	int i;
+	
+	/* Show scores... */
+	textprintf_ex(buf, font, 10, 10, makecol(138, 153, 200), -1, "Score: %i", score);
+	/* ..record...*/
+	textprintf_ex(buf, font, 10, 25, makecol(138, 153, 200), -1, "Record: %i", game_record);
+	/* ...fps, if enabled.*/
+	if (show_fps == 1)
+		textprintf_right_ex(buf, font, SCREEN_WIDTH-50, 10, makecol(138, 153, 200), -1, "FPS: %i", fps);	
 }
 
 void reset_variables() {
