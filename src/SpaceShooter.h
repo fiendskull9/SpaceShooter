@@ -39,7 +39,7 @@
 #define CONFIG_FPS "show_fps"
 #define CONFIG_FULLSCREEN "fullscreen"
 
-#define SCREENSHOT_FORMAT "bmp"
+#define SCREENSHOT_FORMAT "bmp" /* Valid formats are bmp, pcx and tga */
 
 #define STATUS_RUN 0
 #define STATUS_START 1
