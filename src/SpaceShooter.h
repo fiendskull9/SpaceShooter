@@ -56,7 +56,7 @@
 #define CONFIG_FILE "config"
 #define RECORD_FILE "record"
 
-#define DATA_PATH "bin/SpaceShooter.dat"
+#define DATA_PATH "data/SpaceShooter.dat"
 
 DATAFILE *dat;
 
