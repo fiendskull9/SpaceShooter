@@ -31,7 +31,7 @@ void draw_player() {
 
 	if ( (mouse_y + PLAYER_HEIGHT) <= SCREEN_HEIGHT) player.y = mouse_y;
 	else player.y = SCREEN_HEIGHT - PLAYER_HEIGHT;
-	
+
 	draw_sprite(buf, player.bmp, player.x, player.y);
 }
 
@@ -43,11 +43,11 @@ void player_fire() {
 			player.bullet_y = player.y;
 			play_sample(player.snd_fire, 255,128,1000, FALSE);
 		}
-		
+
 	if (player.fire == 1) {
 		draw_sprite(buf, player.bullet, player.bullet_x, player.bullet_y);
 		player.bullet_x += PLAYER_BULLET_SPEED;
-			
+
 		if (player.bullet_x > SCREEN_WIDTH)
 			player.fire = 0;
 	}
@@ -55,13 +55,16 @@ void player_fire() {
 
 void player_collision(int n) {
 
-	if ( ((player.x + PLAYER_WIDTH) >= enemies[n].x) && (player.x <= (enemies[n].x + ENEMY_WIDTH)) )
-		if ( ((player.y + PLAYER_HEIGHT) >= enemies[n].y) && ((player.y <= enemies[n].y + ENEMY_HEIGHT) ))
+	if (((player.x + PLAYER_WIDTH) >= enemies[n].x) &&
+	     (player.x <= (enemies[n].x + ENEMY_WIDTH)))
+		if (((player.y + PLAYER_HEIGHT) >= enemies[n].y) &&
+		     ((player.y <= enemies[n].y + ENEMY_HEIGHT)))
 			player_death();
 
-
-	if ( ((player.x + PLAYER_WIDTH) >= enemies[n].bullet_x) && (player.x <= (enemies[n].bullet_x + ENEMY_BULLET_WIDTH)) ) 
-		if ( ((player.y + PLAYER_HEIGHT) >= enemies[n].bullet_y) && ((player.y <= enemies[n].bullet_y + ENEMY_BULLET_HEIGHT) ))
+	if (((player.x + PLAYER_WIDTH) >= enemies[n].bullet_x) &&
+	     (player.x <= (enemies[n].bullet_x + ENEMY_BULLET_WIDTH))) 
+		if (((player.y + PLAYER_HEIGHT) >= enemies[n].bullet_y) &&
+		    ((player.y <= enemies[n].bullet_y + ENEMY_BULLET_HEIGHT)))
 			player_death();
 }
 
@@ -71,8 +74,6 @@ void player_death() {
 }
 
 void destroy_player() {
-
 	destroy_bitmap(player.bmp);
 	destroy_bitmap(player.bullet);
-	
 }
