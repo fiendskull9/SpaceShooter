@@ -24,8 +24,6 @@ void load_player() {
 
 	player.snd_fire = dat[SND_FIRE].dat;
 	player.snd_death = dat[SND_DEATH].dat;
-
-	player.bullet_speed = PLAYER_BULLET_SPEED;
 }
 
 void draw_player() {
@@ -48,7 +46,7 @@ void player_fire() {
 		
 	if (player.fire == 1) {
 		draw_sprite(buf, player.bullet, player.bullet_x, player.bullet_y);
-		player.bullet_x += player.bullet_speed;
+		player.bullet_x += PLAYER_BULLET_SPEED;
 			
 		if (player.bullet_x > SCREEN_WIDTH)
 			player.fire = 0;

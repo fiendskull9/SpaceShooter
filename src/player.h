@@ -18,8 +18,6 @@
 
 #include <allegro.h>
 
-#define ENEMIES 3
-
 #define PLAYER_WIDTH 59
 #define PLAYER_HEIGHT 48
 
@@ -30,15 +28,12 @@
 typedef struct {
 	int x, y;
 	int fire;
-	int motion;
-	int speed;
 	int death;
 	BITMAP *bmp;
 
 	SAMPLE *snd_fire, *snd_death;
 
 	int bullet_x, bullet_y;
-	int bullet_speed;
 	BITMAP *bullet;
 } hero;
 
