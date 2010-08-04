@@ -6,8 +6,6 @@ AC_INIT([SpaceShooter], [2.3], [al3xbio@gmail.com])
 AC_CONFIG_SRCDIR([src/SpaceShooter.c])
 #AC_CONFIG_HEADER([src/SpaceShooter.h])
 
-AM_PATH_ALLEGRO([4.2.2])
-
 AM_INIT_AUTOMAKE([SpaceShooter], [2.3])
 
 # Checks for programs.
@@ -18,10 +16,8 @@ AC_PROG_LN_S
 # Checks for libraries.
 
 # Checks for header files.
-AC_CHECK_HEADERS([stdlib.h])
-AC_CHECK_HEADERS([allegro.h])
-AC_CHECK_HEADERS([sys/stat.h])
-AC_CHECK_HEADERS([sys/types.h])
+AC_CHECK_HEADERS([stdlib.h],,AC_MSG_ERROR(stdlib missing.))
+AC_CHECK_HEADERS([allegro.h],,AC_MSG_ERROR(Allegro lib missing.))
 
 # Checks for typedefs, structures, and compiler characteristics.
 

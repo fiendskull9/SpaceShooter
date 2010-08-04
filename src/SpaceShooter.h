@@ -20,9 +20,6 @@
 #include <stdlib.h>
 #include <allegro.h>
 
-#include <sys/stat.h>
-#include <sys/types.h>
-
 #include "data.h"
 #include "sprites.h"
 
