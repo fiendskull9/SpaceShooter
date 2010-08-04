@@ -23,37 +23,37 @@
 #include "data.h"
 #include "sprites.h"
 
-#define VERSION "2.3"
-#define IF_DEBUG if (debug == 1)
-#define DEBUG_INFO "INFO: "
-#define DEBUG_WARN "WARNING: "
-#define DEBUG_ERR "ERROR: "
+#define VERSION    		"2.3"
+#define IF_DEBUG   		if (debug == 1)
+#define DEBUG_INFO 		"INFO: "
+#define DEBUG_WARN 		"WARNING: "
+#define DEBUG_ERR  		"ERROR: "
 
 #define SET_GAME_STATUS(STATUS) game_status = STATUS;
 
-#define CONFIG_DEBUG "debug"
-#define CONFIG_NO_AUDIO "disable_audio"
-#define CONFIG_FPS "show_fps"
-#define CONFIG_FULLSCREEN "fullscreen"
+#define CONFIG_DEBUG 		"debug"
+#define CONFIG_NO_AUDIO 	"disable_audio"
+#define CONFIG_FPS 		"show_fps"
+#define CONFIG_FULLSCREEN 	"fullscreen"
 
-#define SCREENSHOT_FORMAT "bmp" /* Valid formats are bmp, pcx and tga */
+#define SCREENSHOT_FORMAT 	"bmp" /* Valid formats are bmp, pcx and tga */
 
-#define STATUS_RUN 0
-#define STATUS_START 1
-#define STATUS_PAUSE 2
-#define STATUS_GAMEOVER 3
-#define STATUS_HELP 4
+#define STATUS_RUN 		0
+#define STATUS_START 		1
+#define STATUS_PAUSE 		2
+#define STATUS_GAMEOVER 	3
+#define STATUS_HELP 		4
 
-#define SCREEN_WIDTH 768
-#define SCREEN_HEIGHT 536
+#define SCREEN_WIDTH 		768
+#define SCREEN_HEIGHT 		536
 
-#define UPDATES_PER_SECOND 60
+#define UPDATES_PER_SECOND 	60
 
-#define CONFIG_DIR ".SpaceShooter"
-#define CONFIG_FILE "config"
-#define RECORD_FILE "record"
+#define CONFIG_DIR 		".SpaceShooter"
+#define CONFIG_FILE 		"config"
+#define RECORD_FILE 		"record"
 
-#define DATA_PATH "data/SpaceShooter.dat"
+#define DATA_PATH 		"data/SpaceShooter.dat"
 
 DATAFILE *dat;
 
