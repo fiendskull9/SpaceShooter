@@ -22,7 +22,8 @@
 
 #include "config.h"
 #include "data.h"
-#include "sprites.h"
+#include "player.h"
+#include "enemies.h"
 
 #define IF_DEBUG   		if (debug == 1)
 #define DEBUG_INFO 		"INFO: "

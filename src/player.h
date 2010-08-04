@@ -23,20 +23,9 @@
 #define PLAYER_WIDTH 59
 #define PLAYER_HEIGHT 48
 
-#define ENEMY_WIDTH 57
-#define ENEMY_HEIGHT 40
-#define ENEMY_MAX_SPEED 5
-#define ENEMY_MIN_SPEED 3
-#define ENEMY_DEATH_SCORES 5
-#define ENEMY_OVERTAKE_SCORES -1
-
 #define PLAYER_BULLET_WIDTH 7
 #define PLAYER_BULLET_HEIGHT 7
 #define PLAYER_BULLET_SPEED 12
-
-#define ENEMY_BULLET_WIDTH 17
-#define ENEMY_BULLET_HEIGHT 8
-#define ENEMY_BULLET_SPEED 8
 
 typedef struct {
 	int x, y;
@@ -51,10 +40,9 @@ typedef struct {
 	int bullet_x, bullet_y;
 	int bullet_speed;
 	BITMAP *bullet;
-} entity;
+} hero;
 
-entity player;
-entity enemies[ENEMIES];
+hero player;
 
 void load_player();
 void draw_player();
@@ -62,11 +50,3 @@ void player_fire();
 void player_collision(int n);
 void player_death();
 void destroy_player();
-
-void load_enemy(int n);
-void draw_enemy(int n);
-void enemy_respawn(int n);
-void enemy_motion(int n);
-void enemy_fire(int n);
-void enemy_collision(int n);
-void destroy_enemy(int n);
