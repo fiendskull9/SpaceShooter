@@ -34,13 +34,12 @@ int main(int argc, char **argv) {
 	reset_variables();
 	IF_DEBUG
 		printf(DEBUG_INFO"Allegro initialized.\n");
-	
+
 	/* Set-up input devices */
 	install_keyboard();
 	install_mouse();
 	IF_DEBUG
 		printf(DEBUG_INFO"Input devices installed.\n");
-
 
 	/* Set-up sound card */
 	reserve_voices(8, 0);
@@ -64,23 +63,23 @@ int main(int argc, char **argv) {
 	install_int_ex(game_time_ticker, BPS_TO_TIMER(10));
 	IF_DEBUG
 		printf(DEBUG_INFO"Timers installed and initialized.\n");
-	
+
 	/* Set colors*/
 	set_color_depth(32);
 	set_palette(colors);
-	
+
 	/* Set screen */
 	if (fullscreen == 1)
 		set_gfx_mode(GFX_AUTODETECT_FULLSCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0);
 	else
 		set_gfx_mode(GFX_AUTODETECT_WINDOWED, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0);
-		
+
 	buf = create_bitmap(SCREEN_WIDTH, SCREEN_HEIGHT);
 	set_window_title("SpaceShooter");
 	clear(buf);
 	IF_DEBUG
 		printf(DEBUG_INFO"Screen initialized.\n");
-	
+
 	/* Load data */
 	dat = load_datafile(DATA_PATH);
 	IF_DEBUG
@@ -90,13 +89,13 @@ int main(int argc, char **argv) {
 	snd_pause = dat[SND_PAUSE].dat;
 
 	load_player();
-	
+
 	for (i = 0; i < ENEMIES; i++)
 		load_enemy(i);
 
 	/* Main loop */
 	while (!key[KEY_ESC]) {
-		
+
 		while (ticks == 0) 
 			rest(100 / UPDATES_PER_SECOND);
 
@@ -104,15 +103,15 @@ int main(int argc, char **argv) {
 			update_screen();
 			ticks--;
 		}
-		
-		print_basic();
+
+		set_bg();
 
 		if (xscroll > SCREEN_WIDTH-1)
 			xscroll = 0;
 
 		if(key[KEY_S])
 			take_screenshot();
-		
+
 		if (game_status == STATUS_RUN) {
 			if(key[KEY_P]) {
 				/* Game pause */
@@ -126,7 +125,7 @@ int main(int argc, char **argv) {
 			check_game_status();
 			continue;
 		}
-		
+
 		/* For each enemy do... */
 		for (i = 0; i < ENEMIES; i++) {
 
@@ -141,10 +140,10 @@ int main(int argc, char **argv) {
 		}
 
 		print_game_info();
-		
+
 		/* Draw spaceship sprite at mouse position */
 		draw_player();
-		
+
 		/* And bullet, if fired */
 		player_fire();
 
@@ -158,7 +157,7 @@ int main(int argc, char **argv) {
 			enemy_fire(i);
 		}
 
-		if(game_ticks >= old_time + 1) {
+		if (game_ticks >= old_time + 1) {
 			fps -= frames_array[frame_index];
 			frames_array[frame_index] = frames_done;
 			fps += frames_done;
@@ -171,27 +170,26 @@ int main(int argc, char **argv) {
 
 		frames_done++;
 	}
-	
+
 	/* Unload datafile, bitmaps and sounds */
 	//unload_data();
-	
+
 	return 0;
 }
 
-END_OF_MAIN ();
+END_OF_MAIN();
 
 void update_screen() {
 	blit(buf, screen, 0, 0, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 	clear(buf);
 }
 
-void print_basic() {
-	/* Set backgound */
+void set_bg() {
 	blit(background, buf, xscroll, 0, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);		
 	xscroll++;
 }
 
-void print_game_info () {
+void print_game_info() {
 	/* Show scores... */
 	textprintf_ex(buf, font, 10, 10, makecol(138, 153, 200), -1, "Score: %i", score);
 	/* ..record...*/
@@ -232,17 +230,17 @@ void check_game_status() {
 	switch (game_status) {
 		case STATUS_START:
 			draw_player();
-			
+
 			textout_centre_ex(buf, font, "SpaceShooter version "VERSION, SCREEN_WIDTH/2,
 				SCREEN_HEIGHT/2-15, makecol(138, 153, 200), makecol(0, 0, 0));
-				
+
 			textout_centre_ex(buf, font, "Press FIRE to start or H for help.", SCREEN_WIDTH/2,
 				SCREEN_HEIGHT/2, makecol(138, 153, 200), makecol(0, 0, 0));
-			
+
 			if (mouse_b & 1) {
 				SET_GAME_STATUS(STATUS_RUN);
 			}
-			
+
 			if (key[KEY_H])
 				SET_GAME_STATUS(STATUS_HELP);
 
@@ -250,7 +248,7 @@ void check_game_status() {
 
 		case STATUS_HELP:
 			align = SCREEN_WIDTH/2-100;
-			
+
 			textout_ex(buf, font, "MOUSE = Control spaceship", align,
 				SCREEN_HEIGHT/2-75, makecol(138, 153, 200), makecol(0, 0, 0));
 
@@ -262,11 +260,10 @@ void check_game_status() {
 
 			textout_ex(buf, font, "S = Take a screenshot", align,
 				SCREEN_HEIGHT/2-30, makecol(138, 153, 200), makecol(0, 0, 0));
-								
+			
 			textout_ex(buf, font, "ESC = Quit", align,
 				SCREEN_HEIGHT/2-15, makecol(138, 153, 200), makecol(0, 0, 0));
 
-				
 			textout_centre_ex(buf, font, "Press ENTER to continue.", SCREEN_WIDTH/2,
 				SCREEN_HEIGHT/2+15, makecol(138, 153, 200), makecol(0, 0, 0));
 
@@ -293,20 +290,18 @@ void check_game_status() {
 				textout_centre_ex(buf, font, "Congratulations! You've broken the record.", SCREEN_WIDTH/2,
 					SCREEN_HEIGHT/2-30, makecol(138, 153, 200), makecol(0, 0, 0));
 			}
-				
+
 			textprintf_centre_ex(buf, font, SCREEN_WIDTH/2, SCREEN_HEIGHT/2-15, 
 				makecol(138, 153, 200), -1, "Game Over! Score: %d", score);
 
 			textout_centre_ex(buf, font, "Press ENTER to continue.", SCREEN_WIDTH/2,
 				SCREEN_HEIGHT/2, makecol(138, 153, 200), makecol(0, 0, 0));
-			
 
 			if(key[KEY_ENTER])
 				reset_variables();
-			
+
 			break;
 	}
-	
 }
 
 void ticker() {
@@ -321,15 +316,12 @@ void unload_data() {
 	int i;
 
 	set_gfx_mode(GFX_TEXT, 0, 0, 0, 0);
-
-	unload_datafile(dat);
-
 	destroy_bitmap(background);
-
 	destroy_bitmap(buf);
-		
 	destroy_player();
-	
+
 	for (i = 0; i < ENEMIES; i++)
 		destroy_enemy(i);
+
+	unload_datafile(dat);
 }
