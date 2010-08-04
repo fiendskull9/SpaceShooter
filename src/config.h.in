@@ -1,0 +1,5 @@
+/* Define SpaceShooter version */
+#define VERSION
+
+/* Define where binary data (images and sounds) are stored */*
+#define DATA_PATH
