@@ -70,8 +70,9 @@ int game_status, score, xscroll, fps, gameover;
 int game_record, record_is_broken;
 volatile int ticks, game_ticks;
 
-void printd(char* format, ...);
 void reset_variables();
+void printd(char* format, ...);
+void prints(char align, int x, int y, char* format, ...);
 
 void check_config_dir();
 void read_config();

@@ -52,4 +52,5 @@ void enemy_respawn(int n);
 void enemy_motion(int n);
 void enemy_fire(int n);
 void enemy_collision(int n);
+void reset_enemy(int n);
 void destroy_enemy(int n);
