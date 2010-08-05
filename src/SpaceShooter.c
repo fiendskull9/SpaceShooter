@@ -189,7 +189,9 @@ void printd(char* format, ...) {
 void prints(char align, int x, int y, char* format, ...) {
 	va_list args;
 	char buffer[100];
-	int color = makecol(138, 153, 200);
+	int color = makecol(TEXT_DEFAULT_RGB_RED,
+			    TEXT_DEFAULT_RGB_GREEN,
+			    TEXT_DEFAULT_RGB_BLUE);
 
 	va_start(args, format);
 	uvszprintf(buffer, sizeof(buffer), format, args);

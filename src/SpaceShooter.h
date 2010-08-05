@@ -51,6 +51,10 @@
 
 #define UPDATES_PER_SECOND 	60
 
+#define TEXT_DEFAULT_RGB_RED	138
+#define TEXT_DEFAULT_RGB_GREEN	153
+#define TEXT_DEFAULT_RGB_BLUE	200
+
 #define CONFIG_DIR 		".SpaceShooter"
 #define CONFIG_FILE 		"config"
 #define RECORD_FILE 		"record"
