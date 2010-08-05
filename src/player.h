@@ -28,7 +28,6 @@
 typedef struct {
 	int x, y;
 	int fire;
-	int death;
 	BITMAP *bmp;
 
 	SAMPLE *snd_fire, *snd_death;

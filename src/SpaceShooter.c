@@ -106,12 +106,15 @@ int main(int argc, char **argv) {
 		if(key[KEY_S])
 			take_screenshot();
 
+		if(key[KEY_ALTGR] && key[KEY_G])
+			gameover = 2;
+
 		if (game_status == STATUS_RUN) {
 			if(key[KEY_P]) {
 				/* Game pause */
 				SET_GAME_STATUS(STATUS_PAUSE);
 				play_sample(snd_pause, 255,128,1000, FALSE);
-			} else if (player.death == 1) {
+			} else if (gameover == 1) {
 				/* Game Over */
 				SET_GAME_STATUS(STATUS_GAMEOVER);
 			} 
@@ -213,8 +216,8 @@ void reset_variables() {
 	player.fire = 0;
 	player.bullet_x = 0;
 	player.bullet_y = 0;
-	player.death = 0;
 
+	gameover = 0;
 	record_is_broken = 0;
 
 	for (i = 0; i < ENEMIES; i++) {

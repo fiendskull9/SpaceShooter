@@ -66,7 +66,7 @@ SAMPLE *snd_pause;
 
 int config_debug, config_disable_audio,
     config_show_fps, config_fullscreen;
-int game_status, score, xscroll, fps;
+int game_status, score, xscroll, fps, gameover;
 int game_record, record_is_broken;
 volatile int ticks, game_ticks;
 
