@@ -24,6 +24,8 @@ void load_player() {
 
 	player.snd_fire = dat[SND_FIRE].dat;
 	player.snd_death = dat[SND_DEATH].dat;
+
+	reset_player();
 }
 
 void draw_player() {
@@ -73,6 +75,14 @@ void player_death() {
 		gameover = 1;
 		play_sample(player.snd_death, 255,128,1000, FALSE);
 	}
+}
+
+void reset_player() {
+	player.x = 0;
+	player.y = 0;
+	player.fire = 0;
+	player.bullet_x = 0;
+	player.bullet_y = 0;
 }
 
 void destroy_player() {

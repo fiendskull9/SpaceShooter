@@ -99,6 +99,13 @@ void enemy_collision(int n) {
 		}
 }
 
+void reset_enemy(int n) {
+	enemies[n].fire = 0;
+	enemies[n].death = 1;
+	enemies[n].bullet_x = SCREEN_WIDTH;
+	enemies[n].bullet_y = SCREEN_WIDTH;
+}
+
 void destroy_enemy(int n) {
 	destroy_bitmap(enemies[n].bmp);
 	destroy_bitmap(enemies[n].bullet);

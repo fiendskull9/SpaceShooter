@@ -211,23 +211,14 @@ void reset_variables() {
 	int i;
 
 	score = 0;
-	player.x = 0;
-	player.y = 0;
-	player.fire = 0;
-	player.bullet_x = 0;
-	player.bullet_y = 0;
-
 	gameover = 0;
 	record_is_broken = 0;
 
-	for (i = 0; i < ENEMIES; i++) {
-		enemies[i].fire = 0;
-		enemies[i].death = 1;
-		enemies[i].bullet_x = SCREEN_WIDTH;
-		enemies[i].bullet_y = SCREEN_WIDTH;
-	}
+	for (i = 0; i < ENEMIES; i++)
+		reset_enemy(i);
 
 	get_record();
+	reset_player();
 
 	srand(time(NULL));
 
