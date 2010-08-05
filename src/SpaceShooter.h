@@ -31,6 +31,7 @@
 #define DEBUG_ERR  		"ERROR: "
 
 #define SET_GAME_STATUS(STATUS) game_status = STATUS;
+#define GEN_RAND(SEED)		rand() % SEED
 
 #define CONFIG_DEBUG 		"debug"
 #define CONFIG_NO_AUDIO 	"disable_audio"

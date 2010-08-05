@@ -226,6 +226,8 @@ void reset_variables() {
 
 	get_record();
 
+	srand(time(NULL));
+
 	SET_GAME_STATUS(STATUS_START);
 }
 

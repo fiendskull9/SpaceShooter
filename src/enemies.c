@@ -38,9 +38,9 @@ void draw_enemy(int n) {
 
 void enemy_respawn(int n) {
 	enemies[n].x = SCREEN_WIDTH - ENEMY_HEIGHT; 
-	enemies[n].y = rand() % (SCREEN_HEIGHT);
+	enemies[n].y = GEN_RAND(SCREEN_HEIGHT);
 	enemies[n].death = 0;
-	enemies[n].speed = (rand() % ENEMY_MAX_SPEED) + ENEMY_MIN_SPEED;
+	enemies[n].speed = GEN_RAND(ENEMY_MAX_SPEED) + ENEMY_MIN_SPEED;
 	enemies[n].bullet_speed = ENEMY_BULLET_SPEED;
 	printd(DEBUG_INFO "Enemy %i spawned at %i with speed %i", n,
 					enemies[n].y, enemies[n].speed);
