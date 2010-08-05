@@ -81,6 +81,7 @@ int main(int argc, char **argv) {
 
 	background = dat[BMP_BACKGROUND].dat;
 	snd_pause = dat[SND_PAUSE].dat;
+	font_default = dat[FONT_YANONE].dat;
 
 	load_player();
 
@@ -189,6 +190,7 @@ void printd(char* format, ...) {
 void prints(char align, int x, int y, char* format, ...) {
 	va_list args;
 	char buffer[100];
+	int bg = -1;
 	int color = makecol(TEXT_DEFAULT_RGB_RED,
 			    TEXT_DEFAULT_RGB_GREEN,
 			    TEXT_DEFAULT_RGB_BLUE);
@@ -199,15 +201,15 @@ void prints(char align, int x, int y, char* format, ...) {
 
 	switch (align) {
 		case 'l':
-			textout_ex(buf, font, buffer, x, y, color, -1);
+			textout_ex(buf, font_default, buffer, x, y, color, bg);
 			break;
 
 		case 'c':
-			textout_centre_ex(buf, font, buffer, x, y, color, -1);
+			textout_centre_ex(buf, font_default, buffer, x, y, color, bg);
 			break;
 
 		case 'r':
-			textout_right_ex(buf, font, buffer, x, y, color, -1);
+			textout_right_ex(buf, font_default, buffer, x, y, color, bg);
 			break;
 	}
 }
@@ -222,22 +224,18 @@ void set_bg() {
 	xscroll++;
 }
 
-void print_screen_center(char *msg, int relative_height) {
-	textout_centre_ex(buf, font, msg, SCREEN_WIDTH/2,
-			SCREEN_HEIGHT/2 - relative_height,
-				makecol(138, 153, 200), makecol(0, 0, 0));
-}
-
 void print_game_info() {
+	int margin = 10;
+
 	/* Show scores... */
-	prints('l', 10, 10, "Score: %i", score);
+	prints('l', margin, margin, "Score: %i", score);
 
 	/* ..record...*/
-	prints('l', 10, 25, "Record: %i", game_record);
+	prints('l', margin, margin + TEXT_LINE_HEIGHT, "Record: %i", game_record);
 
 	/* ...fps, if enabled.*/
 	if (config_show_fps == 1)
-		prints('r', SCREEN_WIDTH-50, 10, "FPS: %i", fps);
+		prints('r', SCREEN_WIDTH-50, margin, "FPS: %i", fps);
 }
 
 void reset_variables() {
@@ -267,7 +265,7 @@ void check_game_status() {
 		case STATUS_START:
 			draw_player();
 
-			prints('c', w, h-15, "SpaceShooter version " VERSION);
+			prints('c', w, h-TEXT_LINE_HEIGHT, "SpaceShooter version " VERSION);
 			prints('c', w, h, "Press FIRE to start or H for help.");
 
 			if (mouse_b & 1)
@@ -280,12 +278,12 @@ void check_game_status() {
 
 		case STATUS_HELP:
 			w -= 100;
-			prints('l', w, h-75, "MOUSE = Control spaceship");
-			prints('l', w, h-60, "LEFT BTN = Fire");
-			prints('l', w, h-45, "P = Pause");
-			prints('l', w, h-30, "S = Take a screenshot");
-			prints('l', w, h-15, "ESC = Quit");
-			prints('l', w, h+15, "Press ENTER to continue.");
+			prints('l', w, h-TEXT_LINE_HEIGHT*5, "MOUSE = Control spaceship");
+			prints('l', w, h-TEXT_LINE_HEIGHT*4, "LEFT BTN = Fire");
+			prints('l', w, h-TEXT_LINE_HEIGHT*3, "P = Pause");
+			prints('l', w, h-TEXT_LINE_HEIGHT*2, "S = Take a screenshot");
+			prints('l', w, h-TEXT_LINE_HEIGHT, "ESC = Quit");
+			prints('l', w, h+TEXT_LINE_HEIGHT, "Press ENTER to continue.");
 
 			if(key[KEY_ENTER])
 				SET_GAME_STATUS(STATUS_START);
@@ -295,7 +293,7 @@ void check_game_status() {
 			break;
 
 		case STATUS_PAUSE:
-			prints('c', w, h-15, "Game paused.");
+			prints('c', w, h-TEXT_LINE_HEIGHT, "Game paused.");
 			prints('c', w, h, "Press ENTER to resume.");
 
 			if (key[KEY_ENTER]) 
@@ -306,10 +304,10 @@ void check_game_status() {
 		case STATUS_GAMEOVER:
 			check_record();
 			if (record_is_broken == 1)
-				prints('c', w, h-30,
+				prints('c', w, h-TEXT_LINE_HEIGHT*2,
 					"Congratulations! You've broken the record.");
 
-			prints('c', w, h-15, "Game Over! Score: %d", score);
+			prints('c', w, h-TEXT_LINE_HEIGHT, "Game Over! Score: %d", score);
 			prints('c', w, h, "Press ENTER to continue.");
 
 			if(key[KEY_ENTER])

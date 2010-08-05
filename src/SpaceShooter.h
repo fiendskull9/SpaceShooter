@@ -51,9 +51,10 @@
 
 #define UPDATES_PER_SECOND 	60
 
-#define TEXT_DEFAULT_RGB_RED	138
-#define TEXT_DEFAULT_RGB_GREEN	153
-#define TEXT_DEFAULT_RGB_BLUE	200
+#define TEXT_DEFAULT_RGB_RED	125
+#define TEXT_DEFAULT_RGB_GREEN	125
+#define TEXT_DEFAULT_RGB_BLUE	235
+#define TEXT_LINE_HEIGHT	25
 
 #define CONFIG_DIR 		".SpaceShooter"
 #define CONFIG_FILE 		"config"
@@ -67,6 +68,8 @@ BITMAP *buf, *background;
 PALETTE colors;
 
 SAMPLE *snd_pause;
+
+FONT *font_default;
 
 int config_debug, config_disable_audio,
     config_show_fps, config_fullscreen;
