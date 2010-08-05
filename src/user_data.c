@@ -26,8 +26,7 @@ void check_config_dir() {
 	e = mkdir(path, 0755);
 	
 	if ( e < -1) 
-		IF_DEBUG
-			printf(DEBUG_WARN"Failed creating %s/%s", getenv("HOME"), CONFIG_DIR);
+		printd(DEBUG_WARN "Failed creating %s/%s", getenv("HOME"), CONFIG_DIR);
 		
 }
 
@@ -42,28 +41,23 @@ void read_config() {
 
 	config_file = fopen(path, "r");
 	if (config_file == NULL) {
-		IF_DEBUG
-			printf(DEBUG_WARN"Unable to open %s file.\n", path);
+		printd(DEBUG_WARN "Unable to open %s file", path);
 		return;
 	}
 
 	while (fscanf(config_file, "%s %i", var, &val) > 0) {
 		if (strcmp(var, CONFIG_DEBUG) == 0) {
-			IF_DEBUG
-				printf(DEBUG_INFO"Config debug = %i\n", val);
-			debug = val;
+			printd(DEBUG_INFO "Config config_debug = %i", val);
+			config_debug = val;
 		} else if (strcmp(var, CONFIG_NO_AUDIO) == 0) {
-			IF_DEBUG
-				printf(DEBUG_INFO"Config disable_audio = %i\n", val);
-			disable_audio = val;
+			printd(DEBUG_INFO "Config config_disable_audio = %i", val);
+			config_disable_audio = val;
 		} else if (strcmp(var, CONFIG_FPS) == 0) {
-			IF_DEBUG
-				printf(DEBUG_INFO"Config show_fps = %i\n", val);
-			show_fps = val;
+			printd(DEBUG_INFO "Config config_show_fps = %i", val);
+			config_show_fps = val;
 		} else if (strcmp(var, CONFIG_FULLSCREEN) == 0) {
-			IF_DEBUG
-				printf(DEBUG_INFO"Config fullscreen = %i\n", val);
-			fullscreen = val;
+			printd(DEBUG_INFO "Config config_fullscreen = %i", val);
+			config_fullscreen = val;
 		}
 	}
 	fclose(config_file);
@@ -79,16 +73,14 @@ void get_record() {
 
 	record_file = fopen(path, "r");
 	if (record_file == NULL) {
-		IF_DEBUG
-			printf(DEBUG_WARN"Unable to open %s file.n", path);
+		printd(DEBUG_WARN "Unable to open %s file", path);
 		return;
 	}
 	
 	read = fscanf(record_file, "%i", &game_record);
 	fclose(record_file);
 
-	IF_DEBUG
-		printf(DEBUG_INFO"Config record = %i\n", game_record);
+	printd(DEBUG_INFO "Config record = %i", game_record);
 }
 
 void set_record() {
@@ -100,14 +92,13 @@ void set_record() {
 
 	record_file = fopen(path, "w+");
 	if (record_file == NULL) {
-		IF_DEBUG
-			printf(DEBUG_WARN"Unable to open %s file.\n", path);
+		printd(DEBUG_WARN "Unable to open %s file", path);
 		return;
 	}
 	
 	if (fprintf(record_file, "%i", score) < 0)
-		IF_DEBUG
-			printf(DEBUG_WARN"Unable to write to %s file.\n", path);
+		printd(DEBUG_WARN "Unable to write to %s file", path);
+
 	fclose(record_file);
 }
 

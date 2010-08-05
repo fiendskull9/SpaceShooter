@@ -18,6 +18,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdarg.h>
 #include <allegro.h>
 
 #include "data.h"
@@ -25,7 +26,7 @@
 #include "enemies.h"
 
 #define VERSION    		"2.3"
-#define IF_DEBUG   		if (debug == 1)
+
 #define DEBUG_INFO 		"INFO: "
 #define DEBUG_WARN 		"WARNING: "
 #define DEBUG_ERR  		"ERROR: "
@@ -63,11 +64,13 @@ PALETTE colors;
 
 SAMPLE *snd_pause;
 
-int debug, disable_audio, show_fps, fullscreen;
+int config_debug, config_disable_audio,
+    config_show_fps, config_fullscreen;
 int game_status, score, xscroll, fps;
 int game_record, record_is_broken;
 volatile int ticks, game_ticks;
 
+void printd(char* format, ...);
 void reset_variables();
 
 void check_config_dir();

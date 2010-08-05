@@ -32,25 +32,22 @@ int main(int argc, char **argv) {
 	allegro_init();
 	read_config();
 	reset_variables();
-	IF_DEBUG
-		printf(DEBUG_INFO"Allegro initialized.\n");
+	printd(DEBUG_INFO "Allegro initialized");
 
 	/* Set-up input devices */
 	install_keyboard();
 	install_mouse();
-	IF_DEBUG
-		printf(DEBUG_INFO"Input devices installed.\n");
+	printd(DEBUG_INFO "Input devices installed");
 
 	/* Set-up sound card */
 	reserve_voices(8, 0);
 	set_volume_per_voice(2);
 	install_sound(DIGI_AUTODETECT, MIDI_NONE, NULL);
-	if (disable_audio == 1) 
+	if (config_disable_audio == 1) 
 		set_volume(0, -1);
 	else
 		set_volume(255, -1);
-	IF_DEBUG
-		printf(DEBUG_INFO"Sound card installed.\n");
+	printd(DEBUG_INFO "Sound card installed");
 
 	/* Set-up and initialize timers */
 	install_timer();
@@ -61,15 +58,14 @@ int main(int argc, char **argv) {
 	LOCK_VARIABLE(game_ticks);
 	LOCK_FUNCTION(game_time_ticker);
 	install_int_ex(game_time_ticker, BPS_TO_TIMER(10));
-	IF_DEBUG
-		printf(DEBUG_INFO"Timers installed and initialized.\n");
+	printd(DEBUG_INFO "Timers installed and initialized");
 
 	/* Set colors*/
 	set_color_depth(32);
 	set_palette(colors);
 
 	/* Set screen */
-	if (fullscreen == 1)
+	if (config_fullscreen == 1)
 		set_gfx_mode(GFX_AUTODETECT_FULLSCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0);
 	else
 		set_gfx_mode(GFX_AUTODETECT_WINDOWED, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0);
@@ -77,13 +73,11 @@ int main(int argc, char **argv) {
 	buf = create_bitmap(SCREEN_WIDTH, SCREEN_HEIGHT);
 	set_window_title("SpaceShooter");
 	clear(buf);
-	IF_DEBUG
-		printf(DEBUG_INFO"Screen initialized.\n");
+	printd(DEBUG_INFO "Screen initialized");
 
 	/* Load data */
 	dat = load_datafile(DATA_PATH);
-	IF_DEBUG
-		printf(DEBUG_INFO"Datafile loaded.\n");
+	printd(DEBUG_INFO "Datafile loaded");
 
 	background = dat[BMP_BACKGROUND].dat;
 	snd_pause = dat[SND_PAUSE].dat;
@@ -179,6 +173,17 @@ int main(int argc, char **argv) {
 
 END_OF_MAIN();
 
+void printd(char* format, ...) {
+	va_list args;
+
+	if (config_debug == 1) {
+		va_start(args, format);
+		vprintf(format, args);
+		va_end(args);
+		printf("\n");
+	}
+}
+
 void update_screen() {
 	blit(buf, screen, 0, 0, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 	clear(buf);
@@ -195,7 +200,7 @@ void print_game_info() {
 	/* ..record...*/
 	textprintf_ex(buf, font, 10, 25, makecol(138, 153, 200), -1, "Record: %i", game_record);
 	/* ...fps, if enabled.*/
-	if (show_fps == 1)
+	if (config_show_fps == 1)
 		textprintf_right_ex(buf, font, SCREEN_WIDTH-50, 10, makecol(138, 153, 200), -1, "FPS: %i", fps);	
 }
 

@@ -42,6 +42,8 @@ void enemy_respawn(int n) {
 	enemies[n].death = 0;
 	enemies[n].speed = (rand() % ENEMY_MAX_SPEED) + ENEMY_MIN_SPEED;
 	enemies[n].bullet_speed = ENEMY_BULLET_SPEED;
+	printd(DEBUG_INFO "Enemy %i spawned at %i with speed %i", n,
+					enemies[n].y, enemies[n].speed);
 }
 
 void enemy_motion(int n) {
@@ -87,8 +89,7 @@ void enemy_collision(int n) {
 	     (player.bullet_x <= (enemies[n].x + ENEMY_WIDTH)))
 		if (((player.bullet_y + PLAYER_BULLET_HEIGHT) >= enemies[n].y) &&
 		     (player.bullet_y <= (enemies[n].y + ENEMY_HEIGHT))) {
-			IF_DEBUG
-				printf(DEBUG_INFO"Enemy %i hit.\n", n);
+			printd(DEBUG_INFO "Enemy %i has been hit", n);
 			enemies[n].death = 1;
 			player.fire = 0;
 			score += ENEMY_DEATH_SCORES;
