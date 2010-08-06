@@ -33,6 +33,7 @@ AC_DEFUN([AX_DEFINE_DIR], [
 
 # Custom config header.
 AC_CONFIG_HEADERS([src/config.h])
+AH_TEMPLATE([DATA_PATH], [Define datafile path.])
 AX_DEFINE_DIR([DATA_PATH], [datadir/spaceshooter/SpaceShooter.dat])
 
 # Checks for header files.
