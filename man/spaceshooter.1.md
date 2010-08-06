@@ -51,6 +51,20 @@ Allegro development files are needed to compile this game.
 You can find all the files and additional information at
 `<http://www.talula.demon.co.uk/allegro>`
 
+## INSTALLATION
+
+SpaceShooter is distributed as source code. Install with:
+
+    $ git clone git://github.com/AlexBio/SpaceShooter.git
+    $ cd SpaceShooter
+    $ ./bootstrap
+    $ ./configure
+    $ make
+    # make install
+
+Debian (.deb) packages for i386 and amd64 architectures and source tarball
+are also available at `<http://github.com/AlexBio/SpaceShooter/downloads>`
+
 ## BUGS
 
 Please report any bugs or feature requests to GitHub issues tracker at
