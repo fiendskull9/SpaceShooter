@@ -12,30 +12,29 @@
 SpaceShooter is an old-school space shooter game in 2D.
 Copyright (C) 2010 Alessandro Ghedini <al3xbio@gmail.com>
 
-Version 2.3
-
+## COPYRIGHT
 This software is released under GNU GPL licence v.3
 This program comes with ABSOLUTELY NO WARRANTY. This is free software, 
 and you are welcome to redistribute it under certain conditions.
 
-To be compiled it needs Allegro shared library (liballegro4.2) 
-and its development files (liballegro4.2-dev).
+## DEPENDENCIES
+SpaceShooter, to properly run, depends upon Allegro library. In addition
+Allegro development files are needed to compile this game.
 
-=== Compile & Install ===
-$ make
-# make install
+## INSTALLATION
+SpaceShooter is distributed as source code. Install with:
 
-=== Run ===
-$ SpaceShooter
+    $ git clone git://github.com/AlexBio/SpaceShooter.git
+    $ cd SpaceShooter
+    $ ./bootstrap
+    $ ./configure
+    $ make
+    # make install
 
-=== Configuration ===
-SpaceShooter will read the file ‘config’ in ‘$HOME/.SpaceShooter’. “, and may set the following variables:
+Debian (.deb) packages for i386 and amd64 architectures and source tarball
+are also available at http://github.com/AlexBio/SpaceShooter/downloads
+    
+## SUPPORT
+You can find documentation with the man command:
 
-debug [0|1]
-	Enable/disable debug mode. Must be 0 (debug disabled) or 1 (debug enabled).
-disable_audio [0|1]
-	Disable audio (set volume to 0). Must be 0 (audio enabled) or 1 (audio disabled).
-show_fps [0|1]
-	Show FPS during game. Must be 0 (FPS disabled) or 1 (FPS enabled).
-fullscreen [0|1]
-	Enable/disable fullscreen mode. Must be 0 (fullscreen disabled) or 1 (fullscreen enabled).
+    $ man spaceshooter

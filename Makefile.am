@@ -11,4 +11,7 @@ EXTRA_DIST 	= data/SpaceShooter.dat
 datdir 		= $(datadir)/$(name)
 dat_DATA    	= data/SpaceShooter.dat
 
+# Man page
+man1_MANS	= man/spaceshooter.1
+
 spaceshooter_SOURCES = src/user_data.c src/enemies.c src/player.c src/SpaceShooter.c
