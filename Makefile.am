@@ -6,8 +6,9 @@ LDFLAGS		=-L/usr/lib -lalleg-4.2.2
 name 		= spaceshooter
 bin_PROGRAMS 	= $(name)
 
+EXTRA_DIST 	= data/SpaceShooter.dat man/spaceshooter.1
+
 # Install DAT file
-EXTRA_DIST 	= data/SpaceShooter.dat
 datdir 		= $(datadir)/$(name)
 dat_DATA    	= data/SpaceShooter.dat
 
