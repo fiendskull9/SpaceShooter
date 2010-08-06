@@ -8,6 +8,8 @@ bin_PROGRAMS 	= $(name)
 
 EXTRA_DIST 	= data/SpaceShooter.dat man/spaceshooter.1
 
+include_HEADERS = src/enemies.h src/player.h src/SpaceShooter.h src/data.h
+
 # Install DAT file
 datdir 		= $(datadir)/$(name)
 dat_DATA    	= data/SpaceShooter.dat
