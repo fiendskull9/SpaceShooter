@@ -1,30 +1,401 @@
-Version 2.3
-- Take screenshots pressing S
-- Updated many sounds
-- Increased player's bullet speed to 12
-- Modified makefile (command 'which' not needed)
-- Fullsscreen mode via config file
-- Many bugfixes
+commit e0f1ed91da5228361dfae2dcf16bf79072509c81
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Fri Aug 6 10:51:44 2010 +0200
 
-Version 2.2
-- Added config file + improved debug
-- Added disable audio option
-- Show fps + config
-- Removed help on game run
-- New sprites for enemies
+    add man page
 
-Version 2.1
-- Added record functions
-- Adjusted player bullet spawn position
-- Adjusted scores for enemy death and overtake
-- Adjusted text formatting
-- Removed DATA_PATH when DEBUG=1
+commit ac2b25c6d608e0a61783e7a6b74bd209294eccb5
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Fri Aug 6 09:42:03 2010 +0200
 
-Version 2.0
-- Code re-write
-- Screen update using timer
-- Help screen
-- Bugfixes
+    add configure custom config header
 
-Version 1.0
-- First stable release
+commit 48adafd1bf9687a866b6da6f44bc5e7d22f42681
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Thu Aug 5 23:33:17 2010 +0200
+
+    adjust startup message
+
+commit d89dec5e95ae313df2d6f19590e6330f8c114267
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Thu Aug 5 23:25:28 2010 +0200
+
+    add new font && improve text line spacing
+
+commit b378a6475b5bfc3bc222fc7c2e9d7864e2393434
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Thu Aug 5 22:36:55 2010 +0200
+
+    add default text color
+
+commit 9793a2d21d5a5c6a5731c3f5c4ee513ff4743183
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Thu Aug 5 22:30:46 2010 +0200
+
+    improve screen printing with prints()
+
+commit 3a37eaa9dca844065f4ec109faa0d599c1e36b21
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Thu Aug 5 21:42:05 2010 +0200
+
+    add player and enemies resetting functions
+
+commit 1f84c27dd3b0381042717540f32506b60583878e
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Thu Aug 5 21:38:55 2010 +0200
+
+    add god mode
+
+commit d9167d6f5fa04a5702e108469f1be4759b8f52b1
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Thu Aug 5 21:32:00 2010 +0200
+
+    add smrter random numbers gen
+
+commit fe34e195d571128e0399d4e613cb51561d4f14de
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Thu Aug 5 21:28:43 2010 +0200
+
+    remove not used header
+
+commit 95fa646000911e60c3939755a8bf14c42d2cf129
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Thu Aug 5 21:27:44 2010 +0200
+
+    improve logging system with printd()
+
+commit b12e9a76bf8a3031766aad85bee2a39734787dbd
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Thu Aug 5 21:04:38 2010 +0200
+
+    fix set_bg() declaration
+
+commit ae937b466b0183bfff5b35c7b12ff1c84470fc80
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Wed Aug 4 23:52:09 2010 +0200
+
+    more cleaning
+
+commit 89591251684b1c59e6f45faffb8099e2991735bb
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Wed Aug 4 23:47:50 2010 +0200
+
+    remove useless variables from player (hero) struct
+
+commit d1a77f82ac1db723dcebd0a3e659245071525110
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Wed Aug 4 23:40:29 2010 +0200
+
+    add file src/user_data.c introduced by previous commit
+
+commit d7984f23dfef7987729df6f6eb5e315de878e5bd
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Wed Aug 4 23:31:07 2010 +0200
+
+    revert commit 6647dc6d60 which caused some errors on compile
+
+commit 96748321080aad955eea130e2203614578d19236
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Wed Aug 4 22:24:15 2010 +0200
+
+    split src/spites.h in src/enemies.h and src/player.h
+
+commit 580d08c65dd0c229ff696cd6ac55031d4368259b
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Wed Aug 4 22:14:41 2010 +0200
+
+    clean code
+
+commit 5ac8bfeacc0278e0e6cc07f0426b603111a6b75d
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Wed Aug 4 22:06:53 2010 +0200
+
+    rename src/config.c to src/user_data.c
+
+commit 77b03edcc615b2f2e3a9d6e5507182ab8f3bea96
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Wed Aug 4 21:44:43 2010 +0200
+
+    add bootstrap script
+
+commit 441e0cdaed10ffe5b3db71b25c19a57f3c2d2a77
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Wed Aug 4 21:44:29 2010 +0200
+
+    add custom header creation (config.h) in autoconf
+
+commit e18d49f9636a2208bd0bf2ad8b9406cc2466a568
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Wed Aug 4 12:39:41 2010 +0200
+
+    align MACROs to values in SpaceShooter.h
+
+commit 64f85bd0612a329e56f46a54b73b9c1d4b0d514c
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Wed Aug 4 12:36:47 2010 +0200
+
+    remove useless dependencies
+
+commit 930b5889fcd23b627563d12e35f69448eae25624
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Fri Jun 25 19:51:59 2010 +0200
+
+    change path to DAT file
+
+commit b6590fa30df935d256d405e9fbf76dbd2ed7d92c
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Fri Jun 25 19:20:15 2010 +0200
+
+    add use of autoconf and automake
+
+commit d7363549233fb0c0e47d4647d19d5038a863a9a4
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Fri Mar 19 21:19:17 2010 +0100
+
+    updated README, CHANGELOG and VERSION
+
+commit e7870b6b54249f00e1c9e32c627d6a84bcc0cb35
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Fri Mar 19 21:10:53 2010 +0100
+
+    updated most of sounds
+
+commit 523bed653c973abc0b77cadc35cd7bc015f26c3f
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Fri Mar 19 20:42:05 2010 +0100
+
+    increased player' bullet speed to 12
+
+commit 3886ce2b2c5ecd21d3391eff3cbf077a6d505900
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Fri Mar 19 20:23:10 2010 +0100
+
+    modified Makefile: which not needed
+
+commit 7e62cb05edc4e395ea07f76af7c072c01f88984b
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Fri Mar 19 20:21:06 2010 +0100
+
+    disabled unload_data due to segfault
+
+commit 1f3ff708b130f7d50640d6c9c1f27141361df5b6
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Fri Mar 19 19:44:48 2010 +0100
+
+    Added fullscreen mode via config file
+
+commit 0452d4a2c72a799656ea23999fe2349142ac1631
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Fri Mar 19 19:28:15 2010 +0100
+
+    micro-update on player's bullet sprite
+
+commit e26d74dc84a5aa4bad2c47d5aa884d7855c8e4fe
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Fri Mar 19 19:17:22 2010 +0100
+
+    -.-'' never commit without compiling at least once
+
+commit f27b75a87be3ab009852c91932e4fae28d60dbcd
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Fri Mar 19 19:14:41 2010 +0100
+
+    small code changes
+
+commit a18aa48fc5edc04820f6e7e9367a1ba5fae3c4c6
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Fri Mar 19 18:52:07 2010 +0100
+
+    updated help screen
+
+commit 73caada5e6a02220b9cbc1c8ba9c8af1a2816017
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Fri Mar 19 18:48:14 2010 +0100
+
+    do screenshot with S
+
+commit eb017033aa611eba56b9d97eeb2165786ac7a8bd
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Tue Mar 16 18:32:11 2010 +0100
+
+    updated CHANGELOG
+
+commit 1c11e607b50bb1333c34ea33df0e43dbb593b979
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Mar 15 21:19:43 2010 +0100
+
+    cleaned-up removed sprites
+
+commit 235e776c8c82ceabf0e0da5056130f5677d0a4f6
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Mar 15 21:18:33 2010 +0100
+
+    new sprites for enemies
+
+commit 5163807735087ed038943acaa50e99d1557c295e
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Mar 15 20:07:53 2010 +0100
+
+    removed help on game run
+
+commit 2adffc7f08510dd42af9ab45a38943463166ff7f
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Mar 15 20:07:23 2010 +0100
+
+    show fps + config
+
+commit b1ee8eab6620fa80fb8493e4c9d03f4b2a8394be
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Mar 15 19:52:45 2010 +0100
+
+    added disable audio option
+
+commit 6b00b1e75c05c49b267cc612e1990c2e35a7c508
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Mar 15 19:44:10 2010 +0100
+
+    added config file + improved debug
+
+commit 0cad7ecc41fb0865ddc26bd752885966caf2028d
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Sun Mar 14 18:26:05 2010 +0100
+
+    Updated README & CHANGELOG (readded)
+
+commit 4f909986ba5b84a70c1fe74f4c82a67697fc22b5
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Sun Mar 14 18:10:55 2010 +0100
+
+    removed CHANGELOG, see git log for changes
+
+commit 2688eaf3fb13fa206fd381d1cf73caa24d17f2c6
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Sun Mar 14 18:06:46 2010 +0100
+
+    new upstream version 2.1
+
+commit 25c05f4f7d8e7e4154e2e92a04b8b6ef999ef14b
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Sun Mar 14 18:06:09 2010 +0100
+
+    removed DATA_PATH when DEBUG=1: it causes confusion
+
+commit 498899060a2e2da3773d66c8724cbaf39cce1ba0
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Sun Mar 14 18:00:28 2010 +0100
+
+    adjusted text formatting
+
+commit 881e1757aacf0fbf3e79e3b564de495ad4f226d2
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Sun Mar 14 17:52:40 2010 +0100
+
+    adjusted scores for death (now +5 points) and overtake (now -1 score)
+
+commit 82805945d9cbe9356496fd713093772d2decddc4
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Sat Mar 13 17:22:05 2010 +0100
+
+    adjusted player bullet spawn position
+
+commit 3a8f1e70f2921caa3ee16477f6666c2a7a5a032d
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Sat Mar 13 17:19:39 2010 +0100
+
+    added record functions
+
+commit 0ce6a5e6c7c7b6410036780c52d5737483c4a54e
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Fri Mar 12 20:55:44 2010 +0100
+
+    added CHANGELOG
+
+commit 367210b31e91cdc03fd0ff72797f959715dc67af
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Fri Mar 12 20:12:58 2010 +0100
+
+    added help screen
+
+commit 9a712c4e7c8c9b3a2bbe432822ddc08df0e3d6e2
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Fri Mar 12 18:56:38 2010 +0100
+
+    fixed enemy suicide bug
+
+commit a200c17d6a9bf37cceb918167b5d77b6c80ae751
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Fri Mar 12 18:14:05 2010 +0100
+
+    new start screen
+
+commit 5576ba86d39d66c1f581dfc754aeb605f28a250b
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Fri Mar 12 18:01:13 2010 +0100
+
+    update screen with timer
+
+commit bf347edce9ab84d6655556b4de416a0d79480859
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Fri Mar 12 17:52:35 2010 +0100
+
+    code re-write
+
+commit e6394fb93bf3ca08abfd02e42964dcaedc518e43
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Fri Mar 12 17:47:43 2010 +0100
+
+    code re-write
+
+commit a3cebc7da7c726e68486b799177fd730fce87d4c
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Thu Mar 11 12:24:12 2010 +0100
+
+    debug mode
+
+commit 75726b21342215a4e371e3cb914e16c4529e69e8
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Wed Jan 13 17:59:11 2010 +0100
+
+    makefile change
+
+commit b8e52ad9b02fea45d04f11b85d35fb91eb70c333
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Fri Jan 1 21:40:07 2010 +0100
+
+    datafile + minor updates
+
+commit c85a645e461d3bd70f194a57089f69d781c7d722
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Thu Dec 31 16:54:26 2009 +0100
+
+    new background
+
+commit 105bf5bfd0c4716b4f315d25872bc84de942cf86
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Thu Dec 31 16:42:17 2009 +0100
+
+    minor updates + random enemy speed
+
+commit 21580c5861b4023c6e5f76ef6d498472efb39ef1
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Wed Dec 30 23:00:42 2009 +0100
+
+    game status + pause
+
+commit fb5d6d5a7f41482511a679776a441d1b4719b01a
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Wed Dec 30 17:46:17 2009 +0100
+
+    added sounds
+
+commit 17c4cce001eb3643ae45eeca15a8da4b6fde3c48
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Tue Dec 29 18:22:06 2009 +0100
+
+    code restyling & multiple enemies
+
+commit a3358e5eb99b568aa0c41aa177b6195ae46b49a5
+Author: AlexBio <al3xbio@gmail.com>
+Date:   Tue Sep 29 21:41:11 2009 +0200
+
+    first commit
