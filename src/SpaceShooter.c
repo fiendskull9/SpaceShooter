@@ -265,7 +265,7 @@ void check_game_status() {
 		case STATUS_START:
 			draw_player();
 
-			prints('c', w, h-TEXT_LINE_HEIGHT, "SpaceShooter " VERSION);
+			prints('c', w, h-TEXT_LINE_HEIGHT, PACKAGE_STRING);
 			prints('c', w, h, "Press FIRE to start or H for help.");
 
 			if (mouse_b & 1)

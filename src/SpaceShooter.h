@@ -20,11 +20,10 @@
 #include <stdlib.h>
 #include <allegro.h>
 
+#include "config.h"
 #include "data.h"
 #include "player.h"
 #include "enemies.h"
-
-#define VERSION    		"2.3"
 
 #define DEBUG_INFO 		"INFO: "
 #define DEBUG_WARN 		"WARNING: "
@@ -59,8 +58,6 @@
 #define CONFIG_DIR 		".SpaceShooter"
 #define CONFIG_FILE 		"config"
 #define RECORD_FILE 		"record"
-
-#define DATA_PATH 		"data/SpaceShooter.dat"
 
 DATAFILE *dat;
 
