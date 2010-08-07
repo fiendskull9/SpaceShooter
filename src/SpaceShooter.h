@@ -38,6 +38,7 @@
 #define CONFIG_NO_AUDIO 	"disable_audio"
 #define CONFIG_FPS 		"show_fps"
 #define CONFIG_FULLSCREEN 	"fullscreen"
+#define CONFIG_START_TMOUT 	"start_timeout"
 
 #define SCREENSHOT_FORMAT 	"bmp" /* Valid formats are bmp, pcx and tga */
 
@@ -70,7 +71,8 @@ SAMPLE *snd_pause;
 FONT *font_default;
 
 int config_debug, config_disable_audio,
-    config_show_fps, config_fullscreen;
+    config_show_fps, config_fullscreen,
+    config_start_tmout;
 int game_status, score, xscroll, fps, gameover;
 int game_record, record_is_broken;
 

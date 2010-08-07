@@ -29,19 +29,20 @@ Here are the controls for the spaceship
 SpaceShooter will read the file  '$HOME/.SpaceShooter/config',
 and may set the following boolean variables:
 
-  * `debug`
+  * `debug [0|1]`
     Enable/disable debug mode.
 
-  * `disable_audio`
+  * `disable_audio [0|1]`
     Disable audio (set volume to 0).
 
-  * `show_fps`
+  * `show_fps [0|1]`
     Show FPS during game.
 
-  * `fullscreen`
+  * `fullscreen [0|1]`
     Enable/disable fullscreen mode.
 
-Every variable must be set to 0 (disabled) or 1 (enabled).
+  * `start_timeout [TIMEOUT]`
+    Set timeout seconds on start (default 3)
 
 ## DEPENDENCIES
 

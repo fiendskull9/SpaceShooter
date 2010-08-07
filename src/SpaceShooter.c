@@ -28,6 +28,8 @@ int main(int argc, char **argv) {
 	for (i = 0; i < 10; i++)
 		frames_array[i] = 0;
 
+	config_start_tmout = START_TIMEOUT_DEFAULT;
+
 	/* Initialize Allegro and variables*/
 	allegro_init();
 	set_user_data();
@@ -260,7 +262,7 @@ void reset_variables() {
 	read_config();
 	reset_player();
 
-	start_ticks = START_TIMEOUT;
+	start_ticks = config_start_tmout;
 
 	srand(time(NULL));
 

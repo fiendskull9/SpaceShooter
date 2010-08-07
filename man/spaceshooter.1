@@ -42,21 +42,21 @@ Exit the game with ESC
 SpaceShooter will read the file \'$HOME/\.SpaceShooter/config\', and may set the following boolean variables:
 .
 .IP "\(bu" 4
-\fBdebug\fR Enable/disable debug mode\.
+\fBdebug [0|1]\fR Enable/disable debug mode\.
 .
 .IP "\(bu" 4
-\fBdisable_audio\fR Disable audio (set volume to 0)\.
+\fBdisable_audio [0|1]\fR Disable audio (set volume to 0)\.
 .
 .IP "\(bu" 4
-\fBshow_fps\fR Show FPS during game\.
+\fBshow_fps [0|1]\fR Show FPS during game\.
 .
 .IP "\(bu" 4
-\fBfullscreen\fR Enable/disable fullscreen mode\.
+\fBfullscreen [0|1]\fR Enable/disable fullscreen mode\.
+.
+.IP "\(bu" 4
+\fBstart_timeout [TIMEOUT]\fR Set timeout seconds on start (default 3)
 .
 .IP "" 0
-.
-.P
-Every variable must be set to 0 (disabled) or 1 (enabled)\.
 .
 .SH "DEPENDENCIES"
 SpaceShooter, to properly run, depends upon Allegro library\. In addition Allegro development files are needed to compile this game\.

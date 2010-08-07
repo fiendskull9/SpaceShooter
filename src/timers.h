@@ -17,7 +17,7 @@
 */
 
 #define UPDATES_PER_SECOND 	60
-#define START_TIMEOUT		3
+#define START_TIMEOUT_DEFAULT	3
 
 volatile int ticks, fps_ticks, start_ticks, respawn_ticks;
 

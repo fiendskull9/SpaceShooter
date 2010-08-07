@@ -69,6 +69,9 @@ void read_config() {
 		} else if (strcmp(var, CONFIG_FULLSCREEN) == 0) {
 			printd(DEBUG_INFO "Config config_fullscreen = %i", val);
 			config_fullscreen = val;
+		} else if (strcmp(var, CONFIG_START_TMOUT) == 0) {
+			printd(DEBUG_INFO "Config config_fullscreen = %i", val);
+			config_start_tmout = val;
 		}
 	}
 
