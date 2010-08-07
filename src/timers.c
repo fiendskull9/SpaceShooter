@@ -21,11 +21,14 @@
 void ticker() {
 	ticks++;
 }
+END_OF_FUNCTION(ticker);
 
 void fps_ticker() {
 	fps_ticks++;
 }
+END_OF_FUNCTION(fps_ticker);
 
 void start_ticker() {
 	start_ticks--;
 }
+END_OF_FUNCTION(start_ticker);

@@ -251,6 +251,8 @@ void reset_variables() {
 	read_config();
 	reset_player();
 
+	start_ticks = START_TIMEOUT;
+
 	srand(time(NULL));
 
 	SET_GAME_STATUS(STATUS_START);
@@ -268,11 +270,28 @@ void check_game_status() {
 			prints('c', w, h-TEXT_LINE_HEIGHT, PACKAGE_STRING);
 			prints('c', w, h, "Press FIRE to start or H for help.");
 
-			if (mouse_b & 1)
-				SET_GAME_STATUS(STATUS_RUN);
+			if (mouse_b & 1) {
+				SET_GAME_STATUS(STATUS_STARTING);
+
+				LOCK_VARIABLE(start_ticks);
+				LOCK_FUNCTION(start_ticker);
+				install_int_ex(start_ticker, SECS_TO_TIMER(1));
+			}
 
 			if (key[KEY_H])
 				SET_GAME_STATUS(STATUS_HELP);
+
+			break;
+
+		case STATUS_STARTING:
+			draw_player();
+
+			if (start_ticks < 1) {
+				remove_int(start_ticker);
+				SET_GAME_STATUS(STATUS_RUN);
+			}
+
+			prints('c', SCREEN_WIDTH/2, SCREEN_HEIGHT/2, "%i", start_ticks);
 
 			break;
 
