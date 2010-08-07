@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <allegro.h>
+#include <sys/stat.h>
 
 #include "config.h"
 #include "data.h"
@@ -78,9 +79,11 @@ void reset_variables();
 void printd(char* format, ...);
 void prints(char align, int x, int y, char* format, ...);
 
+char *get_path(char *file);
 void check_config_dir();
 void read_config();
-void get_record();
+void read_record();
+void set_user_data();
 void set_record();
 void check_record();
 void take_screenshot();

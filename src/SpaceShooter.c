@@ -30,7 +30,7 @@ int main(int argc, char **argv) {
 
 	/* Initialize Allegro and variables*/
 	allegro_init();
-	read_config();
+	set_user_data();
 	reset_variables();
 	printd(DEBUG_INFO "Allegro initialized");
 
@@ -248,7 +248,7 @@ void reset_variables() {
 	for (i = 0; i < ENEMIES; i++)
 		reset_enemy(i);
 
-	get_record();
+	read_config();
 	reset_player();
 
 	srand(time(NULL));

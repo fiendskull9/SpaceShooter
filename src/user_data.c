@@ -18,26 +18,37 @@
 
 #include "SpaceShooter.h"
 
-void check_config_dir() {
-	int e;
-	char path[strlen(getenv("HOME")) + strlen(CONFIG_DIR)];
-	sprintf(path, "%s/%s", getenv("HOME"), CONFIG_DIR);
+char *get_path(char *file) {
+	char *path;
+	char *home = getenv("HOME");
 
-	e = mkdir(path, 0755);
+	path = (char *) malloc(strlen(home)+1 + strlen(CONFIG_DIR)+1 +
+				strlen(file)+1 + 2 * sizeof(char));
+	sprintf(path, "%s/%s/%s", home, CONFIG_DIR, file);
+
+	return path;
+}
+
+void set_user_data() {
+	check_config_dir();
+	read_config();
+	read_record();
+}
+
+void check_config_dir() {
+	char *path = get_path("");
+	struct stat st;
 	
-	if ( e < -1) 
-		printd(DEBUG_WARN "Failed creating %s/%s", getenv("HOME"), CONFIG_DIR);
-		
+	if ((stat(path, &st) != 0) && (mkdir(path, 0755) < 0)) 
+		printd(DEBUG_WARN "Unable to create %s/%s",
+				getenv("HOME"), CONFIG_DIR);	
 }
 
 void read_config() {
-	char var[15];
 	int val;
-	char path[strlen(getenv("HOME")) + strlen(CONFIG_DIR) + strlen(CONFIG_FILE)];
+	char var[15];
+	char *path = get_path(CONFIG_FILE);
 	FILE *config_file;
-	
-	check_config_dir();
-	sprintf(path, "%s/%s/%s", getenv("HOME"), CONFIG_DIR, CONFIG_FILE);
 
 	config_file = fopen(path, "r");
 	if (config_file == NULL) {
@@ -60,18 +71,15 @@ void read_config() {
 			config_fullscreen = val;
 		}
 	}
+
 	fclose(config_file);
 }
 
-void get_record() {
+void read_record() {
 	int read;
-	char path[strlen(getenv("HOME")) + strlen(CONFIG_DIR) + strlen(RECORD_FILE)];
-	FILE *record_file;
-	
-	check_config_dir();
-	sprintf(path, "%s/%s/%s", getenv("HOME"), CONFIG_DIR, RECORD_FILE);
+	char *path = get_path(RECORD_FILE);;
+	FILE *record_file = fopen(path, "r");
 
-	record_file = fopen(path, "r");
 	if (record_file == NULL) {
 		printd(DEBUG_WARN "Unable to open %s file", path);
 		return;
