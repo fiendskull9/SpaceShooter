@@ -45,8 +45,8 @@
 #define STATUS_GAMEOVER 	3
 #define STATUS_HELP 		4
 
-#define SCREEN_WIDTH 		768
-#define SCREEN_HEIGHT 		536
+#define SCREEN_WIDTH 		640
+#define SCREEN_HEIGHT 		480
 
 #define UPDATES_PER_SECOND 	60
 

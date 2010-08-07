@@ -18,7 +18,7 @@
 
 #include <allegro.h>
 
-#define PLAYER_WIDTH 59
+#define PLAYER_WIDTH 43
 #define PLAYER_HEIGHT 48
 
 #define PLAYER_BULLET_WIDTH 7
