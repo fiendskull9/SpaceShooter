@@ -22,6 +22,7 @@
 #include <sys/stat.h>
 
 #include "config.h"
+#include "timers.h"
 #include "data.h"
 #include "player.h"
 #include "enemies.h"
@@ -45,11 +46,10 @@
 #define STATUS_PAUSE 		2
 #define STATUS_GAMEOVER 	3
 #define STATUS_HELP 		4
+#define STATUS_STARTING		5
 
 #define SCREEN_WIDTH 		640
 #define SCREEN_HEIGHT 		480
-
-#define UPDATES_PER_SECOND 	60
 
 #define TEXT_DEFAULT_RGB_RED	125
 #define TEXT_DEFAULT_RGB_GREEN	125
@@ -73,7 +73,6 @@ int config_debug, config_disable_audio,
     config_show_fps, config_fullscreen;
 int game_status, score, xscroll, fps, gameover;
 int game_record, record_is_broken;
-volatile int ticks, game_ticks;
 
 void reset_variables();
 void printd(char* format, ...);
@@ -92,6 +91,4 @@ void update_screen();
 void set_bg();
 void print_game_info();
 void check_game_status();
-void ticker();
-void game_time_ticker();
 void unload_data();

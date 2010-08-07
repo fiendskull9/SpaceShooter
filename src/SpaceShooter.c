@@ -55,9 +55,9 @@ int main(int argc, char **argv) {
 	LOCK_FUNCTION(ticker);
 	install_int_ex(ticker, BPS_TO_TIMER(UPDATES_PER_SECOND));
 
-	LOCK_VARIABLE(game_ticks);
-	LOCK_FUNCTION(game_time_ticker);
-	install_int_ex(game_time_ticker, BPS_TO_TIMER(10));
+	LOCK_VARIABLE(fps_ticks);
+	LOCK_FUNCTION(fps_ticker);
+	install_int_ex(fps_ticker, BPS_TO_TIMER(10));
 	printd(DEBUG_INFO "Timers installed and initialized");
 
 	/* Set colors*/
@@ -154,7 +154,7 @@ int main(int argc, char **argv) {
 			enemy_fire(i);
 		}
 
-		if (game_ticks >= old_time + 1) {
+		if (fps_ticks >= old_time + 1) {
 			fps -= frames_array[frame_index];
 			frames_array[frame_index] = frames_done;
 			fps += frames_done;
@@ -315,14 +315,6 @@ void check_game_status() {
 
 			break;
 	}
-}
-
-void ticker() {
-	ticks++;
-}
-
-void game_time_ticker() {
-	game_ticks++;
 }
 
 void unload_data() {
