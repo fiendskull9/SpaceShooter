@@ -86,6 +86,8 @@ void player_death() {
 		LOCK_VARIABLE(respawn_ticks);
 		LOCK_FUNCTION(respawn_ticker);
 		install_int_ex(respawn_ticker, SECS_TO_TIMER(1));
+
+		respawn_ticks = PLAYER_RESPAWN_TIMEOUT;
 	}
 
 	if (player.lives == 0)
