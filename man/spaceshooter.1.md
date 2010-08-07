@@ -24,6 +24,13 @@ Here are the controls for the spaceship
   * Show controls with H
   * Exit the game with ESC
 
+## SCORE
+
+The scores are calculated as follows
+
+  * +5 points for enemy hits
+  * -1 point for enemy survival
+
 ## CONFIGURATION
 
 SpaceShooter will read the file  '$HOME/.SpaceShooter/config',
