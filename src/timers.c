@@ -1,6 +1,6 @@
 /*
     This file is part of SpaceShooter.
-    Copyright (C) 2010 Alessandro Ghedini
+    Copyright (C) 2010 Alessandro Ghedini <al3xbio@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -32,3 +32,8 @@ void start_ticker() {
 	start_ticks--;
 }
 END_OF_FUNCTION(start_ticker);
+
+void respawn_ticker() {
+	respawn_ticks--;
+}
+END_OF_FUNCTION(respawn_ticker);

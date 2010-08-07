@@ -1,6 +1,6 @@
 /*
     This file is part of SpaceShooter.
-    Copyright (C) 2010 Alessandro Ghedini
+    Copyright (C) 2010 Alessandro Ghedini <al3xbio@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,6 +21,10 @@
 #define PLAYER_WIDTH 43
 #define PLAYER_HEIGHT 48
 
+#define PLAYER_RESPAWN_TIMEOUT 4 /* in secs */
+
+#define PLAYER_LIVES 3;
+
 #define PLAYER_BULLET_WIDTH 7
 #define PLAYER_BULLET_HEIGHT 7
 #define PLAYER_BULLET_SPEED 12
@@ -28,6 +32,8 @@
 typedef struct {
 	int x, y;
 	int fire;
+	int death;
+	int lives;
 	BITMAP *bmp;
 
 	SAMPLE *snd_fire, *snd_death;

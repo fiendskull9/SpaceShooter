@@ -1,6 +1,6 @@
 /*
     This file is part of SpaceShooter.
-    Copyright (C) 2010 Alessandro Ghedini
+    Copyright (C) 2010 Alessandro Ghedini <al3xbio@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,8 +19,9 @@
 #define UPDATES_PER_SECOND 	60
 #define START_TIMEOUT		3
 
-volatile int ticks, fps_ticks, start_ticks;
+volatile int ticks, fps_ticks, start_ticks, respawn_ticks;
 
 void ticker();
 void fps_ticker();
 void start_ticker();
+void respawn_ticker();

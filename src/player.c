@@ -1,6 +1,6 @@
 /*
     This file is part of SpaceShooter.
-    Copyright (C) 2010 Alessandro Ghedini
+    Copyright (C) 2010 Alessandro Ghedini <al3xbio@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -35,9 +35,17 @@ void draw_player() {
 	else player.y = SCREEN_HEIGHT - PLAYER_HEIGHT;
 
 	draw_sprite(buf, player.bmp, player.x, player.y);
+
+	if ((player.death == 1) && (respawn_ticks == 0)) {
+		remove_int(respawn_ticker);
+		reset_player();
+	}
 }
 
 void player_fire() {
+	if (player.death == 1)
+		return;
+
 	if ((mouse_b & 1) && (game_status == STATUS_RUN))
 		if (player.fire == 0) { 
 			player.fire = 1;
@@ -56,7 +64,6 @@ void player_fire() {
 }
 
 void player_collision(int n) {
-
 	if (((player.x + PLAYER_WIDTH) >= enemies[n].x) &&
 	     (player.x <= (enemies[n].x + ENEMY_WIDTH)))
 		if (((player.y + PLAYER_HEIGHT) >= enemies[n].y) &&
@@ -71,18 +78,31 @@ void player_collision(int n) {
 }
 
 void player_death() {
-	if (gameover == 0) {
-		gameover = 1;
-		play_sample(player.snd_death, 255,128,1000, FALSE);
+	if (player.death == 0) {
+		player.death = 1;
+		player.lives--;
+
+		LOCK_VARIABLE(respawn_ticks);
+		LOCK_FUNCTION(respawn_ticker);
+		install_int_ex(respawn_ticker, SECS_TO_TIMER(1));
 	}
+
+	if (player.lives == 0)
+		gameover = 1;
 }
 
 void reset_player() {
 	player.x = 0;
 	player.y = 0;
 	player.fire = 0;
+	player.death = 0;
 	player.bullet_x = 0;
 	player.bullet_y = 0;
+
+	if (game_status != STATUS_RUN)
+		player.lives = PLAYER_LIVES;
+
+	respawn_ticks = PLAYER_RESPAWN_TIMEOUT;
 }
 
 void destroy_player() {

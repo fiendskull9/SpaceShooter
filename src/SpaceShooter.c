@@ -1,6 +1,6 @@
 /*
     SpaceShooter is an old-school space shooter game in 2D.
-    Copyright (C) 2010 Alessandro Ghedini
+    Copyright (C) 2010 Alessandro Ghedini <al3xbio@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -117,6 +117,7 @@ int main(int argc, char **argv) {
 				play_sample(snd_pause, 255,128,1000, FALSE);
 			} else if (gameover == 1) {
 				/* Game Over */
+				play_sample(player.snd_death, 255,128,1000, FALSE);
 				SET_GAME_STATUS(STATUS_GAMEOVER);
 			} 
 		} else {
@@ -230,12 +231,20 @@ void print_game_info() {
 	/* Show scores... */
 	prints('l', margin, margin, "Score: %i", score);
 
+	/* ...player lives... */
+	prints('l', margin, margin + TEXT_LINE_HEIGHT, "Lives: %i", player.lives);
+
 	/* ..record...*/
-	prints('l', margin, margin + TEXT_LINE_HEIGHT, "Record: %i", game_record);
+	prints('l', margin, margin + TEXT_LINE_HEIGHT*2, "Record: %i", game_record);
 
 	/* ...fps, if enabled.*/
 	if (config_show_fps == 1)
 		prints('r', SCREEN_WIDTH-50, margin, "FPS: %i", fps);
+
+	/* If player is dead */
+	if (player.death == 1)
+		prints('c', SCREEN_WIDTH/2, SCREEN_HEIGHT/2,
+				"Respqning in %i", respawn_ticks);
 }
 
 void reset_variables() {
@@ -322,6 +331,7 @@ void check_game_status() {
 
 		case STATUS_GAMEOVER:
 			check_record();
+
 			if (record_is_broken == 1)
 				prints('c', w, h-TEXT_LINE_HEIGHT*2,
 					"Congratulations! You've broken the record.");
