@@ -1,6 +1,6 @@
 /* Allegro datafile object indexes, produced by grabber v4.2.2, Unix */
 /* Datafile: /home/ale/Sources/Games/SpaceShooter/data/SpaceShooter.dat */
-/* Date: Sat Aug  7 14:47:48 2010 */
+/* Date: Sat Aug  7 19:46:20 2010 */
 /* Do not hand edit! */
 
 #define BMP_BACKGROUND                   0        /* BMP  */
@@ -15,5 +15,6 @@
 #define SND_EXPLOSION                    9        /* SAMP */
 #define SND_FIRE                         10       /* SAMP */
 #define SND_ROCKET                       11       /* SAMP */
-#define FONT_YANONE                      12       /* FONT */
+#define SND_GAMEOVER                     12       /* SAMP */
+#define FONT_YANONE                      13       /* FONT */
 

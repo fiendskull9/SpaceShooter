@@ -83,6 +83,7 @@ int main(int argc, char **argv) {
 
 	background = dat[BMP_BACKGROUND].dat;
 	snd_pause = dat[SND_PAUSE].dat;
+	snd_gameover = dat[SND_GAMEOVER].dat;
 	font_default = dat[FONT_YANONE].dat;
 
 	load_player();
@@ -119,7 +120,7 @@ int main(int argc, char **argv) {
 				play_sample(snd_pause, 255,128,1000, FALSE);
 			} else if (gameover == 1) {
 				/* Game Over */
-				play_sample(player.snd_death, 255,128,1000, FALSE);
+				play_sample(snd_gameover, 255,128,1000, FALSE);
 				SET_GAME_STATUS(STATUS_GAMEOVER);
 			} 
 		} else {

@@ -81,6 +81,7 @@ void player_death() {
 	if (player.death == 0) {
 		player.death = 1;
 		player.lives--;
+		play_sample(player.snd_death, 255,128,1000, FALSE);
 
 		LOCK_VARIABLE(respawn_ticks);
 		LOCK_FUNCTION(respawn_ticker);

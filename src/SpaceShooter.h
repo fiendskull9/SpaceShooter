@@ -66,7 +66,7 @@ DATAFILE *dat;
 BITMAP *buf, *background;
 PALETTE colors;
 
-SAMPLE *snd_pause;
+SAMPLE *snd_pause, *snd_gameover;
 
 FONT *font_default;
 
