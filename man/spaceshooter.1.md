@@ -17,7 +17,7 @@ every hostile enemy.
 
 Here are the controls for the spaceship
 
-  * Move the spaceship with mous
+  * Move the spaceship with mouse
   * Fire with mouse left button
   * Pause the game with P
   * Take a screenshot with S
