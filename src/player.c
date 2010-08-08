@@ -55,8 +55,11 @@ void player_fire() {
 		draw_sprite(buf, player.bullet, player.bullet_x, player.bullet_y);
 		player.bullet_x += PLAYER_BULLET_SPEED;
 
-		if (player.bullet_x > SCREEN_WIDTH)
+		if (player.bullet_x > SCREEN_WIDTH) {
+			player.bullet_x = 0;
+			player.bullet_y = 0;
 			player.fire = 0;
+		}
 	}
 }
 
@@ -82,8 +85,8 @@ void reset_player() {
 	player.x = 0;
 	player.y = 0;
 	player.health = PLAYER_HEALTH;
-	player.bullet_x = 0;
-	player.bullet_y = 0;
+	player.bullet_x = 122;
+	player.bullet_y = 122;
 }
 
 void destroy_player() {
