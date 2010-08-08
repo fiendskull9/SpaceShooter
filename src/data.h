@@ -1,6 +1,6 @@
 /* Allegro datafile object indexes, produced by grabber v4.2.2, Unix */
 /* Datafile: /home/ale/Sources/Games/SpaceShooter/data/SpaceShooter.dat */
-/* Date: Sat Aug  7 19:46:20 2010 */
+/* Date: Sun Aug  8 18:46:14 2010 */
 /* Do not hand edit! */
 
 #define BMP_BACKGROUND                   0        /* BMP  */
