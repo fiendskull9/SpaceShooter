@@ -19,9 +19,8 @@
 #define UPDATES_PER_SECOND 	60
 #define START_TIMEOUT_DEFAULT	3
 
-volatile int ticks, fps_ticks, start_ticks, respawn_ticks;
+volatile int ticks, fps_ticks, start_ticks;
 
 void ticker();
 void fps_ticker();
 void start_ticker();
-void respawn_ticker();

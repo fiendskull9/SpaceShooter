@@ -18,25 +18,22 @@
 
 #include <allegro.h>
 
-#define PLAYER_WIDTH 43
-#define PLAYER_HEIGHT 48
+#define PLAYER_WIDTH 		43
+#define PLAYER_HEIGHT 		48
 
-#define PLAYER_RESPAWN_TIMEOUT 4 /* in secs */
+#define PLAYER_HEALTH 		20
 
-#define PLAYER_LIVES 3;
-
-#define PLAYER_BULLET_WIDTH 7
-#define PLAYER_BULLET_HEIGHT 7
-#define PLAYER_BULLET_SPEED 12
+#define PLAYER_BULLET_WIDTH 	7
+#define PLAYER_BULLET_HEIGHT 	7
+#define PLAYER_BULLET_SPEED 	12
 
 typedef struct {
 	int x, y;
 	int fire;
-	int death;
-	int lives;
+	int health;
 	BITMAP *bmp;
 
-	SAMPLE *snd_fire, *snd_death;
+	SAMPLE *snd_fire;
 
 	int bullet_x, bullet_y;
 	BITMAP *bullet;

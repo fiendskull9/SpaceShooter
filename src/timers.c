@@ -32,8 +32,3 @@ void start_ticker() {
 	start_ticks--;
 }
 END_OF_FUNCTION(start_ticker);
-
-void respawn_ticker() {
-	respawn_ticks--;
-}
-END_OF_FUNCTION(respawn_ticker);

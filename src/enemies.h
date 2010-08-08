@@ -16,18 +16,22 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#define ENEMIES 3
+#define ENEMIES 		3
 
-#define ENEMY_WIDTH 57
-#define ENEMY_HEIGHT 40
-#define ENEMY_MAX_SPEED 5
-#define ENEMY_MIN_SPEED 3
-#define ENEMY_DEATH_SCORES 5
-#define ENEMY_OVERTAKE_SCORES -1
+#define ENEMY_WIDTH 		57
+#define ENEMY_HEIGHT 		40
+#define ENEMY_MAX_SPEED 	5
+#define ENEMY_MIN_SPEED 	3
 
-#define ENEMY_BULLET_WIDTH 17
-#define ENEMY_BULLET_HEIGHT 8
-#define ENEMY_BULLET_SPEED 8
+#define ENEMY_DEATH_SCORES 	5
+#define ENEMY_OVERTAKE_SCORES 	-1
+
+#define ENEMY_DAMAGE 		10
+#define ENEMY_BULLET_DAMAGE 	2
+
+#define ENEMY_BULLET_WIDTH 	17
+#define ENEMY_BULLET_HEIGHT 	8
+#define ENEMY_BULLET_SPEED 	8
 
 typedef struct {
 	int x, y;

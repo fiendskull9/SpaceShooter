@@ -235,19 +235,21 @@ void print_game_info() {
 	prints('l', margin, margin, "Score: %i", score);
 
 	/* ...player lives... */
-	prints('l', margin, margin + TEXT_LINE_HEIGHT, "Lives: %i", player.lives);
+	prints('l', margin, margin + TEXT_LINE_HEIGHT, "Health: %i/%i",
+					player.health, PLAYER_HEALTH);
 
 	/* ..record...*/
-	prints('l', margin, margin + TEXT_LINE_HEIGHT*2, "Record: %i", game_record);
+	prints('l', margin, margin + TEXT_LINE_HEIGHT*2, "Record: %i",
+							game_record);
 
 	/* ...fps, if enabled.*/
 	if (config_show_fps == 1)
 		prints('r', SCREEN_WIDTH-50, margin, "FPS: %i", fps);
 
 	/* If player is dead */
-	if (player.death == 1)
+	/*if (player.death == 1)
 		prints('c', SCREEN_WIDTH/2, SCREEN_HEIGHT/2,
-				"Respqning in %i", respawn_ticks);
+				"Respqning in %i", respawn_ticks);*/
 }
 
 void reset_variables() {

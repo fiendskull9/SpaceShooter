@@ -23,29 +23,26 @@ void load_player() {
 	player.bullet = dat[BMP_BULLET].dat;
 
 	player.snd_fire = dat[SND_FIRE].dat;
-	player.snd_death = dat[SND_DEATH].dat;
 
 	reset_player();
 }
 
 void draw_player() {
+
+	if (player.health <= 0) {
+		gameover = 1;
+		return;
+	}
+
 	player.x = mouse_x;
 
 	if ( (mouse_y + PLAYER_HEIGHT) <= SCREEN_HEIGHT) player.y = mouse_y;
 	else player.y = SCREEN_HEIGHT - PLAYER_HEIGHT;
 
 	draw_sprite(buf, player.bmp, player.x, player.y);
-
-	if ((player.death == 1) && (respawn_ticks == 0)) {
-		remove_int(respawn_ticker);
-		reset_player();
-	}
 }
 
 void player_fire() {
-	if (player.death == 1)
-		return;
-
 	if ((mouse_b & 1) && (game_status == STATUS_RUN))
 		if (player.fire == 0) { 
 			player.fire = 1;
@@ -67,45 +64,26 @@ void player_collision(int n) {
 	if (((player.x + PLAYER_WIDTH) >= enemies[n].x) &&
 	     (player.x <= (enemies[n].x + ENEMY_WIDTH)))
 		if (((player.y + PLAYER_HEIGHT) >= enemies[n].y) &&
-		     ((player.y <= enemies[n].y + ENEMY_HEIGHT)))
-			player_death();
+		     ((player.y <= enemies[n].y + ENEMY_HEIGHT))) {
+			player.health -= ENEMY_DAMAGE;
+			enemies[n].death = 1;
+		}
 
 	if (((player.x + PLAYER_WIDTH) >= enemies[n].bullet_x) &&
 	     (player.x <= (enemies[n].bullet_x + ENEMY_BULLET_WIDTH))) 
 		if (((player.y + PLAYER_HEIGHT) >= enemies[n].bullet_y) &&
-		    ((player.y <= enemies[n].bullet_y + ENEMY_BULLET_HEIGHT)))
-			player_death();
-}
-
-void player_death() {
-	if (player.death == 0) {
-		player.death = 1;
-		player.lives--;
-		play_sample(player.snd_death, 255,128,1000, FALSE);
-
-		LOCK_VARIABLE(respawn_ticks);
-		LOCK_FUNCTION(respawn_ticker);
-		install_int_ex(respawn_ticker, SECS_TO_TIMER(1));
-
-		respawn_ticks = PLAYER_RESPAWN_TIMEOUT;
-	}
-
-	if (player.lives == 0)
-		gameover = 1;
+		    ((player.y <= enemies[n].bullet_y + ENEMY_BULLET_HEIGHT))) {
+			player.health -= ENEMY_BULLET_DAMAGE;
+			enemies[n].fire = 0;
+		}
 }
 
 void reset_player() {
 	player.x = 0;
 	player.y = 0;
-	player.fire = 0;
-	player.death = 0;
+	player.health = PLAYER_HEALTH;
 	player.bullet_x = 0;
 	player.bullet_y = 0;
-
-	if (game_status != STATUS_RUN)
-		player.lives = PLAYER_LIVES;
-
-	respawn_ticks = PLAYER_RESPAWN_TIMEOUT;
 }
 
 void destroy_player() {
