@@ -136,7 +136,6 @@ int main(int argc, char **argv) {
 				enemy_respawn(i);
 	
 			enemy_motion(i);
-
 			enemy_collision(i);
 		}
 

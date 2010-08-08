@@ -65,7 +65,8 @@ void player_fire() {
 
 void player_collision(int n) {
 	if (((player.x + PLAYER_WIDTH) >= enemies[n].x) &&
-	     (player.x <= (enemies[n].x + ENEMY_WIDTH)))
+	     (player.x <= (enemies[n].x + ENEMY_WIDTH)) &&
+	      enemies[n].death == 0)
 		if (((player.y + PLAYER_HEIGHT) >= enemies[n].y) &&
 		     ((player.y <= enemies[n].y + ENEMY_HEIGHT))) {
 			player.health -= ENEMY_DAMAGE;
@@ -77,7 +78,7 @@ void player_collision(int n) {
 		if (((player.y + PLAYER_HEIGHT) >= enemies[n].bullet_y) &&
 		    ((player.y <= enemies[n].bullet_y + ENEMY_BULLET_HEIGHT))) {
 			player.health -= ENEMY_BULLET_DAMAGE;
-			enemies[n].fire = 0;
+			reset_enemy_bullet(n);
 		}
 }
 
@@ -85,8 +86,13 @@ void reset_player() {
 	player.x = 0;
 	player.y = 0;
 	player.health = PLAYER_HEALTH;
-	player.bullet_x = 122;
-	player.bullet_y = 122;
+	reset_player_bullet();
+}
+
+void reset_player_bullet() {
+	player.fire = 0;
+	player.bullet_x = -100;
+	player.bullet_y = -100;
 }
 
 void destroy_player() {

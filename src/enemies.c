@@ -33,20 +33,33 @@ void load_enemy(int n) {
 }
 
 void draw_enemy(int n) {
-	draw_sprite(buf, enemies[n].bmp, enemies[n].x, enemies[n].y);
+	if (enemies[n].death == 0)
+		draw_sprite(buf, enemies[n].bmp, enemies[n].x, enemies[n].y);
+	else if (enemies[n].x > 0)
+		draw_sprite(buf, dat[ANI_EXPLOSION_0 + enemies[n].expl_frame].dat,
+						enemies[n].x, enemies[n].y);
 }
 
 void enemy_respawn(int n) {
-	enemies[n].x = SCREEN_WIDTH - ENEMY_HEIGHT; 
-	enemies[n].y = GEN_RAND(SCREEN_HEIGHT);
-	enemies[n].death = 0;
-	enemies[n].speed = GEN_RAND(ENEMY_MAX_SPEED) + ENEMY_MIN_SPEED;
-	enemies[n].bullet_speed = ENEMY_BULLET_SPEED;
-	printd(DEBUG_INFO "Enemy %i spawned at %i with speed %i", n,
-					enemies[n].y, enemies[n].speed);
+	if ((enemies[n].expl_frame < ENEMY_EXPLOSION_FRAMES) &&
+					(enemies[n].x > 0)) {
+		enemies[n].expl_frame++;
+	} else {
+		enemies[n].expl_frame = 0;
+		enemies[n].death = 0;
+		enemies[n].x = SCREEN_WIDTH - ENEMY_HEIGHT; 
+		enemies[n].y = GEN_RAND(SCREEN_HEIGHT);
+		enemies[n].speed = GEN_RAND(ENEMY_MAX_SPEED) + ENEMY_MIN_SPEED;
+		enemies[n].bullet_speed = ENEMY_BULLET_SPEED;
+		printd(DEBUG_INFO "Enemy %i spawned at %i with speed %i", n,
+						enemies[n].y, enemies[n].speed);
+	}
 }
 
 void enemy_motion(int n) {
+	if (enemies[n].death == 1)
+		return;
+
 	if (enemies[n].y >= SCREEN_HEIGHT - ENEMY_HEIGHT) enemies[n].motion = 0;
 
 	if (enemies[n].y <= 0) enemies[n].motion = 1;
@@ -63,7 +76,8 @@ void enemy_motion(int n) {
 }
 
 void enemy_fire(int n) {
-	if ( (enemies[n].fire == 0) && (enemies[n].x > player.x) ){
+	if ( (enemies[n].fire == 0) && (enemies[n].x > player.x) &&
+						(enemies[n].death == 0)){
 		enemies[n].bullet_x = enemies[n].x;
 		enemies[n].bullet_y = enemies[n].y+32;
 		enemies[n].fire = 1;
@@ -84,26 +98,30 @@ void enemy_fire(int n) {
 }
 
 void enemy_collision(int n) {
-
 	if (((player.bullet_x + PLAYER_BULLET_WIDTH) >= enemies[n].x) &&
 	     (player.bullet_x <= (enemies[n].x + ENEMY_WIDTH)))
 		if (((player.bullet_y + PLAYER_BULLET_HEIGHT) >= enemies[n].y) &&
 		     (player.bullet_y <= (enemies[n].y + ENEMY_HEIGHT))) {
 			printd(DEBUG_INFO "Enemy %i has been hit", n);
-			enemies[n].death = 1;
-			player.fire = 0;
 			score += ENEMY_DEATH_SCORES;
-			player.bullet_x = 0;
-			player.bullet_y = 0;
 			play_sample(enemies[n].snd_death, 255,128,1000, FALSE);
+			enemies[n].death = 1;
+			reset_player_bullet();
 		}
 }
 
 void reset_enemy(int n) {
-	enemies[n].fire = 0;
+	reset_enemy_bullet(n);
 	enemies[n].death = 1;
-	enemies[n].bullet_x = SCREEN_WIDTH;
-	enemies[n].bullet_y = SCREEN_WIDTH;
+	enemies[n].expl_frame = 0;
+	enemies[n].x = -200;
+	enemies[n].y = -200;
+}
+
+void reset_enemy_bullet(int n) {
+	enemies[n].bullet_x = -100;
+	enemies[n].bullet_y = -100;
+	enemies[n].fire = 0;
 }
 
 void destroy_enemy(int n) {

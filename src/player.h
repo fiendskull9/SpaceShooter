@@ -47,4 +47,5 @@ void player_fire();
 void player_collision(int n);
 void player_death();
 void reset_player();
+void reset_player_bullet();
 void destroy_player();

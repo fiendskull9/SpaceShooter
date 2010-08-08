@@ -29,6 +29,8 @@
 #define ENEMY_DAMAGE 		10
 #define ENEMY_BULLET_DAMAGE 	2
 
+#define ENEMY_EXPLOSION_FRAMES	15
+
 #define ENEMY_BULLET_WIDTH 	17
 #define ENEMY_BULLET_HEIGHT 	8
 #define ENEMY_BULLET_SPEED 	8
@@ -39,6 +41,7 @@ typedef struct {
 	int motion;
 	int speed;
 	int death;
+	int expl_frame;
 	BITMAP *bmp;
 
 	SAMPLE *snd_fire, *snd_death;
@@ -57,4 +60,5 @@ void enemy_motion(int n);
 void enemy_fire(int n);
 void enemy_collision(int n);
 void reset_enemy(int n);
+void reset_enemy_bullet();
 void destroy_enemy(int n);
