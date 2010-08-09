@@ -73,6 +73,7 @@ FONT *font_default;
 int config_debug, config_disable_audio,
     config_show_fps, config_fullscreen,
     config_start_tmout;
+
 int game_status, score, xscroll, fps, gameover;
 int game_record, record_is_broken;
 

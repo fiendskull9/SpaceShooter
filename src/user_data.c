@@ -24,6 +24,7 @@ char *get_path(char *file) {
 
 	path = (char *) malloc(strlen(home)+1 + strlen(CONFIG_DIR)+1 +
 				strlen(file)+1 + 2 * sizeof(char));
+
 	sprintf(path, "%s/%s/%s", home, CONFIG_DIR, file);
 
 	return path;
@@ -115,8 +116,9 @@ void set_record() {
 
 void check_record() {
 	if ((game_record < score) && (record_is_broken == 0)) {
-		set_record();
 		record_is_broken = 1;
+
+		set_record();
 	}
 }
 
@@ -127,6 +129,7 @@ void take_screenshot() {
 	BITMAP *shot = screen;
 
 	check_config_dir();
+
 	do {
 		sprintf(path, "%s/%s/screen-%i.%s", getenv("HOME"), CONFIG_DIR, i, SCREENSHOT_FORMAT);
 		i++;

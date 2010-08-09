@@ -21,10 +21,11 @@
 int main(int argc, char **argv) {
 	int i;
 	int frames_done = 0;
-	int old_time = 0;
+	int old_time 	= 0;
 
 	int frames_array[10];
 	int frame_index = 0;
+
 	for (i = 0; i < 10; i++)
 		frames_array[i] = 0;
 
@@ -45,10 +46,12 @@ int main(int argc, char **argv) {
 	reserve_voices(8, 0);
 	set_volume_per_voice(2);
 	install_sound(DIGI_AUTODETECT, MIDI_NONE, NULL);
+
 	if (config_disable_audio == 1) 
 		set_volume(0, -1);
 	else
 		set_volume(255, -1);
+
 	printd(DEBUG_INFO "Sound card installed");
 
 	/* Set-up and initialize timers */
@@ -81,10 +84,10 @@ int main(int argc, char **argv) {
 	dat = load_datafile(DATA_PATH);
 	printd(DEBUG_INFO "Datafile loaded");
 
-	background = dat[BMP_BACKGROUND].dat;
-	snd_pause = dat[SND_PAUSE].dat;
-	snd_gameover = dat[SND_GAMEOVER].dat;
-	font_default = dat[FONT_YANONE].dat;
+	background 	= dat[BMP_BACKGROUND].dat;
+	snd_pause 	= dat[SND_PAUSE].dat;
+	snd_gameover 	= dat[SND_GAMEOVER].dat;
+	font_default 	= dat[FONT_YANONE].dat;
 
 	load_player();
 
@@ -158,14 +161,14 @@ int main(int argc, char **argv) {
 		}
 
 		if (fps_ticks >= old_time + 1) {
-			fps -= frames_array[frame_index];
-			frames_array[frame_index] = frames_done;
-			fps += frames_done;
+			fps 			  -= frames_array[frame_index];
+			frames_array[frame_index]  = frames_done;
+			fps 			  += frames_done;
  
 			frame_index = (frame_index + 1) % 10;
  
-			frames_done = 0;
-			old_time += 1;
+			frames_done 	 = 0;
+			old_time 	+= 1;
 		}
 
 		frames_done++;
@@ -193,7 +196,7 @@ void printd(char* format, ...) {
 void prints(char align, int x, int y, char* format, ...) {
 	va_list args;
 	char buffer[100];
-	int bg = -1;
+	int bg 	  = -1;
 	int color = makecol(TEXT_DEFAULT_RGB_RED,
 			    TEXT_DEFAULT_RGB_GREEN,
 			    TEXT_DEFAULT_RGB_BLUE);
@@ -244,18 +247,13 @@ void print_game_info() {
 	/* ...fps, if enabled.*/
 	if (config_show_fps == 1)
 		prints('r', SCREEN_WIDTH-50, margin, "FPS: %i", fps);
-
-	/* If player is dead */
-	/*if (player.death == 1)
-		prints('c', SCREEN_WIDTH/2, SCREEN_HEIGHT/2,
-				"Respqning in %i", respawn_ticks);*/
 }
 
 void reset_variables() {
 	int i;
 
-	score = 0;
-	gameover = 0;
+	score 		 = 0;
+	gameover 	 = 0;
 	record_is_broken = 0;
 
 	for (i = 0; i < ENEMIES; i++)
@@ -273,13 +271,11 @@ void reset_variables() {
 
 void check_game_status() {
 	int w, h;
-	w  = SCREEN_WIDTH/2; /* Screen width middle */
+	w = SCREEN_WIDTH/2;  /* Screen width middle */
 	h = SCREEN_HEIGHT/2; /* Screen height middle */
 
 	switch (game_status) {
 		case STATUS_START:
-			draw_player();
-
 			prints('c', w, h-TEXT_LINE_HEIGHT, PACKAGE_STRING);
 			prints('c', w, h, "Press FIRE to start or H for help.");
 
@@ -297,8 +293,6 @@ void check_game_status() {
 			break;
 
 		case STATUS_STARTING:
-			draw_player();
-
 			if (start_ticks < 1) {
 				remove_int(start_ticker);
 				SET_GAME_STATUS(STATUS_RUN);

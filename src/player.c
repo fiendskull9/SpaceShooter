@@ -19,9 +19,8 @@
 #include "SpaceShooter.h"
 
 void load_player() {
-	player.bmp = dat[BMP_SPACESHIP].dat;
-	player.bullet = dat[BMP_BULLET].dat;
-
+	player.bmp 	= dat[BMP_SPACESHIP].dat;
+	player.bullet 	= dat[BMP_BULLET].dat;
 	player.snd_fire = dat[SND_FIRE].dat;
 
 	reset_player();
@@ -36,8 +35,10 @@ void draw_player() {
 
 	player.x = mouse_x;
 
-	if ( (mouse_y + PLAYER_HEIGHT) <= SCREEN_HEIGHT) player.y = mouse_y;
-	else player.y = SCREEN_HEIGHT - PLAYER_HEIGHT;
+	if ( (mouse_y + PLAYER_HEIGHT) <= SCREEN_HEIGHT)
+		player.y = mouse_y;
+	else
+		player.y = SCREEN_HEIGHT - PLAYER_HEIGHT;
 
 	draw_sprite(buf, player.bmp, player.x, player.y);
 }
@@ -45,9 +46,10 @@ void draw_player() {
 void player_fire() {
 	if ((mouse_b & 1) && (game_status == STATUS_RUN))
 		if (player.fire == 0) { 
-			player.fire = 1;
+			player.fire 	= 1;
 			player.bullet_x = player.x + PLAYER_WIDTH;
 			player.bullet_y = player.y;
+
 			play_sample(player.snd_fire, 255,128,1000, FALSE);
 		}
 
@@ -58,7 +60,7 @@ void player_fire() {
 		if (player.bullet_x > SCREEN_WIDTH) {
 			player.bullet_x = 0;
 			player.bullet_y = 0;
-			player.fire = 0;
+			player.fire 	= 0;
 		}
 	}
 }
@@ -69,7 +71,7 @@ void player_collision(int n) {
 	      enemies[n].death == 0)
 		if (((player.y + PLAYER_HEIGHT) >= enemies[n].y) &&
 		     ((player.y <= enemies[n].y + ENEMY_HEIGHT))) {
-			player.health -= ENEMY_DAMAGE;
+			player.health 	-= ENEMY_DAMAGE;
 			enemies[n].death = 1;
 		}
 
@@ -78,19 +80,21 @@ void player_collision(int n) {
 		if (((player.y + PLAYER_HEIGHT) >= enemies[n].bullet_y) &&
 		    ((player.y <= enemies[n].bullet_y + ENEMY_BULLET_HEIGHT))) {
 			player.health -= ENEMY_BULLET_DAMAGE;
+
 			reset_enemy_bullet(n);
 		}
 }
 
 void reset_player() {
-	player.x = 0;
-	player.y = 0;
-	player.health = PLAYER_HEALTH;
+	player.x 	= 0;
+	player.y 	= 0;
+	player.health 	= PLAYER_HEALTH;
+
 	reset_player_bullet();
 }
 
 void reset_player_bullet() {
-	player.fire = 0;
+	player.fire 	= 0;
 	player.bullet_x = -100;
 	player.bullet_y = -100;
 }

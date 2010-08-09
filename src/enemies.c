@@ -26,9 +26,8 @@ void load_enemy(int n) {
 	else if (n == 2)
 		enemies[n].bmp = dat[BMP_ENEMY3].dat;
 
-	enemies[n].bullet = dat[BMP_ROCKET].dat;
-
-	enemies[n].snd_fire = dat[SND_ROCKET].dat;
+	enemies[n].bullet    = dat[BMP_ROCKET].dat;
+	enemies[n].snd_fire  = dat[SND_ROCKET].dat;
 	enemies[n].snd_death = dat[SND_EXPLOSION].dat;
 }
 
@@ -45,12 +44,13 @@ void enemy_respawn(int n) {
 					(enemies[n].x > 0)) {
 		enemies[n].expl_frame++;
 	} else {
-		enemies[n].expl_frame = 0;
-		enemies[n].death = 0;
-		enemies[n].x = SCREEN_WIDTH - ENEMY_HEIGHT; 
-		enemies[n].y = GEN_RAND(SCREEN_HEIGHT);
-		enemies[n].speed = GEN_RAND(ENEMY_MAX_SPEED) + ENEMY_MIN_SPEED;
+		enemies[n].expl_frame 	= 0;
+		enemies[n].death 	= 0;
+		enemies[n].x 		= SCREEN_WIDTH - ENEMY_HEIGHT; 
+		enemies[n].y 		= GEN_RAND(SCREEN_HEIGHT);
+		enemies[n].speed 	= GEN_RAND(ENEMY_MAX_SPEED) + ENEMY_MIN_SPEED;
 		enemies[n].bullet_speed = ENEMY_BULLET_SPEED;
+
 		printd(DEBUG_INFO "Enemy %i spawned at %i with speed %i", n,
 						enemies[n].y, enemies[n].speed);
 	}
@@ -60,12 +60,16 @@ void enemy_motion(int n) {
 	if (enemies[n].death == 1)
 		return;
 
-	if (enemies[n].y >= SCREEN_HEIGHT - ENEMY_HEIGHT) enemies[n].motion = 0;
+	if (enemies[n].y >= SCREEN_HEIGHT - ENEMY_HEIGHT)
+		enemies[n].motion = 0;
 
-	if (enemies[n].y <= 0) enemies[n].motion = 1;
+	if (enemies[n].y <= 0)
+		enemies[n].motion = 1;
 
-	if (enemies[n].motion == 0) enemies[n].y--;
-	else enemies[n].y++;
+	if (enemies[n].motion == 0)
+		enemies[n].y--;
+	else
+		enemies[n].y++;
 
 	enemies[n].x -= enemies[n].speed;
 
@@ -78,9 +82,10 @@ void enemy_motion(int n) {
 void enemy_fire(int n) {
 	if ( (enemies[n].fire == 0) && (enemies[n].x > player.x) &&
 						(enemies[n].death == 0)){
-		enemies[n].bullet_x = enemies[n].x;
-		enemies[n].bullet_y = enemies[n].y+32;
-		enemies[n].fire = 1;
+		enemies[n].bullet_x 	= enemies[n].x;
+		enemies[n].bullet_y 	= enemies[n].y+32;
+		enemies[n].fire 	= 1;
+
 		play_sample(enemies[n].snd_fire, 255,128,1000, FALSE);
 	}
 
@@ -90,10 +95,13 @@ void enemy_fire(int n) {
 
 		enemies[n].bullet_x -= enemies[n].bullet_speed;
 
-		if(player.y > enemies[n].bullet_y) enemies[n].bullet_y++;
-		else enemies[n].bullet_y--;
+		if(player.y > enemies[n].bullet_y)
+			enemies[n].bullet_y++;
+		else
+			enemies[n].bullet_y--;
 			
-		if (enemies[n].bullet_x <= 0) enemies[n].fire = 0;
+		if (enemies[n].bullet_x <= 0)
+			enemies[n].fire = 0;
 	}
 }
 
@@ -102,26 +110,28 @@ void enemy_collision(int n) {
 	     (player.bullet_x <= (enemies[n].x + ENEMY_WIDTH)))
 		if (((player.bullet_y + PLAYER_BULLET_HEIGHT) >= enemies[n].y) &&
 		     (player.bullet_y <= (enemies[n].y + ENEMY_HEIGHT))) {
-			printd(DEBUG_INFO "Enemy %i has been hit", n);
-			score += ENEMY_DEATH_SCORES;
-			play_sample(enemies[n].snd_death, 255,128,1000, FALSE);
+			score 		 += ENEMY_DEATH_SCORES;
 			enemies[n].death = 1;
+
+			play_sample(enemies[n].snd_death, 255,128,1000, FALSE);
 			reset_player_bullet();
+			printd(DEBUG_INFO "Enemy %i has been hit", n);
 		}
 }
 
 void reset_enemy(int n) {
+	enemies[n].death 	= 1;
+	enemies[n].expl_frame 	= 0;
+	enemies[n].x 		= -200;
+	enemies[n].y 		= -200;
+
 	reset_enemy_bullet(n);
-	enemies[n].death = 1;
-	enemies[n].expl_frame = 0;
-	enemies[n].x = -200;
-	enemies[n].y = -200;
 }
 
 void reset_enemy_bullet(int n) {
-	enemies[n].bullet_x = -100;
-	enemies[n].bullet_y = -100;
-	enemies[n].fire = 0;
+	enemies[n].bullet_x 	= -100;
+	enemies[n].bullet_y 	= -100;
+	enemies[n].fire 	= 0;
 }
 
 void destroy_enemy(int n) {
