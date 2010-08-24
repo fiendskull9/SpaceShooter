@@ -1,4 +1,4 @@
-spaceshooter(1) -- 2D old-school space shooter game
+spaceshooter(6) -- 2D old-school space shooter game
 ===================================================
 
 ## SYNOPSIS
@@ -10,8 +10,7 @@ spaceshooter(1) -- 2D old-school space shooter game
 SpaceShooter is an old-school space shooter game in 2D, written using
 Allegro library, and licensed under GPLv3.
 
-You play as the pilot of a spaceship who has the mission to destroy
-every hostile enemy.
+You play as a spaceship pilot with the mission to destroy every hostile enemy.
 
 ## CONTROLS
 
@@ -28,8 +27,8 @@ Here are the controls for the spaceship
 
 The scores are calculated as follows
 
-  * +5 points for enemy hits
-  * -1 point for enemy survival
+  * +5 points if enemy gets hit
+  * -1 point if enemy gets past your spaceship
 
 ## CONFIGURATION
 
@@ -59,26 +58,13 @@ Allegro development files are needed to compile this game.
 You can find all the files and additional information at
 `<http://www.talula.demon.co.uk/allegro>`
 
-## INSTALLATION
-
-SpaceShooter is distributed as source code. Install with:
-
-    $ git clone git://github.com/AlexBio/SpaceShooter.git
-    $ cd SpaceShooter
-    $ ./bootstrap
-    $ ./configure
-    $ make
-    # make install
-
-Debian (.deb) packages for i386 and amd64 architectures and source tarball
-are also available at `<http://github.com/AlexBio/SpaceShooter/downloads>`
-
 ## BUGS
 
 Please report any bugs or feature requests to GitHub issues tracker at
 `<http://github.com/AlexBio/SpaceShooter/issues>`.
 
 ## SUPPORT
+
 You can look for information at:
 
   * Homepage
@@ -87,14 +73,18 @@ You can look for information at:
   * GitHub repository
     `<http://github.com/AlexBio/SpaceShooter>`
 
+## INSTALL
+
+See `README` for installation.
+
 ## AUTHOR
 
-Alessandro Ghedini, <al3xbio@gmail.com>
+Alessandro Ghedini, <al3xbio@gmail.com>, `<http://ghedini.co.cc>`
 
 ## COPYRIGHT
 
-Copyright (C) 2010 Alessandro Ghedini `<http://ghedini.co.cc>`
+Copyright (C) 2010 Alessandro Ghedini <al3xbio@gmail.com>
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of the GNU General Public License as published
-by the Free Software Foundation.
+by the Free Software Foundation (see LICENSE).

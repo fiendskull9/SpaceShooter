@@ -1,7 +1,7 @@
 .\" generated with Ronn/v0.7.3
 .\" http://github.com/rtomayko/ronn/tree/0.7.3
 .
-.TH "SPACESHOOTER" "1" "August 2010" "" ""
+.TH "SPACESHOOTER" "6" "August 2010" "" ""
 .
 .SH "NAME"
 \fBspaceshooter\fR \- 2D old\-school space shooter game
@@ -13,7 +13,7 @@
 SpaceShooter is an old\-school space shooter game in 2D, written using Allegro library, and licensed under GPLv3\.
 .
 .P
-You play as the pilot of a spaceship who has the mission to destroy every hostile enemy\.
+You play as a spaceship pilot with the mission to destroy every hostile enemy\.
 .
 .SH "CONTROLS"
 Here are the controls for the spaceship
@@ -42,10 +42,10 @@ Exit the game with ESC
 The scores are calculated as follows
 .
 .IP "\(bu" 4
-+5 points for enemy hits
++5 points if enemy gets hit
 .
 .IP "\(bu" 4
-\-1 point for enemy survival
+\-1 point if enemy gets past your spaceship
 .
 .IP "" 0
 .
@@ -75,27 +75,6 @@ SpaceShooter, to properly run, depends upon Allegro library\. In addition Allegr
 .P
 You can find all the files and additional information at \fB<http://www\.talula\.demon\.co\.uk/allegro>\fR
 .
-.SH "INSTALLATION"
-SpaceShooter is distributed as source code\. Install with:
-.
-.IP "" 4
-.
-.nf
-
-$ git clone git://github\.com/AlexBio/SpaceShooter\.git
-$ cd SpaceShooter
-$ \./bootstrap
-$ \./configure
-$ make
-# make install
-.
-.fi
-.
-.IP "" 0
-.
-.P
-Debian (\.deb) packages for i386 and amd64 architectures and source tarball are also available at \fB<http://github\.com/AlexBio/SpaceShooter/downloads>\fR
-.
 .SH "BUGS"
 Please report any bugs or feature requests to GitHub issues tracker at \fB<http://github\.com/AlexBio/SpaceShooter/issues>\fR\.
 .
@@ -110,11 +89,14 @@ GitHub repository \fB<http://github\.com/AlexBio/SpaceShooter>\fR
 .
 .IP "" 0
 .
+.SH "INSTALL"
+See \fBREADME\fR for installation\.
+.
 .SH "AUTHOR"
-Alessandro Ghedini, \fIal3xbio@gmail\.com\fR
+Alessandro Ghedini, \fIal3xbio@gmail\.com\fR, \fB<http://ghedini\.co\.cc>\fR
 .
 .SH "COPYRIGHT"
-Copyright (C) 2010 Alessandro Ghedini \fB<http://ghedini\.co\.cc>\fR
+Copyright (C) 2010 Alessandro Ghedini \fIal3xbio@gmail\.com\fR
 .
 .P
-This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation\.
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation (see LICENSE)\.
