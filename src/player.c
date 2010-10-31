@@ -16,15 +16,20 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "SpaceShooter.h"
+#include <allegro.h>
 
-void load_player() {
-	player.bmp 	= dat[BMP_SPACESHIP].dat;
-	player.bullet 	= dat[BMP_BULLET].dat;
-	player.snd_fire = dat[SND_FIRE].dat;
+#include "dat.h"
+#include "debug.h"
+#include "screen.h"
+#include "user_data.h"
+#include "enemies.h"
 
-	reset_player();
-}
+#define  __PLAYER_C__
+#include "player.h"
+
+hero player;
+
+extern int game_status, gameover;
 
 void draw_player() {
 
@@ -40,11 +45,11 @@ void draw_player() {
 	else
 		player.y = SCREEN_HEIGHT - PLAYER_HEIGHT;
 
-	draw_sprite(buf, player.bmp, player.x, player.y);
+	draw(player.bmp, player.x, player.y);
 }
 
 void player_fire() {
-	if ((mouse_b & 1) && (game_status == STATUS_RUN))
+	if ((mouse_b & 1) /*&& (game_status == STATUS_RUN)*/)
 		if (player.fire == 0) { 
 			player.fire 	= 1;
 			player.bullet_x = player.x + PLAYER_WIDTH;
@@ -54,7 +59,7 @@ void player_fire() {
 		}
 
 	if (player.fire == 1) {
-		draw_sprite(buf, player.bullet, player.bullet_x, player.bullet_y);
+		draw(player.bullet, player.bullet_x, player.bullet_y);
 		player.bullet_x += PLAYER_BULLET_SPEED;
 
 		if (player.bullet_x > SCREEN_WIDTH) {
@@ -85,6 +90,12 @@ void player_collision(int n) {
 		}
 }
 
+void reset_player_bullet() {
+	player.fire 	= 0;
+	player.bullet_x = -100;
+	player.bullet_y = -100;
+}
+
 void reset_player() {
 	player.x 	= 0;
 	player.y 	= 0;
@@ -93,10 +104,12 @@ void reset_player() {
 	reset_player_bullet();
 }
 
-void reset_player_bullet() {
-	player.fire 	= 0;
-	player.bullet_x = -100;
-	player.bullet_y = -100;
+void load_player() {
+	player.bmp 	= dat[BMP_SPACESHIP].dat;
+	player.bullet 	= dat[BMP_BULLET].dat;
+	player.snd_fire = dat[SND_FIRE].dat;
+
+	reset_player();
 }
 
 void destroy_player() {

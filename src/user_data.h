@@ -16,38 +16,12 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <allegro.h>
+extern int config_disable_audio, config_show_fps,
+	   config_fullscreen, config_start_tmout;
 
-#include "debug.h"
+extern int user_record, record_is_broken, score;
 
-#define UPDATES_PER_SECOND 	60
-
-volatile int ticks, fps_ticks, start_ticks;
-
-void ticker() {
-	ticks++;
-}
-END_OF_FUNCTION(ticker);
-
-void fps_ticker() {
-	fps_ticks++;
-}
-END_OF_FUNCTION(fps_ticker);
-
-void start_ticker() {
-	start_ticks--;
-}
-END_OF_FUNCTION(start_ticker);
-
-void init_timers() {
-	/* Set-up and initialize timers */
-	install_timer();
-	LOCK_VARIABLE(ticks);
-	LOCK_FUNCTION(ticker);
-	install_int_ex(ticker, BPS_TO_TIMER(UPDATES_PER_SECOND));
-
-	LOCK_VARIABLE(fps_ticks);
-	LOCK_FUNCTION(fps_ticker);
-	install_int_ex(fps_ticker, BPS_TO_TIMER(10));
-	printd(DEBUG_INFO "Timers installed and initialized");
-}
+extern void check_record();
+extern void set_user_data();
+extern void take_screenshot();
+extern void read_config();

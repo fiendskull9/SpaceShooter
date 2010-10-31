@@ -16,9 +16,33 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "SpaceShooter.h"
+#define CONFIG_DEBUG 		"debug"
+#define CONFIG_NO_AUDIO 	"disable_audio"
+#define CONFIG_FPS 		"show_fps"
+#define CONFIG_FULLSCREEN 	"fullscreen"
+#define CONFIG_START_TMOUT 	"start_timeout"
 
-char *get_path(char *file) {
+#define CONFIG_DIR 		".SpaceShooter"
+#define CONFIG_FILE 		"config"
+#define RECORD_FILE 		"record"
+
+#define SCREENSHOT_FORMAT 	"bmp" /* Valid formats: bmp, pcx and tga */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <malloc.h>
+#include <sys/stat.h>
+#include <allegro.h>
+
+#include "debug.h"
+
+int config_disable_audio, config_show_fps,
+    config_fullscreen, config_start_tmout;
+
+int user_record, record_is_broken, score;
+
+static char *get_path(char *file) {
 	char *path;
 	char *home = getenv("HOME");
 
@@ -30,13 +54,7 @@ char *get_path(char *file) {
 	return path;
 }
 
-void set_user_data() {
-	check_config_dir();
-	read_config();
-	read_record();
-}
-
-void check_config_dir() {
+static void check_config_dir() {
 	char *path = get_path("");
 	struct stat st;
 	
@@ -79,7 +97,7 @@ void read_config() {
 	fclose(config_file);
 }
 
-void read_record() {
+static void read_record() {
 	int read;
 	char *path = get_path(RECORD_FILE);;
 	FILE *record_file = fopen(path, "r");
@@ -89,13 +107,13 @@ void read_record() {
 		return;
 	}
 	
-	read = fscanf(record_file, "%i", &game_record);
+	read = fscanf(record_file, "%i", &user_record);
 	fclose(record_file);
 
-	printd(DEBUG_INFO "Config record = %i", game_record);
+	printd(DEBUG_INFO "Config record = %i", user_record);
 }
 
-void set_record() {
+static void set_record() {
 	char path[strlen(getenv("HOME")) + strlen(CONFIG_DIR) + strlen(RECORD_FILE)];
 	FILE *record_file;
 
@@ -115,11 +133,17 @@ void set_record() {
 }
 
 void check_record() {
-	if ((game_record < score) && (record_is_broken == 0)) {
+	if ((user_record < score) && (record_is_broken == 0)) {
 		record_is_broken = 1;
 
 		set_record();
 	}
+}
+
+void set_user_data() {
+	check_config_dir();
+	read_config();
+	read_record();
 }
 
 void take_screenshot() {
@@ -127,6 +151,7 @@ void take_screenshot() {
 	FILE *screenshot_file;
 	int i = 0;
 	BITMAP *shot = screen;
+	PALETTE colors;
 
 	check_config_dir();
 

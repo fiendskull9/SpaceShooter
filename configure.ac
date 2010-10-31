@@ -7,7 +7,7 @@ m4_define([version], [version_major.version_minor])
 
 AC_PREREQ([2.65])
 AC_INIT([SpaceShooter], [version], [al3xbio@gmail.com])
-AC_CONFIG_SRCDIR([src/SpaceShooter.c])
+AC_CONFIG_SRCDIR([src/main.c])
 
 AM_INIT_AUTOMAKE([SpaceShooter], [version])
 

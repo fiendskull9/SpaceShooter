@@ -19,35 +19,19 @@
 #include <allegro.h>
 
 #include "debug.h"
+#include "user_data.h"
 
-#define UPDATES_PER_SECOND 	60
+SAMPLE *snd_pause, *snd_gameover;
 
-volatile int ticks, fps_ticks, start_ticks;
+void init_sound() {
+	reserve_voices(8, 0);
+	set_volume_per_voice(2);
+	install_sound(DIGI_AUTODETECT, MIDI_NONE, NULL);
 
-void ticker() {
-	ticks++;
-}
-END_OF_FUNCTION(ticker);
+	if (config_disable_audio == 1) 
+		set_volume(0, -1);
+	else
+		set_volume(255, -1);
 
-void fps_ticker() {
-	fps_ticks++;
-}
-END_OF_FUNCTION(fps_ticker);
-
-void start_ticker() {
-	start_ticks--;
-}
-END_OF_FUNCTION(start_ticker);
-
-void init_timers() {
-	/* Set-up and initialize timers */
-	install_timer();
-	LOCK_VARIABLE(ticks);
-	LOCK_FUNCTION(ticker);
-	install_int_ex(ticker, BPS_TO_TIMER(UPDATES_PER_SECOND));
-
-	LOCK_VARIABLE(fps_ticks);
-	LOCK_FUNCTION(fps_ticker);
-	install_int_ex(fps_ticker, BPS_TO_TIMER(10));
-	printd(DEBUG_INFO "Timers installed and initialized");
+	printd(DEBUG_INFO "Sound card installed");
 }

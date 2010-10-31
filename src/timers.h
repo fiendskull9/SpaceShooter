@@ -16,11 +16,12 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#define UPDATES_PER_SECOND 	60
 #define START_TIMEOUT_DEFAULT	3
+#define UPDATES_PER_SECOND 	60
 
-volatile int ticks, fps_ticks, start_ticks;
+extern volatile int ticks, fps_ticks, start_ticks;
 
-void ticker();
-void fps_ticker();
-void start_ticker();
+extern void ticker();
+extern void fps_ticker();
+extern void start_ticker();
+extern void init_timers();

@@ -16,38 +16,18 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <allegro.h>
+#include <stdio.h>
+#include <stdarg.h>
 
-#include "debug.h"
+int config_debug = 0;
 
-#define UPDATES_PER_SECOND 	60
+void printd(char* format, ...) {
+	va_list args;
 
-volatile int ticks, fps_ticks, start_ticks;
-
-void ticker() {
-	ticks++;
-}
-END_OF_FUNCTION(ticker);
-
-void fps_ticker() {
-	fps_ticks++;
-}
-END_OF_FUNCTION(fps_ticker);
-
-void start_ticker() {
-	start_ticks--;
-}
-END_OF_FUNCTION(start_ticker);
-
-void init_timers() {
-	/* Set-up and initialize timers */
-	install_timer();
-	LOCK_VARIABLE(ticks);
-	LOCK_FUNCTION(ticker);
-	install_int_ex(ticker, BPS_TO_TIMER(UPDATES_PER_SECOND));
-
-	LOCK_VARIABLE(fps_ticks);
-	LOCK_FUNCTION(fps_ticker);
-	install_int_ex(fps_ticker, BPS_TO_TIMER(10));
-	printd(DEBUG_INFO "Timers installed and initialized");
+	if (config_debug == 1) {
+		va_start(args, format);
+		vprintf(format, args);
+		va_end(args);
+		printf("\n");
+	}
 }

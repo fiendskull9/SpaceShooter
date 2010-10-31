@@ -16,7 +16,32 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "SpaceShooter.h"
+#include <allegro.h>
+
+#include "dat.h"
+#include "config.h"
+#include "debug.h"
+#include "user_data.h"
+#include "screen.h"
+#include "sound.h"
+#include "timers.h"
+#include "enemies.h"
+#include "player.h"
+
+#define SET_GAME_STATUS(STATUS) game_status = STATUS;
+
+#define STATUS_RUN 		0
+#define STATUS_START 		1
+#define STATUS_PAUSE 		2
+#define STATUS_GAMEOVER 	3
+#define STATUS_HELP 		4
+#define STATUS_STARTING		5
+
+int gameover, game_status, fps;
+
+void reset_variables();
+void check_game_status();
+void print_game_info();
 
 int main(int argc, char **argv) {
 	int i;
@@ -43,46 +68,16 @@ int main(int argc, char **argv) {
 	printd(DEBUG_INFO "Input devices installed");
 
 	/* Set-up sound card */
-	reserve_voices(8, 0);
-	set_volume_per_voice(2);
-	install_sound(DIGI_AUTODETECT, MIDI_NONE, NULL);
-
-	if (config_disable_audio == 1) 
-		set_volume(0, -1);
-	else
-		set_volume(255, -1);
-
-	printd(DEBUG_INFO "Sound card installed");
+	init_sound();
 
 	/* Set-up and initialize timers */
-	install_timer();
-	LOCK_VARIABLE(ticks);
-	LOCK_FUNCTION(ticker);
-	install_int_ex(ticker, BPS_TO_TIMER(UPDATES_PER_SECOND));
-
-	LOCK_VARIABLE(fps_ticks);
-	LOCK_FUNCTION(fps_ticker);
-	install_int_ex(fps_ticker, BPS_TO_TIMER(10));
-	printd(DEBUG_INFO "Timers installed and initialized");
-
-	/* Set colors*/
-	set_color_depth(32);
-	set_palette(colors);
+	init_timers();
 
 	/* Set screen */
-	if (config_fullscreen == 1)
-		set_gfx_mode(GFX_AUTODETECT_FULLSCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0);
-	else
-		set_gfx_mode(GFX_AUTODETECT_WINDOWED, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0);
-
-	buf = create_bitmap(SCREEN_WIDTH, SCREEN_HEIGHT);
-	set_window_title("SpaceShooter");
-	clear(buf);
-	printd(DEBUG_INFO "Screen initialized");
+	init_screen();
 
 	/* Load data */
-	dat = load_datafile(DATA_PATH);
-	printd(DEBUG_INFO "Datafile loaded");
+	load_dat();
 
 	background 	= dat[BMP_BACKGROUND].dat;
 	snd_pause 	= dat[SND_PAUSE].dat;
@@ -106,9 +101,6 @@ int main(int argc, char **argv) {
 		}
 
 		set_bg();
-
-		if (xscroll > SCREEN_WIDTH-1)
-			xscroll = 0;
 
 		if(key[KEY_S])
 			take_screenshot();
@@ -182,54 +174,6 @@ int main(int argc, char **argv) {
 
 END_OF_MAIN();
 
-void printd(char* format, ...) {
-	va_list args;
-
-	if (config_debug == 1) {
-		va_start(args, format);
-		vprintf(format, args);
-		va_end(args);
-		printf("\n");
-	}
-}
-
-void prints(char align, int x, int y, char* format, ...) {
-	va_list args;
-	char buffer[100];
-	int bg 	  = -1;
-	int color = makecol(TEXT_DEFAULT_RGB_RED,
-			    TEXT_DEFAULT_RGB_GREEN,
-			    TEXT_DEFAULT_RGB_BLUE);
-
-	va_start(args, format);
-	uvszprintf(buffer, sizeof(buffer), format, args);
-	va_end(args);
-
-	switch (align) {
-		case 'l':
-			textout_ex(buf, font_default, buffer, x, y, color, bg);
-			break;
-
-		case 'c':
-			textout_centre_ex(buf, font_default, buffer, x, y, color, bg);
-			break;
-
-		case 'r':
-			textout_right_ex(buf, font_default, buffer, x, y, color, bg);
-			break;
-	}
-}
-
-void update_screen() {
-	blit(buf, screen, 0, 0, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-	clear(buf);
-}
-
-void set_bg() {
-	blit(background, buf, xscroll, 0, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);		
-	xscroll++;
-}
-
 void print_game_info() {
 	int margin = 10;
 
@@ -242,7 +186,7 @@ void print_game_info() {
 
 	/* ..record...*/
 	prints('l', margin, margin + TEXT_LINE_HEIGHT*2, "Record: %i",
-							game_record);
+							user_record);
 
 	/* ...fps, if enabled.*/
 	if (config_show_fps == 1)
@@ -344,7 +288,14 @@ void check_game_status() {
 	}
 }
 
-void unload_data() {
+int game_running() {
+	if (game_status == STATUS_RUN)
+		return 1;
+
+	return 0;
+}
+
+/*void unload_data() {
 	int i;
 
 	set_gfx_mode(GFX_TEXT, 0, 0, 0, 0);
@@ -356,4 +307,4 @@ void unload_data() {
 		destroy_enemy(i);
 
 	unload_datafile(dat);
-}
+}*/

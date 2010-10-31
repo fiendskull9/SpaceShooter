@@ -16,7 +16,22 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "SpaceShooter.h"
+#include <allegro.h>
+
+#include "dat.h"
+#include "debug.h"
+#include "screen.h"
+#include "user_data.h"
+#include "player.h"
+
+#define  __ENEMIES_C__
+#include "enemies.h"
+
+#define ENEMY_EXPLOSION_FRAMES	15
+
+#define GEN_RAND(SEED)		rand() % SEED
+
+villain enemies[ENEMIES];
 
 void load_enemy(int n) {
 	if (n == 0)
@@ -33,9 +48,9 @@ void load_enemy(int n) {
 
 void draw_enemy(int n) {
 	if (enemies[n].death == 0)
-		draw_sprite(buf, enemies[n].bmp, enemies[n].x, enemies[n].y);
+		draw(enemies[n].bmp, enemies[n].x, enemies[n].y);
 	else if (enemies[n].x > 0)
-		draw_sprite(buf, dat[ANI_EXPLOSION_0 + enemies[n].expl_frame].dat,
+		draw(dat[ANI_EXPLOSION_0 + enemies[n].expl_frame].dat,
 						enemies[n].x, enemies[n].y);
 }
 
@@ -90,8 +105,7 @@ void enemy_fire(int n) {
 	}
 
 	if (enemies[n].fire == 1) {
-		draw_sprite(buf, enemies[n].bullet,
-			    enemies[n].bullet_x, enemies[n].bullet_y);
+		draw(enemies[n].bullet, enemies[n].bullet_x, enemies[n].bullet_y);
 
 		enemies[n].bullet_x -= enemies[n].bullet_speed;
 
@@ -119,6 +133,12 @@ void enemy_collision(int n) {
 		}
 }
 
+void reset_enemy_bullet(int n) {
+	enemies[n].bullet_x 	= -100;
+	enemies[n].bullet_y 	= -100;
+	enemies[n].fire 	= 0;
+}
+
 void reset_enemy(int n) {
 	enemies[n].death 	= 1;
 	enemies[n].expl_frame 	= 0;
@@ -126,12 +146,6 @@ void reset_enemy(int n) {
 	enemies[n].y 		= -200;
 
 	reset_enemy_bullet(n);
-}
-
-void reset_enemy_bullet(int n) {
-	enemies[n].bullet_x 	= -100;
-	enemies[n].bullet_y 	= -100;
-	enemies[n].fire 	= 0;
 }
 
 void destroy_enemy(int n) {

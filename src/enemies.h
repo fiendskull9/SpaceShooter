@@ -29,8 +29,6 @@
 #define ENEMY_DAMAGE 		10
 #define ENEMY_BULLET_DAMAGE 	2
 
-#define ENEMY_EXPLOSION_FRAMES	15
-
 #define ENEMY_BULLET_WIDTH 	17
 #define ENEMY_BULLET_HEIGHT 	8
 #define ENEMY_BULLET_SPEED 	8
@@ -51,14 +49,16 @@ typedef struct {
 	BITMAP *bullet;
 } villain;
 
-villain enemies[ENEMIES];
+#ifndef __ENEMIES_C__
+extern villain enemies[ENEMIES];
 
-void load_enemy(int n);
-void draw_enemy(int n);
-void enemy_respawn(int n);
-void enemy_motion(int n);
-void enemy_fire(int n);
-void enemy_collision(int n);
-void reset_enemy(int n);
-void reset_enemy_bullet();
-void destroy_enemy(int n);
+extern void load_enemy(int n);
+extern void draw_enemy(int n);
+extern void enemy_respawn(int n);
+extern void enemy_motion(int n);
+extern void enemy_fire(int n);
+extern void enemy_collision(int n);
+extern void reset_enemy(int n);
+extern void reset_enemy_bullet();
+extern void destroy_enemy(int n);
+#endif

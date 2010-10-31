@@ -16,8 +16,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <allegro.h>
-
 #define PLAYER_WIDTH 		43
 #define PLAYER_HEIGHT 		48
 
@@ -39,13 +37,15 @@ typedef struct {
 	BITMAP *bullet;
 } hero;
 
-hero player;
+#ifndef __PLAYER_C__
+extern hero player;
 
-void load_player();
-void draw_player();
-void player_fire();
-void player_collision(int n);
-void player_death();
-void reset_player();
-void reset_player_bullet();
-void destroy_player();
+extern void load_player();
+extern void draw_player();
+extern void player_fire();
+extern void player_collision(int n);
+extern void player_death();
+extern void reset_player();
+extern void reset_player_bullet();
+extern void destroy_player();
+#endif
