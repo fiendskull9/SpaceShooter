@@ -15,6 +15,6 @@ datdir 		= $(datadir)/$(name)
 dat_DATA    	= data/SpaceShooter.dat
 
 # Man page
-man1_MANS	= man/spaceshooter.6
+man6_MANS	= man/spaceshooter.6
 
 spaceshooter_SOURCES = src/dat.c src/enemies.c src/player.c src/sound.c src/user_data.c src/debug.c src/main.c src/screen.c  src/timers.c
