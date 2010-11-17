@@ -130,11 +130,15 @@ static void set_record() {
 		printd(DEBUG_WARN "Unable to write to %s file", path);
 
 	fclose(record_file);
+
+	printd(DEBUG_INFO "New record set to %i", score);
 }
 
 void check_record() {
 	if ((user_record < score) && (record_is_broken == 0)) {
 		record_is_broken = 1;
+
+		printd(DEBUG_INFO "Setting new record");
 
 		set_record();
 	}
