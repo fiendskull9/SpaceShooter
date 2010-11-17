@@ -63,7 +63,7 @@ static void check_config_dir() {
 				getenv("HOME"), CONFIG_DIR);	
 }
 
-void read_config() {
+static void read_config() {
 	int val;
 	char var[15];
 	char *path = get_path(CONFIG_FILE);

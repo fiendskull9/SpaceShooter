@@ -203,7 +203,7 @@ void reset_variables() {
 	for (i = 0; i < ENEMIES; i++)
 		reset_enemy(i);
 
-	read_config();
+	set_user_data();
 	reset_player();
 
 	start_ticks = config_start_tmout;
