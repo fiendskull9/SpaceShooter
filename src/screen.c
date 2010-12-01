@@ -65,13 +65,15 @@ void update_screen() {
 }
 
 void set_bg() {
+	int x;
 	static int xscroll = 0;
-
-	blit(background, buf, xscroll, 0, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);		
 	xscroll++;
 
-	if (xscroll > SCREEN_WIDTH-1)
-		xscroll = 0;
+	blit(background, buf, xscroll, 0, 0, 0, SCREEN_WIDTH*2 - xscroll, SCREEN_HEIGHT);
+
+	for(x = SCREEN_WIDTH*2 - xscroll; x < SCREEN_WIDTH; x += SCREEN_WIDTH*2) {
+		blit(background, buf, 0, 0, x, 0, SCREEN_WIDTH*2, SCREEN_HEIGHT);
+	}
 }
 
 void init_screen() {
