@@ -3,14 +3,14 @@ LDFLAGS=-L/usr/lib -lalleg-4.2.2 -g
 
 all: spaceshooter
 
-spaceshooter: src/main.o src/dat.o src/user_data.o src/debug.o src/screen.o src/timers.o src/sound.o src/enemies.o src/player.o
-	gcc -o spaceshooter src/main.o src/dat.o src/user_data.o src/debug.o src/screen.o src/timers.o src/sound.o src/enemies.o src/player.o $(LDFLAGS)
+spaceshooter: src/main.o src/game_data.o src/user_data.o src/debug.o src/screen.o src/timers.o src/sound.o src/enemies.o src/player.o
+	gcc -o spaceshooter src/main.o src/game_data.o src/user_data.o src/debug.o src/screen.o src/timers.o src/sound.o src/enemies.o src/player.o $(LDFLAGS)
 
-src/main.o: src/main.c src/config.h src/dat.h src/user_data.h src/debug.h src/screen.h src/timers.h src/sound.h
+src/main.o: src/main.c src/config.h src/game_data.h src/user_data.h src/debug.h src/screen.h src/timers.h src/sound.h
 	gcc -c -o src/main.o src/main.c $(CFLAGS)
 
-src/dat.o: src/dat.c src/data.h
-	gcc -c -o src/dat.o src/dat.c $(CFLAGS)
+src/game_data.o: src/game_data.c src/data.h
+	gcc -c -o src/game_data.o src/game_data.c $(CFLAGS)
 
 src/user_data.o: src/user_data.c src/debug.h
 	gcc -c -o src/user_data.o src/user_data.c $(CFLAGS)
@@ -27,10 +27,10 @@ src/timers.o: src/timers.c src/debug.h
 src/sound.o: src/sound.c src/debug.h
 	gcc -c -o src/sound.o src/sound.c $(CFLAGS)
 
-src/enemies.o: src/enemies.c src/dat.h src/debug.h src/screen.h src/user_data.h
+src/enemies.o: src/enemies.c src/game_data.h src/debug.h src/screen.h src/user_data.h
 	gcc -c -o src/enemies.o src/enemies.c $(CFLAGS)
 
-src/player.o: src/player.c src/dat.h src/debug.h src/screen.h src/user_data.h
+src/player.o: src/player.c src/game_data.h src/debug.h src/screen.h src/user_data.h
 	gcc -c -o src/player.o src/player.c $(CFLAGS)
 
 clean:

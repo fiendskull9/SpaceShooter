@@ -8,7 +8,7 @@ bin_PROGRAMS 	= $(name)
 
 EXTRA_DIST 	= data/SpaceShooter.dat man/spaceshooter.6
 
-noinst_HEADERS  = src/config.h src/dat.h src/enemies.h src/screen.h src/timers.h src/data.h src/debug.h src/player.h src/sound.h src/user_data.h
+noinst_HEADERS  = src/config.h src/game_data.h src/enemies.h src/screen.h src/timers.h src/data.h src/debug.h src/player.h src/sound.h src/user_data.h
 
 # Install DAT file
 datdir 		= $(datadir)/$(name)
@@ -17,4 +17,4 @@ dat_DATA    	= data/SpaceShooter.dat
 # Man page
 man6_MANS	= man/spaceshooter.6
 
-spaceshooter_SOURCES = src/dat.c src/enemies.c src/player.c src/sound.c src/user_data.c src/debug.c src/main.c src/screen.c  src/timers.c
+spaceshooter_SOURCES = src/game_data.c src/enemies.c src/player.c src/sound.c src/user_data.c src/debug.c src/main.c src/screen.c  src/timers.c

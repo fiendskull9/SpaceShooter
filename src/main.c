@@ -18,9 +18,9 @@
 
 #include <allegro.h>
 
-#include "dat.h"
 #include "config.h"
 #include "debug.h"
+#include "game_data.h"
 #include "user_data.h"
 #include "screen.h"
 #include "sound.h"
