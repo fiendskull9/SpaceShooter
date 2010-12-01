@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <data.h>
+#include "data.h"
 
 extern DATAFILE *dat;
 
