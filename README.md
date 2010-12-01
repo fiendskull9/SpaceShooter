@@ -20,7 +20,7 @@ SpaceShooter is distributed as source code. Install with:
 
     $ git clone git://github.com/AlexBio/SpaceShooter.git
     $ cd SpaceShooter
-    $ ./bootstrap
+    $ ./autogen.sh
     $ ./configure
     $ make
     # make install
