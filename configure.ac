@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 m4_define([version_major], [2])
-m4_define([version_minor], [6])
+m4_define([version_minor], [7])
 m4_define([version], [version_major.version_minor])
 
 AC_PREREQ([2.65])

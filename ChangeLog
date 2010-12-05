@@ -1,3 +1,81 @@
+commit bbd3eac694e7aa87aa62883fc308a19bca88ec86
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Sun Dec 5 13:20:48 2010 +0100
+
+    bump version
+
+commit 472cd705ffaf089e93418a63a6dd9824b18d898e
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Wed Dec 1 21:49:37 2010 +0100
+
+    update background drawing function
+
+commit fca115e22fa68e95f8576a5e408f84fc483fc18e
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Wed Dec 1 21:13:40 2010 +0100
+
+    fix data.h path in game_data header
+
+commit 6ecbfae2b2580d020c46ed5c0247d1b1ff08eaa8
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Wed Dec 1 21:08:03 2010 +0100
+
+    rename bootstrap -> autogen.sh
+
+commit 00a04744814be3119a12dfc336e7ef76c4216e75
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Wed Dec 1 21:06:55 2010 +0100
+
+    rename dat.{h,c} -> game_data.{h,c}
+
+commit 584d264fc720cef85c378a0cbdc44d40b5e11a6b
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Wed Nov 17 20:10:44 2010 +0100
+
+    fix missing record update after gameover
+
+commit 0d79b3419565e5e00dbf4406c7ff95d9373589be
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Wed Nov 17 19:50:27 2010 +0100
+
+    add debug message to set_record() and check_record()
+
+commit 4aac44f4b0564d205febb3e0d0ca7fc578c8b6c0
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Sat Nov 13 19:44:15 2010 +0100
+
+    fix manpage target in Makefile.am
+
+commit b4fdcd3cb292af08c618e27c00b30705290293c3
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Sun Oct 31 17:25:29 2010 +0100
+
+    bump version
+
+commit df5ded8af93d773d94f384ccd36e44593a11c418
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Sun Oct 31 17:25:00 2010 +0100
+
+    add hand-made Makefile
+
+commit a1aa441f2b09fc643c82b4612ac5bb769654d945
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Sun Oct 31 17:24:38 2010 +0100
+
+    refactor code
+
+commit f5127943d38c509e0e5834835cd2a31a4f56632e
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Tue Aug 24 20:27:13 2010 +0200
+
+    update docs
+
+commit 7efc10d3981b49530a290336718b9c36cc466739
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Aug 9 17:44:43 2010 +0200
+
+    update release files
+
 commit 454d2c229613b0ad98c7624a832b3187ca93c776
 Author: Alessandro Ghedini <al3xbio@gmail.com>
 Date:   Mon Aug 9 17:42:02 2010 +0200
