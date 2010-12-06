@@ -215,8 +215,9 @@ void check_game_status() {
 
 	switch (game_status) {
 		case STATUS_START:
-			prints('c', w, h-TEXT_LINE_HEIGHT, PACKAGE_STRING);
-			prints('c', w, h, "Press FIRE to start or H for help.");
+			draw(title, w-275, h-23);
+			prints('c', w, SCREEN_HEIGHT-TEXT_LINE_HEIGHT*2,
+					"Press FIRE to start or H for help.");
 
 			if (mouse_b & 1) {
 				SET_GAME_STATUS(STATUS_STARTING);

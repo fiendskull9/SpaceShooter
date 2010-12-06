@@ -20,7 +20,7 @@
 
 extern DATAFILE *dat;
 
-extern BITMAP  *background;
+extern BITMAP  *background, *title;
 extern FONT    *font_default;
 
 extern SAMPLE *snd_pause, *snd_gameover;
