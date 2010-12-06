@@ -135,17 +135,18 @@ void enemy_fire(int n) {
 }
 
 void enemy_collision(int n) {
-	if (((player.bullet_x + PLAYER_BULLET_WIDTH) >= enemies[n].x) &&
-	     (player.bullet_x <= (enemies[n].x + ENEMY_WIDTH)))
-		if (((player.bullet_y + PLAYER_BULLET_HEIGHT) >= enemies[n].y) &&
-		     (player.bullet_y <= (enemies[n].y + ENEMY_HEIGHT))) {
-			score 		 += ENEMY_DEATH_SCORES;
-			enemies[n].death = 1;
+	if (enemies[n].death != 1)
+		if (((player.bullet_x + PLAYER_BULLET_WIDTH) >= enemies[n].x) &&
+		     (player.bullet_x <= (enemies[n].x + ENEMY_WIDTH)))
+			if (((player.bullet_y + PLAYER_BULLET_HEIGHT) >= enemies[n].y) &&
+			     (player.bullet_y <= (enemies[n].y + ENEMY_HEIGHT))) {
+				score 		 += ENEMY_DEATH_SCORES;
+				enemies[n].death = 1;
 
-			play_sample(enemies[n].snd_death, 255,128,1000, FALSE);
-			reset_player_bullet();
-			printd(DEBUG_INFO "Enemy %i has been hit", n);
-		}
+				play_sample(enemies[n].snd_death, 255,128,1000, FALSE);
+				reset_player_bullet();
+				printd(DEBUG_INFO "Enemy %i has been hit", n);
+			}
 }
 
 void reset_enemy_bullet(int n) {
