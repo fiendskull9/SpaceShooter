@@ -17,6 +17,7 @@
 */
 
 #include <allegro.h>
+#include <semaphore.h>
 
 #include "config.h"
 #include "debug.h"
@@ -77,59 +78,67 @@ int main(int argc, char **argv) {
 
 	/* Main loop */
 	while (!key[KEY_ESC]) {
-
-		while (ticks == 0) 
-			rest(100 / UPDATES_PER_SECOND);
+		sem_wait(&sem_rest);
 
 		while (ticks > 0) {
-			update_screen();
+			int old_ticks = ticks;
+
 			ticks--;
+
+			if(old_ticks <= ticks)
+				break; 
+
+			set_bg();
+
+			check_for_key();
+
+			if ((game_status == STATUS_RUN) && (gameover == 1)) {
+				/* Game Over */
+				play_sample(snd_gameover, 255,128,1000, FALSE);
+				SET_GAME_STATUS(STATUS_GAMEOVER);
+			}
+
+			if (game_status != STATUS_RUN) {
+				check_game_status();
+				continue;
+			}
+
+			print_game_info();
+
+			/* For each enemy do... */
+			for (i = 0; i < ENEMIES; i++) {
+
+				/* Check for respawn... */
+				if (enemies[i].death == 1)
+					enemy_respawn(i);
+		
+				enemy_motion(i);
+				enemy_collision(i);
+
+				/* Check for player collision */
+				player_collision(i);
+			}
+
+			/* Draw spaceship sprite at mouse position */
+			draw_player();
+
+			/* And bullet, if fired */
+			player_fire();		
+
+			/* Draw enemies */
+			for (i = 0; i < ENEMIES; i++) {
+				draw_enemy(i);
+				enemy_fire(i);
+			}
 		}
 
-		set_bg();
-
-		check_for_key();
-
-		if ((game_status == STATUS_RUN) && (gameover == 1)) {
-			/* Game Over */
-			play_sample(snd_gameover, 255,128,1000, FALSE);
-			SET_GAME_STATUS(STATUS_GAMEOVER);
-		}
-
-		if (game_status != STATUS_RUN) {
-			check_game_status();
-			continue;
-		}
-
-		print_game_info();
-
-		/* For each enemy do... */
-		for (i = 0; i < ENEMIES; i++) {
-
-			/* Check for respawn... */
-			if (enemies[i].death == 1)
-				enemy_respawn(i);
-	
-			enemy_motion(i);
-			enemy_collision(i);
-
-			/* Check for player collision */
-			player_collision(i);
-		}
-
-		/* Draw spaceship sprite at mouse position */
-		draw_player();
-
-		/* And bullet, if fired */
-		player_fire();		
-
-		/* Draw enemies */
-		for (i = 0; i < ENEMIES; i++) {
-			draw_enemy(i);
-			enemy_fire(i);
-		}
-
+		update_screen();
 	}
+
+	remove_int(ticker);
+ 
+	/* Destroy the semaphore */
+        sem_destroy(&sem_rest);
 
 	/* Unload datafile, bitmaps and sounds */
 	set_gfx_mode(GFX_TEXT, 0, 0, 0, 0);

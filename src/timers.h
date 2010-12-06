@@ -20,6 +20,7 @@
 #define UPDATES_PER_SECOND 	60
 
 extern volatile int ticks, start_ticks;
+extern sem_t sem_rest;
 
 extern void ticker();
 extern void start_ticker();

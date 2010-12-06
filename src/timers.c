@@ -17,14 +17,17 @@
 */
 
 #include <allegro.h>
+#include <semaphore.h>
 
 #include "debug.h"
 
 #define UPDATES_PER_SECOND 	60
 
 volatile int ticks, start_ticks;
+sem_t sem_rest;
 
 void ticker() {
+	sem_post(&sem_rest);
 	ticks++;
 }
 END_OF_FUNCTION(ticker);
@@ -35,6 +38,9 @@ void start_ticker() {
 END_OF_FUNCTION(start_ticker);
 
 void init_timers() {
+	/* Initialize semaphore */
+	sem_init(&sem_rest, 0, 1);
+	
 	/* Set-up and initialize timers */
 	install_timer();
 	LOCK_VARIABLE(ticks);
