@@ -32,6 +32,27 @@ hero player;
 
 extern int game_status, gameover;
 
+void reset_player();
+
+void load_player() {
+	BITMAP *tmp_player, *tmp_bullet;
+
+	tmp_player	= load_tga(DATA_PATH "/sprites/spaceship.tga", NULL);
+	tmp_bullet 	= load_tga(DATA_PATH "/sprites/bullet.tga", NULL);
+
+	player.sprite	= get_rle_sprite(tmp_player);
+	player.bullet	= get_rle_sprite(tmp_bullet);
+	
+	player.snd_fire = load_wav(DATA_PATH "/sounds/fire.wav");
+
+	reset_player();
+
+	destroy_bitmap(tmp_player);
+	destroy_bitmap(tmp_bullet);
+
+	printd(DEBUG_INFO "Player data loaded");
+}
+
 void draw_player() {
 
 	if (player.health <= 0) {
@@ -46,7 +67,7 @@ void draw_player() {
 	else
 		player.y = SCREEN_HEIGHT - PLAYER_HEIGHT;
 
-	draw_trans(player.bmp, player.x, player.y);
+	draw_rle_trans(player.sprite, player.x, player.y);
 }
 
 void player_fire() {
@@ -60,7 +81,7 @@ void player_fire() {
 		}
 
 	if (player.fire == 1) {
-		draw_trans(player.bullet, player.bullet_x, player.bullet_y);
+		draw_rle_trans(player.bullet, player.bullet_x, player.bullet_y);
 		player.bullet_x += PLAYER_BULLET_SPEED;
 
 		if (player.bullet_x > SCREEN_WIDTH) {
@@ -105,15 +126,7 @@ void reset_player() {
 	reset_player_bullet();
 }
 
-void load_player() {
-	player.bmp 	= load_tga(DATA_PATH "/sprites/spaceship.tga", NULL);
-	player.bullet 	= load_tga(DATA_PATH "/sprites/bullet.tga", NULL);
-	player.snd_fire = load_wav(DATA_PATH "/sounds/fire.wav");
-
-	reset_player();
-}
-
 void destroy_player() {
-	destroy_bitmap(player.bmp);
-	destroy_bitmap(player.bullet);
+	destroy_rle_sprite(player.sprite);
+	destroy_rle_sprite(player.bullet);
 }

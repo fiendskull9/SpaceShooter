@@ -29,12 +29,12 @@ typedef struct {
 	int x, y;
 	int fire;
 	int health;
-	BITMAP *bmp;
+	RLE_SPRITE *sprite;
 
 	SAMPLE *snd_fire;
 
 	int bullet_x, bullet_y;
-	BITMAP *bullet;
+	RLE_SPRITE *bullet;
 } hero;
 
 #ifndef __PLAYER_C__

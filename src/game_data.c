@@ -21,20 +21,24 @@
 #include "config.h"
 #include "debug.h"
 
-BITMAP 	 *background, *title;
-
-FONT     *font_default;
-
-SAMPLE	 *snd_pause, *snd_gameover;
+BITMAP		*background;
+RLE_SPRITE 	*title;
+FONT     	*font_default;
+SAMPLE	 	*snd_pause, *snd_gameover;
 
 void load_game_data() {
-	background 	= load_bmp(DATA_PATH "/sprites/background.bmp", NULL);
-	title	 	= load_tga(DATA_PATH "/sprites/title.tga", NULL);
+	BITMAP *tmb_bg, *tmp_title;
+
+	background	= load_bmp(DATA_PATH "/sprites/background.bmp", NULL);
+	tmp_title	= load_tga(DATA_PATH "/sprites/title.tga", NULL);
+	title		= get_rle_sprite(tmp_title);
 
 	snd_pause 	= load_wav(DATA_PATH "/sounds/pause.wav");
 	snd_gameover 	= load_wav(DATA_PATH "/sounds/gameover.wav");
 	
 	font_default 	= load_font(DATA_PATH "/fonts/Yanone_Kafeesatz.pcx", NULL, NULL);
+
+	destroy_bitmap(tmp_title);
 	
-	printd(DEBUG_INFO "Datafile loaded");
+	printd(DEBUG_INFO "Game data loaded");
 }

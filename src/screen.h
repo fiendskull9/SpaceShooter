@@ -37,9 +37,18 @@ void static inline draw(BITMAP *bmp, int x, int y) {
 	draw_sprite(buf, bmp, x, y);
 }
 
+void static inline draw_rle(RLE_SPRITE *rle, int x, int y) {
+	draw_rle_sprite(buf, rle, x, y);
+}
+
 void static inline draw_trans(BITMAP *bmp, int x, int y) {
 	set_alpha_blender();
 	draw_trans_sprite(buf, bmp, x, y);
+}
+
+void static inline draw_rle_trans(RLE_SPRITE *rle, int x, int y) {
+	set_alpha_blender();
+	draw_trans_rle_sprite(buf, rle, x, y);
 }
 
 #endif
