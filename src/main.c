@@ -98,37 +98,22 @@ int main(int argc, char **argv) {
 				SET_GAME_STATUS(STATUS_GAMEOVER);
 			}
 
-			if (game_status != STATUS_RUN) {
-				check_game_status();
-				continue;
-			}
+			check_game_status();
 
-			print_game_info();
+			if (game_status == STATUS_RUN) {
+				/* For each enemy do... */
+				for (i = 0; i < ENEMIES; i++) {
 
-			/* For each enemy do... */
-			for (i = 0; i < ENEMIES; i++) {
+					/* Check for respawn... */
+					if (enemies[i].death == 1)
+						enemy_respawn(i);
+			
+					enemy_motion(i);
+					enemy_collision(i);
 
-				/* Check for respawn... */
-				if (enemies[i].death == 1)
-					enemy_respawn(i);
-		
-				enemy_motion(i);
-				enemy_collision(i);
-
-				/* Check for player collision */
-				player_collision(i);
-			}
-
-			/* Draw spaceship sprite at mouse position */
-			draw_player();
-
-			/* And bullet, if fired */
-			player_fire();		
-
-			/* Draw enemies */
-			for (i = 0; i < ENEMIES; i++) {
-				draw_enemy(i);
-				enemy_fire(i);
+					/* Check for player collision */
+					player_collision(i);
+				}
 			}
 		}
 
@@ -186,10 +171,6 @@ void print_game_info() {
 	/* ..record...*/
 	prints('l', margin, margin + TEXT_LINE_HEIGHT*2, "Record: %i",
 							user_record);
-
-	/* ...fps, if enabled.*/
-	if (config_show_fps == 1)
-		prints('r', SCREEN_WIDTH-50, margin, "FPS: %i", fps);
 }
 
 /*
@@ -217,7 +198,7 @@ void reset_variables() {
 }
 
 void check_game_status() {
-	int w, h;
+	int w, h, i;
 	w = SCREEN_WIDTH/2;  /* Screen width middle */
 	h = SCREEN_HEIGHT/2; /* Screen height middle */
 
@@ -248,6 +229,22 @@ void check_game_status() {
 
 			prints('c', SCREEN_WIDTH/2, SCREEN_HEIGHT/2, "%i", start_ticks);
 
+			break;
+
+		case STATUS_RUN:
+			print_game_info();
+
+			/* Draw spaceship sprite at mouse position */
+			draw_player();
+
+			/* And bullet, if fired */
+			player_fire();		
+
+			/* Draw enemies */
+			for (i = 0; i < ENEMIES; i++) {
+				draw_enemy(i);
+				enemy_fire(i);
+			}
 			break;
 
 		case STATUS_HELP:
