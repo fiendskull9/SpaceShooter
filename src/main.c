@@ -132,6 +132,9 @@ int main(int argc, char **argv) {
 	}
 
 	/* Unload datafile, bitmaps and sounds */
+	set_gfx_mode(GFX_TEXT, 0, 0, 0, 0);
+	destroy_rle_sprite(background);
+	destroy_bitmap(buf);
 	
 
 	return 0;
