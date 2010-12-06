@@ -8,7 +8,7 @@ bindir		= $(prefix)/games
 name 		= spaceshooter
 bin_PROGRAMS 	= $(name)
 
-EXTRA_DIST 	= data/* man/spaceshooter.6
+EXTRA_DIST 	= data/* man/spaceshooter.6 spaceshooter.desktop
 
 noinst_HEADERS  = src/*.h src/game_data.h src/enemies.h src/screen.h src/timers.h src/debug.h src/player.h src/sound.h src/user_data.h
 
@@ -23,6 +23,9 @@ sounds_DATA   	= data/sounds/*
 
 fontsdir	= $(gamedatadir)/fonts
 fonts_DATA   	= data/fonts/*
+
+desktopdir 	= $(datadir)/applications
+desktop_DATA 	= spaceshooter.desktop
 
 # Man page
 man6_MANS	= man/spaceshooter.6

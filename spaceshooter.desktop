@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=SpaceShooter
+GenericName=Old-school space shooter game in 2D
+Exec=spaceshooter
+Categories=Game;ActionGame;
+Terminal=false
+Type=Application
+Icon=spaceshooter
