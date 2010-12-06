@@ -22,10 +22,24 @@
 #define SCREEN_HEIGHT 		480
 
 #ifndef __SCREEN_C__
+extern BITMAP *buf;
+
 extern void prints(char align, int x, int y, char* format, ...);
-extern void update_screen();
 extern void set_bg();
 extern void init_screen();
-extern void draw(BITMAP *bmp, int x, int y);
-extern void draw_trans(BITMAP *bmp, int x, int y);
+
+void static inline update_screen() {
+	blit(buf, screen, 0, 0, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+	clear(buf);
+}
+
+void static inline draw(BITMAP *bmp, int x, int y) {
+	draw_sprite(buf, bmp, x, y);
+}
+
+void static inline draw_trans(BITMAP *bmp, int x, int y) {
+	set_alpha_blender();
+	draw_trans_sprite(buf, bmp, x, y);
+}
+
 #endif

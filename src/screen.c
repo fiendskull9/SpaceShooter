@@ -30,7 +30,6 @@
 #include "screen.h"
 
 BITMAP  *buf;
-PALETTE colors;
 
 void prints(char align, int x, int y, char* format, ...) {
 	va_list args;
@@ -59,11 +58,6 @@ void prints(char align, int x, int y, char* format, ...) {
 	}
 }
 
-void update_screen() {
-	blit(buf, screen, 0, 0, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-	clear(buf);
-}
-
 void set_bg() {
 	int x;
 	static int xscroll = 0;
@@ -77,6 +71,8 @@ void set_bg() {
 }
 
 void init_screen() {
+	PALETTE colors;
+
 	set_color_depth(32);
 	set_palette(colors);
 	set_color_conversion(COLORCONV_NONE);
@@ -90,13 +86,4 @@ void init_screen() {
 	set_window_title("SpaceShooter");
 	clear(buf);
 	printd(DEBUG_INFO "Screen initialized");
-}
-
-void draw(BITMAP *bmp, int x, int y) {
-	draw_sprite(buf, bmp, x, y);
-}
-
-void draw_trans(BITMAP *bmp, int x, int y) {
-	set_alpha_blender();
-	draw_trans_sprite(buf, bmp, x, y);
 }
