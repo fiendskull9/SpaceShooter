@@ -27,6 +27,9 @@ fonts_DATA   	= data/fonts/*
 desktopdir 	= $(datadir)/applications
 desktop_DATA 	= spaceshooter.desktop
 
+icondir		= $(datadir)/pixmaps
+icon_DATA 	= data/spaceshooter.xpm
+
 # Man page
 man6_MANS	= man/spaceshooter.6
 
