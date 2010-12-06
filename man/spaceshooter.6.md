@@ -14,11 +14,11 @@ You play as a spaceship pilot with the mission to destroy every hostile enemy.
 
 ## OPTIONS
 
-  * -d
+  * `-d`
     Enable debug mode
-  * -f
+  * `-f`
     Enable fullscreen
-  * -a
+  * `-a`
     Disable audio
 
 ## CONTROLS
