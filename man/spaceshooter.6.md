@@ -12,6 +12,15 @@ Allegro library, and licensed under GPLv3.
 
 You play as a spaceship pilot with the mission to destroy every hostile enemy.
 
+## OPTIONS
+
+  * -d
+    Enable debug mode
+  * -f
+    Enable fullscreen
+  * -a
+    Disable audio
+
 ## CONTROLS
 
 Here are the controls for the spaceship
@@ -40,9 +49,6 @@ and may set the following boolean variables:
 
   * `disable_audio [0|1]`
     Disable audio (set volume to 0).
-
-  * `show_fps [0|1]`
-    Show FPS during game.
 
   * `fullscreen [0|1]`
     Enable/disable fullscreen mode.

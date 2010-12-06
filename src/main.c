@@ -18,6 +18,7 @@
 
 #include <allegro.h>
 #include <semaphore.h>
+#include <unistd.h>
 
 #include "config.h"
 #include "debug.h"
@@ -46,7 +47,26 @@ void print_game_info();
 void check_for_key();
 
 int main(int argc, char **argv) {
-	int i;
+	int i, opt;
+
+	while ((opt = getopt(argc, argv, "daf")) != -1)
+		switch (opt) {
+			case 'd':
+				config_debug = 1;
+				break;
+
+			case 'a':
+				config_disable_audio = 1;
+				break;
+
+			case 'f':
+				config_fullscreen = 1;
+				break;
+
+			case '?':
+				printd(DEBUG_ERR "Unknown option %x", optopt);
+			
+		}
 
 	/* Initialize Allegro and variables*/
 	allegro_init();
