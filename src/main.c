@@ -42,17 +42,10 @@ int gameover, game_status, fps;
 void reset_variables();
 void check_game_status();
 void print_game_info();
+void check_for_key();
 
 int main(int argc, char **argv) {
 	int i;
-	int frames_done = 0;
-	int old_time 	= 0;
-
-	int frames_array[10];
-	int frame_index = 0;
-
-	for (i = 0; i < 10; i++)
-		frames_array[i] = 0;
 
 	config_start_tmout = START_TIMEOUT_DEFAULT;
 
@@ -97,26 +90,20 @@ int main(int argc, char **argv) {
 
 		set_bg();
 
-		if(key[KEY_S])
-			take_screenshot();
+		check_for_key();
 
-		if(key[KEY_ALTGR] && key[KEY_G])
-			gameover = 2;
+		if ((game_status == STATUS_RUN) && (gameover == 1)) {
+			/* Game Over */
+			play_sample(snd_gameover, 255,128,1000, FALSE);
+			SET_GAME_STATUS(STATUS_GAMEOVER);
+		}
 
-		if (game_status == STATUS_RUN) {
-			if(key[KEY_P]) {
-				/* Game pause */
-				SET_GAME_STATUS(STATUS_PAUSE);
-				play_sample(snd_pause, 255,128,1000, FALSE);
-			} else if (gameover == 1) {
-				/* Game Over */
-				play_sample(snd_gameover, 255,128,1000, FALSE);
-				SET_GAME_STATUS(STATUS_GAMEOVER);
-			} 
-		} else {
+		if (game_status != STATUS_RUN) {
 			check_game_status();
 			continue;
 		}
+
+		print_game_info();
 
 		/* For each enemy do... */
 		for (i = 0; i < ENEMIES; i++) {
@@ -127,19 +114,16 @@ int main(int argc, char **argv) {
 	
 			enemy_motion(i);
 			enemy_collision(i);
-		}
 
-		print_game_info();
+			/* Check for player collision */
+			player_collision(i);
+		}
 
 		/* Draw spaceship sprite at mouse position */
 		draw_player();
 
 		/* And bullet, if fired */
-		player_fire();
-
-		/* Player collision with each enemy */
-		for (i = 0; i < ENEMIES; i++)
-			player_collision(i);
+		player_fire();		
 
 		/* Draw enemies */
 		for (i = 0; i < ENEMIES; i++) {
@@ -147,27 +131,37 @@ int main(int argc, char **argv) {
 			enemy_fire(i);
 		}
 
-		if (fps_ticks >= old_time + 1) {
-			fps 			  -= frames_array[frame_index];
-			frames_array[frame_index]  = frames_done;
-			fps 			  += frames_done;
- 
-			frame_index = (frame_index + 1) % 10;
- 
-			frames_done 	 = 0;
-			old_time 	+= 1;
-		}
-
-		frames_done++;
 	}
 
 	/* Unload datafile, bitmaps and sounds */
-	//unload_data();
+	
 
 	return 0;
 }
 
 END_OF_MAIN();
+
+/*
+ * Check for pressed key, and change status accordingly
+ */
+
+void check_for_key() {
+	if(key[KEY_S])
+		take_screenshot();
+
+	if(key[KEY_ALTGR] && key[KEY_G])
+		gameover = 2;
+
+	if((game_status == STATUS_RUN) && key[KEY_P]) {
+		/* Game pause */
+		SET_GAME_STATUS(STATUS_PAUSE);
+		play_sample(snd_pause, 255,128,1000, FALSE);
+	}
+}
+
+/*
+ * Show game information
+ */
 
 void print_game_info() {
 	int margin = 10;
@@ -187,6 +181,10 @@ void print_game_info() {
 	if (config_show_fps == 1)
 		prints('r', SCREEN_WIDTH-50, margin, "FPS: %i", fps);
 }
+
+/*
+ * Reset game variabled to default
+ */
 
 void reset_variables() {
 	int i;
@@ -290,17 +288,3 @@ int game_running() {
 
 	return 0;
 }
-
-/*void unload_data() {
-	int i;
-
-	set_gfx_mode(GFX_TEXT, 0, 0, 0, 0);
-	destroy_bitmap(background);
-	destroy_bitmap(buf);
-	destroy_player();
-
-	for (i = 0; i < ENEMIES; i++)
-		destroy_enemy(i);
-
-	unload_datafile(dat);
-}*/

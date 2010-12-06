@@ -22,17 +22,12 @@
 
 #define UPDATES_PER_SECOND 	60
 
-volatile int ticks, fps_ticks, start_ticks;
+volatile int ticks, start_ticks;
 
 void ticker() {
 	ticks++;
 }
 END_OF_FUNCTION(ticker);
-
-void fps_ticker() {
-	fps_ticks++;
-}
-END_OF_FUNCTION(fps_ticker);
 
 void start_ticker() {
 	start_ticks--;
@@ -46,8 +41,5 @@ void init_timers() {
 	LOCK_FUNCTION(ticker);
 	install_int_ex(ticker, BPS_TO_TIMER(UPDATES_PER_SECOND));
 
-	LOCK_VARIABLE(fps_ticks);
-	LOCK_FUNCTION(fps_ticker);
-	install_int_ex(fps_ticker, BPS_TO_TIMER(10));
 	printd(DEBUG_INFO "Timers installed and initialized");
 }

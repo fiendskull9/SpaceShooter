@@ -19,9 +19,8 @@
 #define START_TIMEOUT_DEFAULT	3
 #define UPDATES_PER_SECOND 	60
 
-extern volatile int ticks, fps_ticks, start_ticks;
+extern volatile int ticks, start_ticks;
 
 extern void ticker();
-extern void fps_ticker();
 extern void start_ticker();
 extern void init_timers();
