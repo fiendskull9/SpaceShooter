@@ -33,7 +33,7 @@ void load_game_data() {
 	dat = load_datafile(DATA_PATH "/SpaceShooter.dat");
 
 	background 	= load_bmp(DATA_PATH "/sprites/background.bmp", NULL);
-	title	 	= load_bmp(DATA_PATH "/sprites/title.bmp", NULL);
+	title	 	= load_tga(DATA_PATH "/sprites/title.tga", NULL);
 
 	snd_pause 	= load_wav(DATA_PATH "/sounds/pause.wav");
 	snd_gameover 	= load_wav(DATA_PATH "/sounds/gameover.wav");
