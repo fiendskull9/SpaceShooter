@@ -36,7 +36,7 @@
 
 #include "debug.h"
 
-int config_disable_audio, config_show_fps, config_fullscreen;
+int config_disable_audio, config_fullscreen;
 
 int user_record, record_is_broken, score;
 
@@ -80,9 +80,6 @@ static void read_config() {
 		} else if (strcmp(var, CONFIG_NO_AUDIO) == 0) {
 			printd(DEBUG_INFO "Config config_disable_audio = %i", val);
 			config_disable_audio = val;
-		} else if (strcmp(var, CONFIG_FPS) == 0) {
-			printd(DEBUG_INFO "Config config_show_fps = %i", val);
-			config_show_fps = val;
 		} else if (strcmp(var, CONFIG_FULLSCREEN) == 0) {
 			printd(DEBUG_INFO "Config config_fullscreen = %i", val);
 			config_fullscreen = val;
