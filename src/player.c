@@ -18,6 +18,7 @@
 
 #include <allegro.h>
 
+#include "config.h"
 #include "debug.h"
 #include "screen.h"
 #include "game_data.h"
@@ -45,7 +46,7 @@ void draw_player() {
 	else
 		player.y = SCREEN_HEIGHT - PLAYER_HEIGHT;
 
-	draw(player.bmp, player.x, player.y);
+	draw_trans(player.bmp, player.x, player.y);
 }
 
 void player_fire() {
@@ -59,7 +60,7 @@ void player_fire() {
 		}
 
 	if (player.fire == 1) {
-		draw(player.bullet, player.bullet_x, player.bullet_y);
+		draw_trans(player.bullet, player.bullet_x, player.bullet_y);
 		player.bullet_x += PLAYER_BULLET_SPEED;
 
 		if (player.bullet_x > SCREEN_WIDTH) {
@@ -105,8 +106,8 @@ void reset_player() {
 }
 
 void load_player() {
-	player.bmp 	= dat[BMP_SPACESHIP].dat;
-	player.bullet 	= dat[BMP_BULLET].dat;
+	player.bmp 	= load_tga(DATA_PATH "/sprites/spaceship.tga", NULL);
+	player.bullet 	= load_tga(DATA_PATH "/sprites/bullet.tga", NULL);
 	player.snd_fire = dat[SND_FIRE].dat;
 
 	reset_player();
