@@ -23,7 +23,21 @@
 
 DATAFILE *dat;
 
-void load_dat() {
-	dat = load_datafile(DATA_PATH);
+BITMAP 	 *background;
+
+FONT     *font_default;
+
+SAMPLE	 *snd_pause, *snd_gameover;
+
+void load_game_data() {
+	dat = load_datafile(DATA_PATH "/SpaceShooter.dat");
+
+	background 	= load_bmp(DATA_PATH "/sprites/background.bmp", NULL);
+
+	snd_pause 	= load_wav(DATA_PATH "/sounds/pause.wav");
+	snd_gameover 	= load_wav(DATA_PATH "/sounds/gameover.wav");
+	
+	font_default 	= load_font(DATA_PATH "/fonts/Yanone_Kafeesatz.pcx", NULL, NULL);
+	
 	printd(DEBUG_INFO "Datafile loaded");
 }

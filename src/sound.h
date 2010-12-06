@@ -16,6 +16,4 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-extern SAMPLE *snd_pause, *snd_gameover;
-
 extern void init_sound();

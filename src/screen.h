@@ -22,9 +22,6 @@
 #define SCREEN_HEIGHT 		480
 
 #ifndef __SCREEN_C__
-extern BITMAP *background;
-extern FONT    *font_default;
-
 extern void prints(char align, int x, int y, char* format, ...);
 extern void update_screen();
 extern void set_bg();

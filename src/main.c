@@ -77,12 +77,7 @@ int main(int argc, char **argv) {
 	init_screen();
 
 	/* Load data */
-	load_dat();
-
-	background 	= dat[BMP_BACKGROUND].dat;
-	snd_pause 	= dat[SND_PAUSE].dat;
-	snd_gameover 	= dat[SND_GAMEOVER].dat;
-	font_default 	= dat[FONT_YANONE].dat;
+	load_game_data();
 
 	load_player();
 

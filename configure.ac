@@ -34,7 +34,7 @@ AC_DEFUN([AX_DEFINE_DIR], [
 # Custom config header.
 AC_CONFIG_HEADERS([src/config.h])
 AH_TEMPLATE([DATA_PATH], [Define datafile path.])
-AX_DEFINE_DIR([DATA_PATH], [datadir/spaceshooter/SpaceShooter.dat])
+AX_DEFINE_DIR([DATA_PATH], [datadir/games/spaceshooter])
 
 # Checks for header files.
 AC_CHECK_HEADERS([stdlib.h],, AC_MSG_ERROR(stdlib missing.))

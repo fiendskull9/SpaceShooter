@@ -20,4 +20,9 @@
 
 extern DATAFILE *dat;
 
-extern void load_dat();
+extern BITMAP  *background;
+extern FONT    *font_default;
+
+extern SAMPLE *snd_pause, *snd_gameover;
+
+extern void load_game_data();

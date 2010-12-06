@@ -19,9 +19,8 @@
 #include <allegro.h>
 
 #include "debug.h"
+#include "game_data.h"
 #include "user_data.h"
-
-SAMPLE *snd_pause, *snd_gameover;
 
 void init_sound() {
 	reserve_voices(8, 0);

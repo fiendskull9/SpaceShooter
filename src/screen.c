@@ -19,6 +19,7 @@
 #include <allegro.h>
 
 #include "debug.h"
+#include "game_data.h"
 #include "user_data.h"
 
 #define TEXT_DEFAULT_RGB_RED	125
@@ -28,8 +29,7 @@
 #define __SCREEN_C__
 #include "screen.h"
 
-BITMAP  *buf, *background;
-FONT    *font_default;
+BITMAP  *buf;
 PALETTE colors;
 
 void prints(char align, int x, int y, char* format, ...) {
