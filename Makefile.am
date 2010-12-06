@@ -6,13 +6,13 @@ LDFLAGS		=-L/usr/lib -lalleg-4.2.2
 name 		= spaceshooter
 bin_PROGRAMS 	= $(name)
 
-EXTRA_DIST 	= data/SpaceShooter.dat man/spaceshooter.6
+EXTRA_DIST 	= data/* man/spaceshooter.6
 
-noinst_HEADERS  = src/config.h src/game_data.h src/enemies.h src/screen.h src/timers.h src/data.h src/debug.h src/player.h src/sound.h src/user_data.h
+noinst_HEADERS  = src/*.h src/game_data.h src/enemies.h src/screen.h src/timers.h src/debug.h src/player.h src/sound.h src/user_data.h
 
 # Install DAT file
 datdir 		= $(datadir)/$(name)
-dat_DATA    	= data/SpaceShooter.dat
+dat_DATA    	= data/*
 
 # Man page
 man6_MANS	= man/spaceshooter.6

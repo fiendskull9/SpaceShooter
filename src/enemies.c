@@ -40,6 +40,7 @@ BITMAP *explosion_sheet;
 
 void load_enemy(int n) {
 	BITMAP *enemies_sheet = load_tga(DATA_PATH "/sprites/enemies.tga", NULL);
+	explosion_sheet = load_tga(DATA_PATH "/sprites/explosion.tga", NULL);
 
 	enemies[n].bmp = create_bitmap(ENEMY_WIDTH, ENEMY_HEIGHT);
 	
@@ -47,10 +48,9 @@ void load_enemy(int n) {
 					0, ENEMY_WIDTH, ENEMY_HEIGHT);
 
 	enemies[n].bullet    = load_tga(DATA_PATH "/sprites/rocket.tga", NULL);
-	enemies[n].snd_fire  = dat[SND_ROCKET].dat;
-	enemies[n].snd_death = dat[SND_EXPLOSION].dat;
-
-	explosion_sheet = load_tga(DATA_PATH "/sprites/explosion.tga", NULL);
+	
+	enemies[n].snd_fire  = load_wav(DATA_PATH "/sounds/rocket.wav");
+	enemies[n].snd_death = load_wav(DATA_PATH "/sounds/explosion.wav");
 }
 
 void draw_enemy(int n) {

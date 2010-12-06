@@ -108,7 +108,7 @@ void reset_player() {
 void load_player() {
 	player.bmp 	= load_tga(DATA_PATH "/sprites/spaceship.tga", NULL);
 	player.bullet 	= load_tga(DATA_PATH "/sprites/bullet.tga", NULL);
-	player.snd_fire = dat[SND_FIRE].dat;
+	player.snd_fire = load_wav(DATA_PATH "/sounds/fire.wav");
 
 	reset_player();
 }

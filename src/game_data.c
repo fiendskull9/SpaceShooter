@@ -21,8 +21,6 @@
 #include "config.h"
 #include "debug.h"
 
-DATAFILE *dat;
-
 BITMAP 	 *background, *title;
 
 FONT     *font_default;
@@ -30,8 +28,6 @@ FONT     *font_default;
 SAMPLE	 *snd_pause, *snd_gameover;
 
 void load_game_data() {
-	dat = load_datafile(DATA_PATH "/SpaceShooter.dat");
-
 	background 	= load_bmp(DATA_PATH "/sprites/background.bmp", NULL);
 	title	 	= load_tga(DATA_PATH "/sprites/title.tga", NULL);
 

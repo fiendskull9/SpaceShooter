@@ -16,10 +16,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "data.h"
-
-extern DATAFILE *dat;
-
 extern BITMAP  *background, *title;
 extern FONT    *font_default;
 
