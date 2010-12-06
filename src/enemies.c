@@ -39,14 +39,14 @@ villain enemies[ENEMIES];
 BITMAP *explosion_sheet;
 
 void load_enemy(int n) {
-	if (n == 0)
-		enemies[n].bmp = dat[BMP_ENEMY1].dat;
-	else if (n == 1)
-		enemies[n].bmp = dat[BMP_ENEMY2].dat;
-	else if (n == 2)
-		enemies[n].bmp = dat[BMP_ENEMY3].dat;
+	BITMAP *enemies_sheet = load_tga(DATA_PATH "/sprites/enemies.tga", NULL);
 
-	enemies[n].bullet    = dat[BMP_ROCKET].dat;
+	enemies[n].bmp = create_bitmap(ENEMY_WIDTH, ENEMY_HEIGHT);
+	
+	blit(enemies_sheet, enemies[n].bmp, n*ENEMY_WIDTH, 0, 0,
+					0, ENEMY_WIDTH, ENEMY_HEIGHT);
+
+	enemies[n].bullet    = load_tga(DATA_PATH "/sprites/rocket.tga", NULL);
 	enemies[n].snd_fire  = dat[SND_ROCKET].dat;
 	enemies[n].snd_death = dat[SND_EXPLOSION].dat;
 
@@ -55,7 +55,7 @@ void load_enemy(int n) {
 
 void draw_enemy(int n) {
 	if (enemies[n].death == 0) {
-		draw(enemies[n].bmp, enemies[n].x, enemies[n].y);
+		draw_trans(enemies[n].bmp, enemies[n].x, enemies[n].y);
 	} else if (enemies[n].x > 0) {
 		BITMAP *tmp 	= create_bitmap(64, 64);
 
@@ -120,7 +120,7 @@ void enemy_fire(int n) {
 	}
 
 	if (enemies[n].fire == 1) {
-		draw(enemies[n].bullet, enemies[n].bullet_x, enemies[n].bullet_y);
+		draw_trans(enemies[n].bullet, enemies[n].bullet_x, enemies[n].bullet_y);
 
 		enemies[n].bullet_x -= enemies[n].bullet_speed;
 
