@@ -1,8 +1,170 @@
-commit bbd3eac694e7aa87aa62883fc308a19bca88ec86
+commit 1c70494f7662674e23f9093fbd1ee9113cc59885
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Dec 6 20:56:12 2010 +0100
+
+    update man
+
+commit 99124f4147b39e44e3a425834fbb1810d9059f35
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Dec 6 20:45:55 2010 +0100
+
+    remove fps code from user config
+
+commit 1cc8ffc034d8567d5b70c058a32e58496259a0c9
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Dec 6 20:45:22 2010 +0100
+
+    add command-line options
+
+commit 66feca94e84d64c2582f6fa2a1309ebe2685a239
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Dec 6 20:33:00 2010 +0100
+
+    add icon
+
+commit 51ce8380b90938cf1fa9877ad2a3e576418370f0
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Dec 6 20:27:51 2010 +0100
+
+    add desktop file
+
+commit 6688478d114fb0c1cc70dd4ff46baa9d910af764
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Dec 6 20:09:59 2010 +0100
+
+    update sounds
+
+commit cc4786dcadb87b852976458a2922749335ec0541
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Dec 6 20:03:34 2010 +0100
+
+    remove unused sounds
+
+commit 673a9f08719a3e3787fbbbb87537b51e5218848e
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Dec 6 19:29:43 2010 +0100
+
+    re-organize code
+
+commit 7ecd82b181850f941c1b95847dafebdee1de55a6
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Dec 6 19:25:15 2010 +0100
+
+    use semaphore for game timer
+
+commit 4f6f5fac3514517a95e705ad112a1e26fee85d84
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Dec 6 19:04:56 2010 +0100
+
+    change back bg to normal bitmap
+
+commit 9df45310d5648cbcabf4ceac812179edf12599f5
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Dec 6 19:01:45 2010 +0100
+
+    fix enemies' ghost deaths
+
+commit 4184e0a2cbdffbc60b373c953a19dff2f887bd50
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Dec 6 18:59:15 2010 +0100
+
+    useless code movement
+
+commit 4e65926a69b37d457347a82b93aeeb4ab10e0177
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Dec 6 18:34:42 2010 +0100
+
+    destroy game data on exit
+
+commit 5f505a504d3a488a7f2e9fbe7a094dc84344fbda
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Dec 6 18:17:27 2010 +0100
+
+    use rle sprites where possible (should be faster)
+
+commit 97c4ae0d7777f53a68c7780e0beecfccbdcb5688
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Dec 6 17:51:32 2010 +0100
+
+    remove config start timeout
+
+commit 04b40b2209fe156c1c68f657ce3c612b38e3ec73
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Dec 6 17:46:14 2010 +0100
+
+    declare draw functions as inline
+
+commit fa0b81f4894983a57171f5234dd773d5e3142540
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Dec 6 17:46:00 2010 +0100
+
+    remove useless code
+
+commit f79aae1f422ad00cd34c217389b5d2d74e3d5896
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Dec 6 13:27:44 2010 +0100
+
+    update installation directories
+
+commit 8b5f5dbb2b6781dd5f8b44cd3afb00a08a0685c1
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Dec 6 13:08:11 2010 +0100
+
+    remove explosion frames
+
+commit 51ce917dccc323e07b9ce2086ed8249b640a0124
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Dec 6 13:07:21 2010 +0100
+
+    remove the stupid dat file
+
+commit 0fd81babb50f33bbe8fb702d2592e95b47f994e5
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Dec 6 13:02:00 2010 +0100
+
+    new enemies load routine and sprites
+
+commit 48af02efc96c213e11ae63b7f04ce81afabfabc3
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Dec 6 12:52:00 2010 +0100
+
+    convert player bitmaps to tga
+
+commit 5fb08a18cbb36c0ae9b61287e71d40d42645c2ae
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Dec 6 12:48:15 2010 +0100
+
+    convert title to tga
+
+commit f047aea74a8dd3be27dd24327877cde7d50e8767
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Dec 6 12:35:06 2010 +0100
+
+    new explosion routine and sprite for enemies
+
+commit 9f804215173ac03cbb502fa4cb037dff6b13c673
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Dec 6 12:29:36 2010 +0100
+
+    add draw_trans function
+
+commit 2cddc206bee903366ae3cadedd11f1a4f25f254b
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Dec 6 11:14:57 2010 +0100
+
+    add game title
+
+commit 84d32b8c50edbc2c5aebd72d658f5dac910088fc
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Dec 6 11:04:53 2010 +0100
+
+    initial dat file removal
+
+commit 5560d0f4237911bae091e84b64add61ee2e3889b
 Author: Alessandro Ghedini <al3xbio@gmail.com>
 Date:   Sun Dec 5 13:20:48 2010 +0100
 
-    bump version
+    bump version and changelog
 
 commit 472cd705ffaf089e93418a63a6dd9824b18d898e
 Author: Alessandro Ghedini <al3xbio@gmail.com>
