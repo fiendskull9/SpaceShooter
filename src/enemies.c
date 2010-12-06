@@ -18,6 +18,7 @@
 
 #include <allegro.h>
 
+#include "config.h"
 #include "debug.h"
 #include "screen.h"
 #include "game_data.h"
@@ -27,11 +28,15 @@
 #define  __ENEMIES_C__
 #include "enemies.h"
 
-#define ENEMY_EXPLOSION_FRAMES	15
+#define ENEMY_EXPLOSION_FRAMES		40
+#define ENEMY_EXPLOSION_FRAME_WIDTH	64
+#define ENEMY_EXPLOSION_FRAME_HEIGHT	64
 
 #define GEN_RAND(SEED)		rand() % SEED
 
 villain enemies[ENEMIES];
+
+BITMAP *explosion_sheet;
 
 void load_enemy(int n) {
 	if (n == 0)
@@ -44,14 +49,24 @@ void load_enemy(int n) {
 	enemies[n].bullet    = dat[BMP_ROCKET].dat;
 	enemies[n].snd_fire  = dat[SND_ROCKET].dat;
 	enemies[n].snd_death = dat[SND_EXPLOSION].dat;
+
+	explosion_sheet = load_tga(DATA_PATH "/sprites/explosion.tga", NULL);
 }
 
 void draw_enemy(int n) {
-	if (enemies[n].death == 0)
+	if (enemies[n].death == 0) {
 		draw(enemies[n].bmp, enemies[n].x, enemies[n].y);
-	else if (enemies[n].x > 0)
-		draw(dat[ANI_EXPLOSION_0 + enemies[n].expl_frame].dat,
-						enemies[n].x, enemies[n].y);
+	} else if (enemies[n].x > 0) {
+		BITMAP *tmp 	= create_bitmap(64, 64);
+
+		int height 	= (enemies[n].expl_frame / (8 + 1)) * 64;
+		int width  	= ((enemies[n].expl_frame % 8) - 1) * 64;
+
+		blit(explosion_sheet, tmp, width, height, 0, 0, 64, 64);
+		draw_trans(tmp, enemies[n].x, enemies[n].y);
+
+		destroy_bitmap(tmp);
+	}
 }
 
 void enemy_respawn(int n) {
