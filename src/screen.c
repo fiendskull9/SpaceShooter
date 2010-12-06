@@ -79,6 +79,7 @@ void set_bg() {
 void init_screen() {
 	set_color_depth(32);
 	set_palette(colors);
+	set_color_conversion(COLORCONV_NONE);
 
 	if (config_fullscreen == 1)
 		set_gfx_mode(GFX_AUTODETECT_FULLSCREEN, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0);
@@ -93,4 +94,9 @@ void init_screen() {
 
 void draw(BITMAP *bmp, int x, int y) {
 	draw_sprite(buf, bmp, x, y);
+}
+
+void draw_trans(BITMAP *bmp, int x, int y) {
+	set_alpha_blender();
+	draw_trans_sprite(buf, bmp, x, y);
 }

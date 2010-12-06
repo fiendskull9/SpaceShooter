@@ -27,4 +27,5 @@ extern void update_screen();
 extern void set_bg();
 extern void init_screen();
 extern void draw(BITMAP *bmp, int x, int y);
+extern void draw_trans(BITMAP *bmp, int x, int y);
 #endif
