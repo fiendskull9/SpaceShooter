@@ -47,8 +47,6 @@ void check_for_key();
 int main(int argc, char **argv) {
 	int i;
 
-	config_start_tmout = START_TIMEOUT_DEFAULT;
-
 	/* Initialize Allegro and variables*/
 	allegro_init();
 	set_user_data();
@@ -199,7 +197,7 @@ void reset_variables() {
 	set_user_data();
 	reset_player();
 
-	start_ticks = config_start_tmout;
+	start_ticks = START_TIMEOUT_DEFAULT;
 
 	srand(time(NULL));
 

@@ -47,9 +47,6 @@ and may set the following boolean variables:
   * `fullscreen [0|1]`
     Enable/disable fullscreen mode.
 
-  * `start_timeout [TIMEOUT]`
-    Set timeout seconds on start (default 3)
-
 ## DEPENDENCIES
 
 SpaceShooter, to properly run, depends upon Allegro library. In addition

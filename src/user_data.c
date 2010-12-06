@@ -20,7 +20,6 @@
 #define CONFIG_NO_AUDIO 	"disable_audio"
 #define CONFIG_FPS 		"show_fps"
 #define CONFIG_FULLSCREEN 	"fullscreen"
-#define CONFIG_START_TMOUT 	"start_timeout"
 
 #define CONFIG_DIR 		".SpaceShooter"
 #define CONFIG_FILE 		"config"
@@ -37,8 +36,7 @@
 
 #include "debug.h"
 
-int config_disable_audio, config_show_fps,
-    config_fullscreen, config_start_tmout;
+int config_disable_audio, config_show_fps, config_fullscreen;
 
 int user_record, record_is_broken, score;
 
@@ -88,9 +86,6 @@ static void read_config() {
 		} else if (strcmp(var, CONFIG_FULLSCREEN) == 0) {
 			printd(DEBUG_INFO "Config config_fullscreen = %i", val);
 			config_fullscreen = val;
-		} else if (strcmp(var, CONFIG_START_TMOUT) == 0) {
-			printd(DEBUG_INFO "Config config_fullscreen = %i", val);
-			config_start_tmout = val;
 		}
 	}
 

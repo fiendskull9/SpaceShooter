@@ -16,8 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-extern int config_disable_audio, config_show_fps,
-	   config_fullscreen, config_start_tmout;
+extern int config_disable_audio, config_show_fps, config_fullscreen;
 
 extern int user_record, record_is_broken, score;
 
