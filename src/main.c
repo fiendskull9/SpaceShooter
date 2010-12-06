@@ -92,7 +92,7 @@ int main(int argc, char **argv) {
 
 		if ((game_status == STATUS_RUN) && (gameover == 1)) {
 			/* Game Over */
-			play_sample(snd_gameover, 255, 128, 1000, FALSE);
+			play_sample(snd_gameover, 255,128,1000, FALSE);
 			SET_GAME_STATUS(STATUS_GAMEOVER);
 		}
 
@@ -100,6 +100,8 @@ int main(int argc, char **argv) {
 			check_game_status();
 			continue;
 		}
+
+		print_game_info();
 
 		/* For each enemy do... */
 		for (i = 0; i < ENEMIES; i++) {
@@ -114,8 +116,6 @@ int main(int argc, char **argv) {
 			/* Check for player collision */
 			player_collision(i);
 		}
-
-		print_game_info();
 
 		/* Draw spaceship sprite at mouse position */
 		draw_player();
@@ -133,7 +133,7 @@ int main(int argc, char **argv) {
 
 	/* Unload datafile, bitmaps and sounds */
 	set_gfx_mode(GFX_TEXT, 0, 0, 0, 0);
-	destroy_rle_sprite(background);
+	destroy_bitmap(background);
 	destroy_bitmap(buf);
 	
 

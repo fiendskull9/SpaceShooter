@@ -16,7 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-extern RLE_SPRITE 	*background, *title;
+extern BITMAP		*background;
+extern RLE_SPRITE 	*title;
 extern FONT    		*font_default;
 
 extern SAMPLE *snd_pause, *snd_gameover;
