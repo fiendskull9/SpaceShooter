@@ -29,7 +29,7 @@ SAMPLE	 	*snd_pause, *snd_gameover;
 void load_game_data() {
 	BITMAP *tmb_bg, *tmp_title;
 
-	background	= load_bmp(DATA_PATH "/sprites/background.bmp", NULL);
+	background	= load_tga(DATA_PATH "/sprites/background.tga", NULL);
 	tmp_title	= load_tga(DATA_PATH "/sprites/title.tga", NULL);
 	title		= get_rle_sprite(tmp_title);
 
