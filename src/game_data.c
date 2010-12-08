@@ -36,7 +36,7 @@ void load_game_data() {
 	snd_pause 	= load_wav(DATA_PATH "/sounds/pause.wav");
 	snd_gameover 	= load_wav(DATA_PATH "/sounds/gameover.wav");
 	
-	font_default 	= load_font(DATA_PATH "/fonts/Yanone_Kafeesatz.pcx", NULL, NULL);
+	font_default 	= load_font(DATA_PATH "/fonts/font.pcx", NULL, NULL);
 
 	destroy_bitmap(tmp_title);
 	

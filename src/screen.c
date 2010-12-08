@@ -22,10 +22,6 @@
 #include "game_data.h"
 #include "user_data.h"
 
-#define TEXT_DEFAULT_RGB_RED	125
-#define TEXT_DEFAULT_RGB_GREEN	125
-#define TEXT_DEFAULT_RGB_BLUE	235
-
 #define __SCREEN_C__
 #include "screen.h"
 
@@ -35,9 +31,6 @@ void prints(char align, int x, int y, char* format, ...) {
 	va_list args;
 	char buffer[100];
 	int bg 	  = -1;
-	int color = makecol(TEXT_DEFAULT_RGB_RED,
-			    TEXT_DEFAULT_RGB_GREEN,
-			    TEXT_DEFAULT_RGB_BLUE);
 
 	va_start(args, format);
 	uvszprintf(buffer, sizeof(buffer), format, args);
@@ -45,15 +38,15 @@ void prints(char align, int x, int y, char* format, ...) {
 
 	switch (align) {
 		case 'l':
-			textout_ex(buf, font_default, buffer, x, y, color, bg);
+			textout_ex(buf, font_default, buffer, x, y, 0, bg);
 			break;
 
 		case 'c':
-			textout_centre_ex(buf, font_default, buffer, x, y, color, bg);
+			textout_centre_ex(buf, font_default, buffer, x, y, 0, bg);
 			break;
 
 		case 'r':
-			textout_right_ex(buf, font_default, buffer, x, y, color, bg);
+			textout_right_ex(buf, font_default, buffer, x, y, 0, bg);
 			break;
 	}
 }
