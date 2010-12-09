@@ -49,18 +49,23 @@ void check_for_key();
 int main(int argc, char **argv) {
 	int i, opt;
 
+	read_config();
+
 	while ((opt = getopt(argc, argv, "daf")) != -1)
 		switch (opt) {
 			case 'd':
 				config_debug = 1;
+				printd(DEBUG_INFO "Config override config_debug");
 				break;
 
 			case 'a':
 				config_disable_audio = 1;
+				printd(DEBUG_INFO "Config override config_disable_audio");
 				break;
 
 			case 'f':
 				config_fullscreen = 1;
+				printd(DEBUG_INFO "Config override config_fullscreen");
 				break;
 
 			case '?':
@@ -73,7 +78,6 @@ int main(int argc, char **argv) {
 
 	/* Initialize Allegro and variables*/
 	allegro_init();
-	set_user_data();
 	reset_variables();
 	printd(DEBUG_INFO "Allegro initialized");
 
@@ -210,7 +214,7 @@ void reset_variables() {
 	for (i = 0; i < ENEMIES; i++)
 		reset_enemy(i);
 
-	set_user_data();
+	read_record();
 	reset_player();
 
 	start_ticks = START_TIMEOUT_DEFAULT;

@@ -61,11 +61,13 @@ static void check_config_dir() {
 				getenv("HOME"), CONFIG_DIR);	
 }
 
-static void read_config() {
+void read_config() {
 	int val;
 	char var[15];
 	char *path = get_path(CONFIG_FILE);
 	FILE *config_file;
+
+	check_config_dir();
 
 	config_file = fopen(path, "r");
 	if (config_file == NULL) {
@@ -89,10 +91,12 @@ static void read_config() {
 	fclose(config_file);
 }
 
-static void read_record() {
+void read_record() {
 	int read;
 	char *path = get_path(RECORD_FILE);;
 	FILE *record_file = fopen(path, "r");
+
+	check_config_dir();
 
 	if (record_file == NULL) {
 		printd(DEBUG_WARN "Unable to open %s file", path);
@@ -134,12 +138,6 @@ void check_record() {
 
 		set_record();
 	}
-}
-
-void set_user_data() {
-	check_config_dir();
-	read_config();
-	read_record();
 }
 
 void take_screenshot() {
