@@ -39,15 +39,15 @@ villain enemies[ENEMIES];
 BITMAP *explosion_sheet;
 
 void load_enemy(int n) {
-	BITMAP *enemies_sheet = load_tga(DATA_PATH "/sprites/enemies.tga", NULL);
-	explosion_sheet = load_tga(DATA_PATH "/sprites/explosion.tga", NULL);
+	BITMAP *enemies_sheet = load_tga(DATA_PATH "/graphics/enemies.tga", NULL);
+	explosion_sheet = load_tga(DATA_PATH "/graphics/explosion.tga", NULL);
 
 	enemies[n].bmp = create_bitmap(ENEMY_WIDTH, ENEMY_HEIGHT);
 	
 	blit(enemies_sheet, enemies[n].bmp, n*ENEMY_WIDTH, 0, 0,
 					0, ENEMY_WIDTH, ENEMY_HEIGHT);
 
-	enemies[n].bullet    = load_tga(DATA_PATH "/sprites/rocket.tga", NULL);
+	enemies[n].bullet    = load_tga(DATA_PATH "/graphics/rocket.tga", NULL);
 	
 	enemies[n].snd_fire  = load_wav(DATA_PATH "/sounds/rocket.wav");
 	enemies[n].snd_death = load_wav(DATA_PATH "/sounds/explosion.wav");

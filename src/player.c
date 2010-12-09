@@ -37,8 +37,8 @@ void reset_player();
 void load_player() {
 	BITMAP *tmp_player, *tmp_bullet;
 
-	tmp_player	= load_tga(DATA_PATH "/sprites/spaceship.tga", NULL);
-	tmp_bullet 	= load_tga(DATA_PATH "/sprites/bullet.tga", NULL);
+	tmp_player	= load_tga(DATA_PATH "/graphics/spaceship.tga", NULL);
+	tmp_bullet 	= load_tga(DATA_PATH "/graphics/bullet.tga", NULL);
 
 	player.sprite	= get_rle_sprite(tmp_player);
 	player.bullet	= get_rle_sprite(tmp_bullet);

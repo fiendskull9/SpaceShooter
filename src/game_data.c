@@ -29,14 +29,14 @@ SAMPLE	 	*snd_pause, *snd_gameover;
 void load_game_data() {
 	BITMAP *tmb_bg, *tmp_title;
 
-	background	= load_tga(DATA_PATH "/sprites/background.tga", NULL);
-	tmp_title	= load_tga(DATA_PATH "/sprites/title.tga", NULL);
+	background	= load_tga(DATA_PATH "/graphics/background.tga", NULL);
+	tmp_title	= load_tga(DATA_PATH "/graphics/title.tga", NULL);
 	title		= get_rle_sprite(tmp_title);
 
 	snd_pause 	= load_wav(DATA_PATH "/sounds/pause.wav");
 	snd_gameover 	= load_wav(DATA_PATH "/sounds/gameover.wav");
 	
-	font_default 	= load_font(DATA_PATH "/fonts/font.pcx", NULL, NULL);
+	font_default 	= load_font(DATA_PATH "/graphics/font.pcx", NULL, NULL);
 
 	destroy_bitmap(tmp_title);
 	

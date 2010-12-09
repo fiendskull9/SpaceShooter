@@ -15,14 +15,11 @@ noinst_HEADERS  = src/*.h src/game_data.h src/enemies.h src/screen.h src/timers.
 # Install data
 gamedatadir	= $(datadir)/games/$(name)
 
-spritesdir	= $(gamedatadir)/sprites
-sprites_DATA   	= data/sprites/*
+graphicsdir	= $(gamedatadir)/graphics
+graphics_DATA   = data/graphics/*
 
 soundsdir	= $(gamedatadir)/sounds
 sounds_DATA   	= data/sounds/*
-
-fontsdir	= $(gamedatadir)/fonts
-fonts_DATA   	= data/fonts/*
 
 desktopdir 	= $(datadir)/applications
 desktop_DATA 	= spaceshooter.desktop
