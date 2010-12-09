@@ -259,8 +259,6 @@ void check_game_status() {
 			break;
 
 		case STATUS_RUN:
-			print_game_info();
-
 			/* Draw spaceship sprite at mouse position */
 			draw_player();
 
@@ -272,6 +270,9 @@ void check_game_status() {
 				draw_enemy(i);
 				enemy_fire(i);
 			}
+
+			print_game_info();
+
 			break;
 
 		case STATUS_HELP:
