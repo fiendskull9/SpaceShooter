@@ -68,6 +68,9 @@ int main(int argc, char **argv) {
 			
 		}
 
+	/* Set window icon */
+	allegro_icon = spaceship_xpm;
+
 	/* Initialize Allegro and variables*/
 	allegro_init();
 	set_user_data();

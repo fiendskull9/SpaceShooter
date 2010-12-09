@@ -16,10 +16,13 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "data/spaceshooter.xpm"
+
 extern BITMAP		*background;
 extern RLE_SPRITE 	*title;
 extern FONT    		*font_default;
 
 extern SAMPLE *snd_pause, *snd_gameover;
 
+extern void *allegro_icon;
 extern void load_game_data();
