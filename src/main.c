@@ -189,7 +189,7 @@ void print_game_info() {
 	int margin = 10;
 
 	/* Show scores... */
-	prints('l', margin, margin, "Score: %i", score);
+	prints('l', margin, margin, "Score:  %i", score);
 
 	/* ...player lives... */
 	prints('l', margin, margin + TEXT_LINE_HEIGHT, "Health: %i/%i",
