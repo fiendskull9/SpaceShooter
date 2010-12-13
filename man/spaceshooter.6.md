@@ -1,59 +1,55 @@
-spaceshooter(6) -- 2D old-school space shooter game
+spaceshooter(6) -- old-school space shooter game in 2D
 ===================================================
 
 ## SYNOPSIS
 
-`spaceshooter`
+`spaceshooter [-d] [-f] [-a]`
 
 ## DESCRIPTION
 
-SpaceShooter is an old-school space shooter game in 2D, written using
-Allegro library, and licensed under GPLv3.
+**spaceshooter** is a score attack game in which the player has to pilot a
+spaceship against the flow of many hostile enemies. The goal is
+obviously to destroy them all.
 
-You play as a spaceship pilot with the mission to destroy every hostile enemy.
+## OPTIONS ##
 
-## OPTIONS
+`-d`  
+&nbsp;&nbsp;&nbsp;Enable debug mode
 
-  * `-d`
-    Enable debug mode
-  * `-f`
-    Enable fullscreen
-  * `-a`
-    Disable audio
+`-f`  
+&nbsp;&nbsp;&nbsp;Enable fullscreen
 
-## CONTROLS
+`-a`  
+&nbsp;&nbsp;&nbsp;Disable audio
 
-Here are the controls for the spaceship
+## CONTROLS ##
 
-  * Move the spaceship with mouse
-  * Fire with mouse left button
-  * Pause the game with P
-  * Take a screenshot with S
-  * Show controls with H
-  * Exit the game with ESC
+You can move the spaceship with *mouse*, fire with mouse *left button*, pause
+the game with *P*, take a screenshot with *S*, show controls with *H* and exit
+the game with *ESC*.
 
-## SCORE
+## SCORE ##
 
-The scores are calculated as follows
+The player gets *+5* points if he destroies an enemy and *-1* point
+when an enemy escapes.
 
-  * +5 points if enemy gets hit
-  * -1 point if enemy gets past your spaceship
+The score record is stored in the <~/.SpaceShooter/record> file.
 
-## CONFIGURATION
+## CONFIGURATION ##
 
-SpaceShooter will read the file  '$HOME/.SpaceShooter/config',
+SpaceShooter will read the file <~/.SpaceShooter/config>,
 and may set the following boolean variables:
 
-  * `debug [0|1]`
-    Enable/disable debug mode.
+`debug [0|1]`  
+&nbsp;&nbsp;&nbsp;Enable/disable debug mode.
 
-  * `disable_audio [0|1]`
-    Disable audio (set volume to 0).
+`disable_audio [0|1]`  
+&nbsp;&nbsp;&nbsp;Disable audio (set volume to 0).
 
-  * `fullscreen [0|1]`
-    Enable/disable fullscreen mode.
+`fullscreen [0|1]`  
+&nbsp;&nbsp;&nbsp;Enable/disable fullscreen mode.
 
-## DEPENDENCIES
+## DEPENDENCIES ##
 
 SpaceShooter, to properly run, depends upon Allegro library. In addition
 Allegro development files are needed to compile this game.
@@ -61,12 +57,12 @@ Allegro development files are needed to compile this game.
 You can find all the files and additional information at
 `<http://www.talula.demon.co.uk/allegro>`
 
-## BUGS
+## BUGS ##
 
 Please report any bugs or feature requests to GitHub issues tracker at
 `<http://github.com/AlexBio/SpaceShooter/issues>`.
 
-## SUPPORT
+## SUPPORT ##
 
 You can look for information at:
 
@@ -76,18 +72,18 @@ You can look for information at:
   * GitHub repository
     `<http://github.com/AlexBio/SpaceShooter>`
 
-## INSTALL
+## INSTALL ##
 
 See `README` for installation.
 
-## AUTHOR
+## AUTHOR ##
 
-Alessandro Ghedini, <al3xbio@gmail.com>, `<http://ghedini.co.cc>`
+Alessandro Ghedini <al3xbio@gmail.com>
 
-## COPYRIGHT
+## COPYRIGHT ##
 
 Copyright (C) 2010 Alessandro Ghedini <al3xbio@gmail.com>
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of the GNU General Public License as published
-by the Free Software Foundation (see LICENSE).
+by the Free Software Foundation (see `LICENSE`).

@@ -4,77 +4,61 @@
 .TH "SPACESHOOTER" "6" "December 2010" "" ""
 .
 .SH "NAME"
-\fBspaceshooter\fR \- 2D old\-school space shooter game
+\fBspaceshooter\fR \- old\-school space shooter game in 2D
 .
 .SH "SYNOPSIS"
-\fBspaceshooter\fR
+\fBspaceshooter [\-d] [\-f] [\-a]\fR
 .
 .SH "DESCRIPTION"
-SpaceShooter is an old\-school space shooter game in 2D, written using Allegro library, and licensed under GPLv3\.
-.
-.P
-You play as a spaceship pilot with the mission to destroy every hostile enemy\.
+\fBspaceshooter\fR is a score attack game in which the player has to pilot a spaceship against the flow of many hostile enemies\. The goal is obviously to destroy them all\.
 .
 .SH "OPTIONS"
+\fB\-d\fR
 .
-.IP "\(bu" 4
-\fB\-d\fR Enable debug mode
+.br
+\~\~\~Enable debug mode
 .
-.IP "\(bu" 4
-\fB\-f\fR Enable fullscreen
+.P
+\fB\-f\fR
 .
-.IP "\(bu" 4
-\fB\-a\fR Disable audio
+.br
+\~\~\~Enable fullscreen
 .
-.IP "" 0
+.P
+\fB\-a\fR
+.
+.br
+\~\~\~Disable audio
 .
 .SH "CONTROLS"
-Here are the controls for the spaceship
-.
-.IP "\(bu" 4
-Move the spaceship with mouse
-.
-.IP "\(bu" 4
-Fire with mouse left button
-.
-.IP "\(bu" 4
-Pause the game with P
-.
-.IP "\(bu" 4
-Take a screenshot with S
-.
-.IP "\(bu" 4
-Show controls with H
-.
-.IP "\(bu" 4
-Exit the game with ESC
-.
-.IP "" 0
+You can move the spaceship with \fImouse\fR, fire with mouse \fIleft button\fR, pause the game with \fIP\fR, take a screenshot with \fIS\fR, show controls with \fIH\fR and exit the game with \fIESC\fR\.
 .
 .SH "SCORE"
-The scores are calculated as follows
+The player gets \fI+5\fR points if he destroies an enemy and \fI\-1\fR point when an enemy escapes\.
 .
-.IP "\(bu" 4
-+5 points if enemy gets hit
-.
-.IP "\(bu" 4
-\-1 point if enemy gets past your spaceship
-.
-.IP "" 0
+.P
+The score record is stored in the <~/\.SpaceShooter/record> file\.
 .
 .SH "CONFIGURATION"
-SpaceShooter will read the file \'$HOME/\.SpaceShooter/config\', and may set the following boolean variables:
+SpaceShooter will read the file <~/\.SpaceShooter/config>, and may set the following boolean variables:
 .
-.IP "\(bu" 4
-\fBdebug [0|1]\fR Enable/disable debug mode\.
+.P
+\fBdebug [0|1]\fR
 .
-.IP "\(bu" 4
-\fBdisable_audio [0|1]\fR Disable audio (set volume to 0)\.
+.br
+\~\~\~Enable/disable debug mode\.
 .
-.IP "\(bu" 4
-\fBfullscreen [0|1]\fR Enable/disable fullscreen mode\.
+.P
+\fBdisable_audio [0|1]\fR
 .
-.IP "" 0
+.br
+\~\~\~Disable audio (set volume to 0)\.
+.
+.P
+\fBfullscreen [0|1]\fR
+.
+.br
+\~\~\~Enable/disable fullscreen mode\.
 .
 .SH "DEPENDENCIES"
 SpaceShooter, to properly run, depends upon Allegro library\. In addition Allegro development files are needed to compile this game\.
@@ -100,10 +84,10 @@ GitHub repository \fB<http://github\.com/AlexBio/SpaceShooter>\fR
 See \fBREADME\fR for installation\.
 .
 .SH "AUTHOR"
-Alessandro Ghedini, \fIal3xbio@gmail\.com\fR, \fB<http://ghedini\.co\.cc>\fR
+Alessandro Ghedini \fIal3xbio@gmail\.com\fR
 .
 .SH "COPYRIGHT"
 Copyright (C) 2010 Alessandro Ghedini \fIal3xbio@gmail\.com\fR
 .
 .P
-This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation (see LICENSE)\.
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation (see \fBLICENSE\fR)\.
