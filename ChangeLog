@@ -1,3 +1,57 @@
+commit 45f056bb8cde4049035f1a3a479dc18af2725412
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Dec 13 21:01:08 2010 +0100
+
+    improve manual page
+
+commit e12b7e71572b731d582342275cc8df4e36abd773
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Thu Dec 9 21:50:20 2010 +0100
+
+    fix text alignment
+
+commit 72bb4cd33d1298bd17c21a4f06f90e272c541bb8
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Thu Dec 9 20:49:00 2010 +0100
+
+    move graphics to data/graphics
+
+commit e38c5e29c1c25c1d3434e312a2ed71ccaf92e0ce
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Thu Dec 9 20:44:21 2010 +0100
+
+    draw game info over sprites
+
+commit 6c9fc7b2d3930d4366f4771e44f00827762e4f79
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Thu Dec 9 20:41:19 2010 +0100
+
+    improve user data handling
+
+commit afc6d1c412ebc1b7f33b860cdfb7ec7b388de8b1
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Thu Dec 9 20:24:48 2010 +0100
+
+    change window icon
+
+commit c0c1410d5bb2daf0a34d16869130137d4b192ffe
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Wed Dec 8 21:12:55 2010 +0100
+
+    convert background to tga
+
+commit a5d001192a4285326e543ed38377f7411deaf137
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Wed Dec 8 20:34:08 2010 +0100
+
+    add new font
+
+commit 6cba9f7c4b82b8a2ec72e18d6c2558bf9b650357
+Author: Alessandro Ghedini <al3xbio@gmail.com>
+Date:   Mon Dec 6 21:07:52 2010 +0100
+
+    bump version and changelog
+
 commit 1c70494f7662674e23f9093fbd1ee9113cc59885
 Author: Alessandro Ghedini <al3xbio@gmail.com>
 Date:   Mon Dec 6 20:56:12 2010 +0100
