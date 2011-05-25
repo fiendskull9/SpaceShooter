@@ -27,7 +27,7 @@ FONT     	*font_default;
 SAMPLE	 	*snd_pause, *snd_gameover;
 
 void load_game_data() {
-	BITMAP *tmb_bg, *tmp_title;
+	BITMAP *tmp_title;
 
 	background	= load_tga(DATA_PATH "/graphics/background.tga", NULL);
 	tmp_title	= load_tga(DATA_PATH "/graphics/title.tga", NULL);
@@ -35,10 +35,10 @@ void load_game_data() {
 
 	snd_pause 	= load_wav(DATA_PATH "/sounds/pause.wav");
 	snd_gameover 	= load_wav(DATA_PATH "/sounds/gameover.wav");
-	
+
 	font_default 	= load_font(DATA_PATH "/graphics/font.pcx", NULL, NULL);
 
 	destroy_bitmap(tmp_title);
-	
+
 	printd(DEBUG_INFO "Game data loaded");
 }

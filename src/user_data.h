@@ -24,3 +24,4 @@ extern void check_record();
 extern void set_user_data();
 extern void take_screenshot();
 extern void read_config();
+extern void read_record();

@@ -16,8 +16,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "data/spaceshooter.xpm"
-
 extern BITMAP		*background;
 extern RLE_SPRITE 	*title;
 extern FONT    		*font_default;

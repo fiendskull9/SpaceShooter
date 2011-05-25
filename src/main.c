@@ -30,6 +30,8 @@
 #include "enemies.h"
 #include "player.h"
 
+#include "data/spaceshooter.xpm"
+
 #define SET_GAME_STATUS(STATUS) game_status = STATUS;
 
 #define STATUS_RUN 		0
@@ -70,7 +72,7 @@ int main(int argc, char **argv) {
 
 			case '?':
 				printd(DEBUG_ERR "Unknown option %x", optopt);
-			
+
 		}
 
 	/* Set window icon */
@@ -113,7 +115,7 @@ int main(int argc, char **argv) {
 			ticks--;
 
 			if(old_ticks <= ticks)
-				break; 
+				break;
 
 			set_bg();
 
@@ -134,7 +136,7 @@ int main(int argc, char **argv) {
 					/* Check for respawn... */
 					if (enemies[i].death == 1)
 						enemy_respawn(i);
-			
+
 					enemy_motion(i);
 					enemy_collision(i);
 
@@ -148,7 +150,7 @@ int main(int argc, char **argv) {
 	}
 
 	remove_int(ticker);
- 
+
 	/* Destroy the semaphore */
         sem_destroy(&sem_rest);
 
@@ -156,7 +158,7 @@ int main(int argc, char **argv) {
 	set_gfx_mode(GFX_TEXT, 0, 0, 0, 0);
 	destroy_bitmap(background);
 	destroy_bitmap(buf);
-	
+
 
 	return 0;
 }
@@ -263,7 +265,7 @@ void check_game_status() {
 			draw_player();
 
 			/* And bullet, if fired */
-			player_fire();		
+			player_fire();
 
 			/* Draw enemies */
 			for (i = 0; i < ENEMIES; i++) {
@@ -295,7 +297,7 @@ void check_game_status() {
 			prints('c', w, h-TEXT_LINE_HEIGHT, "Game paused.");
 			prints('c', w, h, "Press ENTER to resume.");
 
-			if (key[KEY_ENTER]) 
+			if (key[KEY_ENTER])
 				SET_GAME_STATUS(STATUS_RUN);
 
 			break;
