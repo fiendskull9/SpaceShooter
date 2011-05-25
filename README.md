@@ -1,18 +1,13 @@
-     _____                      _____ _                 _            
-    /  ___|                    /  ___| |               | |           
-    \ `--. _ __   __ _  ___ ___\ `--.| |__   ___   ___ | |_ ___ _ __ 
-     `--. \ '_ \ / _` |/ __/ _ \`--. \ '_ \ / _ \ / _ \| __/ _ \ '__|
-    /\__/ / |_) | (_| | (_|  __/\__/ / | | | (_) | (_) | ||  __/ |   
-    \____/| .__/ \__,_|\___\___\____/|_| |_|\___/ \___/ \__\___|_|   
-          | |                                                        
-          |_|                                                        
+SpaceShooter
+============
+
+![status](http://stillmaintained.com/AlexBio/SpaceShooter.png)
 
 SpaceShooter is an old-school space shooter game in 2D.
 
 ## DEPENDENCIES
 
-SpaceShooter, to properly run, depends upon Allegro library. In addition
-Allegro development files are needed to compile this game.
+ * liballegro (>= 4.2)
 
 ## INSTALLATION
 
@@ -25,12 +20,9 @@ SpaceShooter is distributed as source code. Install with:
     $ make
     # make install
 
-Debian (.deb) packages for i386 and amd64 architectures and source tarball
-are also available at [GitHub download page](http://github.com/AlexBio/SpaceShooter/downloads)
-    
 ## SUPPORT
 
-You can find documentation with the man command:
+Additional documentation is available in the manual page:
 
     $ man spaceshooter
 
