@@ -1,7 +1,7 @@
 AUTOMAKE_OPTIONS = foreign
 
 CFLAGS		=-Wall -I/usr/include -O3 -fomit-frame-pointer
-LDFLAGS		=-L/usr/lib -lalleg-4.2.2
+LDFLAGS		=-L/usr/lib `allegro-config --libs` -pthread
 
 bindir		= $(prefix)/games
 
