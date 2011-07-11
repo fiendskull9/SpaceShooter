@@ -1,6 +1,8 @@
 AUTOMAKE_OPTIONS = foreign
 
-CFLAGS		=-Wall -Werror -I/usr/include -O3 -fomit-frame-pointer
+OPTIMIZATION	=-O3
+
+CFLAGS		=-Wall $(OPTIMIZATION)
 LDFLAGS		=-L/usr/lib `allegro-config --libs` -pthread
 
 bindir		= $(prefix)/games
