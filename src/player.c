@@ -1,132 +1,28 @@
-/*
-    This file is part of SpaceShooter.
-    Copyright (C) 2010 Alessandro Ghedini <al3xbio@gmail.com>
+#include <stdlib.h>
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+#include <GL/glfw.h>
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
-#include <allegro.h>
-
-#include "config.h"
-#include "debug.h"
-#include "screen.h"
-#include "game_data.h"
-#include "user_data.h"
-#include "enemies.h"
-
-#define  __PLAYER_C__
 #include "player.h"
+#include "texture.h"
 
-hero player;
+#define PLAYER_WIDTH 		43
+#define PLAYER_HEIGHT 		48
 
-extern int game_status, gameover;
+spaceship_t *player_load() {
+	spaceship_t *player = malloc(sizeof(player));
 
-void reset_player();
+	player -> x	= 0;
+	player -> y	= 0;
+	player -> health	= 50;
 
-void load_player() {
-	BITMAP *tmp_player, *tmp_bullet;
+	player -> texture = texture_load("/tmp/spaceshooter/spaceship.tga");
 
-	tmp_player	= load_tga(DATA_PATH "/graphics/spaceship.tga", NULL);
-	tmp_bullet 	= load_tga(DATA_PATH "/graphics/bullet.tga", NULL);
-
-	player.sprite	= get_rle_sprite(tmp_player);
-	player.bullet	= get_rle_sprite(tmp_bullet);
-	
-	player.snd_fire = load_wav(DATA_PATH "/sounds/fire.wav");
-
-	reset_player();
-
-	destroy_bitmap(tmp_player);
-	destroy_bitmap(tmp_bullet);
-
-	printd(DEBUG_INFO "Player data loaded");
+	return player;
 }
 
-void draw_player() {
+void player_draw(spaceship_t *player) {
+	int x, y;
 
-	if (player.health <= 0) {
-		gameover = 1;
-		return;
-	}
-
-	player.x = mouse_x;
-
-	if ( (mouse_y + PLAYER_HEIGHT) <= SCREEN_HEIGHT)
-		player.y = mouse_y;
-	else
-		player.y = SCREEN_HEIGHT - PLAYER_HEIGHT;
-
-	draw_rle_trans(player.sprite, player.x, player.y);
-}
-
-void player_fire() {
-	if ((mouse_b & 1) /*&& (game_status == STATUS_RUN)*/)
-		if (player.fire == 0) { 
-			player.fire 	= 1;
-			player.bullet_x = player.x + PLAYER_WIDTH;
-			player.bullet_y = player.y;
-
-			play_sample(player.snd_fire, 255,128,1000, FALSE);
-		}
-
-	if (player.fire == 1) {
-		draw_rle_trans(player.bullet, player.bullet_x, player.bullet_y);
-		player.bullet_x += PLAYER_BULLET_SPEED;
-
-		if (player.bullet_x > SCREEN_WIDTH) {
-			player.bullet_x = 0;
-			player.bullet_y = 0;
-			player.fire 	= 0;
-		}
-	}
-}
-
-void player_collision(int n) {
-	if (((player.x + PLAYER_WIDTH) >= enemies[n].x) &&
-	     (player.x <= (enemies[n].x + ENEMY_WIDTH)) &&
-	      enemies[n].death == 0)
-		if (((player.y + PLAYER_HEIGHT) >= enemies[n].y) &&
-		     ((player.y <= enemies[n].y + ENEMY_HEIGHT))) {
-			player.health 	-= ENEMY_DAMAGE;
-			enemies[n].death = 1;
-		}
-
-	if (((player.x + PLAYER_WIDTH) >= enemies[n].bullet_x) &&
-	     (player.x <= (enemies[n].bullet_x + ENEMY_BULLET_WIDTH))) 
-		if (((player.y + PLAYER_HEIGHT) >= enemies[n].bullet_y) &&
-		    ((player.y <= enemies[n].bullet_y + ENEMY_BULLET_HEIGHT))) {
-			player.health -= ENEMY_BULLET_DAMAGE;
-
-			reset_enemy_bullet(n);
-		}
-}
-
-void reset_player_bullet() {
-	player.fire 	= 0;
-	player.bullet_x = -100;
-	player.bullet_y = -100;
-}
-
-void reset_player() {
-	player.x 	= 0;
-	player.y 	= 0;
-	player.health 	= PLAYER_HEALTH;
-
-	reset_player_bullet();
-}
-
-void destroy_player() {
-	destroy_rle_sprite(player.sprite);
-	destroy_rle_sprite(player.bullet);
+	glfwGetMousePos(&x, &y);
+	texture_draw(player -> texture, x, y, PLAYER_WIDTH, PLAYER_HEIGHT);
 }
