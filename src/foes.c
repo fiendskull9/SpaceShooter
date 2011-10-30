@@ -11,8 +11,8 @@
 
 #define FOE_WIDTH 		57
 #define FOE_HEIGHT 		40
-#define FOE_MAX_SPEED 	5
-#define FOE_MIN_SPEED 	3
+#define FOE_MAX_SPEED 	7
+#define FOE_MIN_SPEED 	4
 
 #define FOE_DEATH_SCORES 	5
 #define FOE_OVERTAKE_SCORES 	-1
@@ -22,7 +22,7 @@
 
 #define FOE_BULLET_WIDTH 	17
 #define FOE_BULLET_HEIGHT 	8
-#define FOE_BULLET_SPEED 	6
+#define FOE_BULLET_SPEED 	9
 
 #define GEN_RAND(SEED)		rand() % SEED
 

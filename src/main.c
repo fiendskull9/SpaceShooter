@@ -9,10 +9,11 @@
 #include "sound.h"
 #include "window.h"
 
-#define ENEMY_BULLET_WIDTH 	17
-#define ENEMY_BULLET_HEIGHT 	8
+#define	UPDATE_RATE (1.0 / 120.0)
 
 int main() {
+	double old_time;
+
 	/* init */
 	window_init(SCREEN_WIDTH, SCREEN_HEIGHT, "SpaceShooter");
 
@@ -23,24 +24,32 @@ int main() {
 	foes_load_data();
 	player_load_data();
 
+	old_time = glfwGetTime();
+
 	while (glfwGetKey(GLFW_KEY_ESC) != GLFW_PRESS) {
-		/* game logic */
-		background_scroll();
+		double new_time = glfwGetTime();
 
-		player_move_spaceship();
+		if ((new_time - old_time) >= UPDATE_RATE) {
+			old_time = new_time;
 
-		/* FIXME: move mouse and key check elsewhere */
-		if (glfwGetMouseButton(GLFW_MOUSE_BUTTON_1) == GLFW_PRESS)
-			player_fire_bullet();
+			/* game logic */
+			background_scroll();
 
-		player_move_bullet();
+			player_move_spaceship();
 
-		foes_respawn();
-		foes_move_spaceship();
-		foes_fire_bullet();
-		foes_move_bullet();
+			/* FIXME: move mouse and key check elsewhere */
+			if (glfwGetMouseButton(GLFW_MOUSE_BUTTON_1) == GLFW_PRESS)
+				player_fire_bullet();
 
-		foes_check_collision();
+			player_move_bullet();
+
+			foes_respawn();
+			foes_move_spaceship();
+			foes_fire_bullet();
+			foes_move_bullet();
+
+			foes_check_collision();
+		}
 
 		/* game rendering */
 		window_clear();
