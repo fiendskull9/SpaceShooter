@@ -2,11 +2,10 @@
 
 #include <GL/glfw.h>
 
+#include "foes.h"
 #include "player.h"
 #include "texture.h"
 #include "window.h"
-
-#define FOES 		3
 
 #define FOE_WIDTH 		57
 #define FOE_HEIGHT 		40
@@ -47,6 +46,7 @@ void foes_load_data() {
 
 	for (i = 0; i < FOES; i++) {
 		foes[i]			= malloc(sizeof(spaceship_t));
+		foes[i] -> fired	= 0;
 		foes[i] -> death	= 1;
 	}
 }
@@ -59,26 +59,26 @@ void foes_draw() {
 	for (i = 0; i < FOES; i++) {
 		float x_cell, x_cell2;
 
-		if (foes[i] -> death) continue;
+		if (!foes[i] -> death) {
+			x_cell	= i * cell_division;
+			x_cell2	= x_cell + cell_division;
 
-		x_cell	= i * cell_division;
-		x_cell2	= x_cell + cell_division;
+			glBindTexture(GL_TEXTURE_2D, texture_sheet);
 
-		glBindTexture(GL_TEXTURE_2D, texture_sheet);
+			glBegin(GL_QUADS);
+				glTexCoord2f(x_cell, 0.0f);
+				glVertex2f(foes[i] -> x, foes[i] -> y + FOE_HEIGHT);
 
-		glBegin(GL_QUADS);
-			glTexCoord2f(x_cell, 0.0f);
-			glVertex2f(foes[i] -> x, foes[i] -> y + FOE_HEIGHT);
+				glTexCoord2f(x_cell2, 0.0f);
+				glVertex2f(foes[i] -> x + FOE_WIDTH, foes[i] -> y + FOE_HEIGHT);
 
-			glTexCoord2f(x_cell2, 0.0f);
-			glVertex2f(foes[i] -> x + FOE_WIDTH, foes[i] -> y + FOE_HEIGHT);
+				glTexCoord2f(x_cell2, 1.0f);
+				glVertex2f(foes[i] -> x + FOE_WIDTH, foes[i] -> y);
 
-			glTexCoord2f(x_cell2, 1.0f);
-			glVertex2f(foes[i] -> x + FOE_WIDTH, foes[i] -> y);
-
-			glTexCoord2f(x_cell, 1.0f);
-			glVertex2f(foes[i] -> x, foes[i] -> y);
-		glEnd();
+				glTexCoord2f(x_cell, 1.0f);
+				glVertex2f(foes[i] -> x, foes[i] -> y);
+			glEnd();
+		}
 
 		if (foes[i] -> fired) {
 			texture_draw(
@@ -119,15 +119,9 @@ void foes_move_spaceship() {
 void foes_move_bullet() {
 	int i, player_x, player_y;
 
-	player_get_coord(&player_x, &player_y);
+	player_get_spaceship_coord(&player_x, &player_y);
 
 	for (i = 0; i < FOES; i++) {
-		if (!foes[i] -> fired && (foes[i] -> x > player_x) && !foes[i] -> death) {
-			foes[i] -> bullet_x	= foes[i] -> x;
-			foes[i] -> bullet_y	= foes[i] -> y + (FOE_HEIGHT / 2);
-			foes[i] -> fired	= 1;
-		}
-
 		if (!foes[i] -> fired) continue;
 
 		foes[i] -> bullet_x -= FOE_BULLET_SPEED;
@@ -142,16 +136,81 @@ void foes_move_bullet() {
 	}
 }
 
+void foes_check_collision() {
+	int i, player_x, player_y, player_bullet_x, player_bullet_y;
+
+	player_get_spaceship_coord(&player_x, &player_y);
+	player_get_bullet_coord(&player_bullet_x, &player_bullet_y);
+
+	for (i = 0; i < FOES; i++) {
+		if (foes[i] -> death) continue;
+
+		if (
+			((player_bullet_x + PLAYER_BULLET_WIDTH) >= foes[i] -> x) &&
+			((player_bullet_x <= (foes[i] -> x + FOE_WIDTH))) &&
+			((player_bullet_y + PLAYER_BULLET_HEIGHT) >= foes[i] -> y) &&
+			((player_bullet_y <= (foes[i] -> y + FOE_HEIGHT)))
+		) {
+			/* TODO: score += ENEMY_DEATH_SCORES; */
+
+			foes[i] -> death = 1;
+			player_reset_bullet();
+
+			/* TODO: play_sample */
+		}
+	}
+}
+
+void foes_fire_bullet() {
+	int i, player_x, player_y;
+
+	player_get_spaceship_coord(&player_x, &player_y);
+
+	for (i = 0; i < FOES; i++) {
+		if (!foes[i] -> fired && (foes[i] -> x > player_x) && !foes[i] -> death) {
+			foes[i] -> bullet_x	= foes[i] -> x;
+			foes[i] -> bullet_y	= foes[i] -> y + (FOE_HEIGHT / 2);
+			foes[i] -> fired	= 1;
+
+			/* TODO: play_sample(player.snd_fire, 255,128,1000, FALSE); */
+		}
+	}
+}
+
 void foes_respawn() {
 	int i = 0;
 
 	for (i = 0; i < FOES; i++) {
 		if (!foes[i] -> death) continue;
 
-		foes[i] -> fired	= 0;
+		/*foes[i] -> fired	= 0;*/
 		foes[i] -> death	= 0;
 		foes[i] -> x		= SCREEN_WIDTH - FOE_HEIGHT;
 		foes[i] -> y		= GEN_RAND(SCREEN_HEIGHT);
 		foes[i] -> speed 	= GEN_RAND(FOE_MAX_SPEED) + FOE_MIN_SPEED;
 	}
+}
+
+void foes_get_spaceship_coord(int *x, int *y) {
+	int i, arx[FOES], ary[FOES];
+
+	for (i = 0; i < FOES; i++) {
+		arx[i] = foes[i] -> x;
+		ary[i] = foes[i] -> y;
+	}
+
+	x = arx;
+	y = ary;
+}
+
+void foes_get_bullet_coord(int *x, int *y) {
+	int i, arx[FOES], ary[FOES];
+
+	for (i = 0; i < FOES; i++) {
+		arx[i] = foes[i] -> bullet_x;
+		ary[i] = foes[i] -> bullet_y;
+	}
+
+	x = arx;
+	y = ary;
 }

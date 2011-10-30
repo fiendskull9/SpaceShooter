@@ -2,6 +2,7 @@
 
 #include <GL/glfw.h>
 
+#include "foes.h"
 #include "texture.h"
 #include "window.h"
 
@@ -14,7 +15,7 @@
 
 typedef struct SPACESHIP {
 	int x, y;
-	int fire;
+	int fired;
 	int health;
 	unsigned int texture;
 
@@ -31,7 +32,7 @@ void player_load_data() {
 	player -> x		= 0;
 	player -> y		= 0;
 	player -> health	= 50;
-	player -> fire		= 0;
+	player -> fired		= 0;
 
 	player -> texture = texture_load("data/graphics/spaceship.tga");
 	player -> bullet_texture = texture_load("data/graphics/bullet.tga");
@@ -47,7 +48,7 @@ void player_draw(spaceship_t *asd) {
 		PLAYER_WIDTH, PLAYER_HEIGHT
 	);
 
-	if (player -> fire) {
+	if (player -> fired) {
 		texture_draw(
 			player -> bullet_texture,
 			player -> bullet_x, player -> bullet_y,
@@ -69,7 +70,7 @@ void player_move_spaceship() {
 }
 
 void player_move_bullet() {
-	if (!player -> fire)
+	if (!player -> fired)
 		return;
 
 	player -> bullet_x += PLAYER_BULLET_SPEED;
@@ -77,22 +78,38 @@ void player_move_bullet() {
 	if (player -> bullet_x > SCREEN_WIDTH) {
 		player -> bullet_x	= -200;
 		player -> bullet_y	= -200;
-		player -> fire		= 0;
+		player -> fired		= 0;
 	}
 }
 
+void player_check_collision() {
+
+}
+
 void player_fire_bullet() {
-	if (player -> fire)
+	if (player -> fired)
 		return;
 
-	player -> fire		= 1;
+	player -> fired		= 1;
 	player -> bullet_x	= player -> x + PLAYER_WIDTH;
 	player -> bullet_y	= player -> y + (PLAYER_HEIGHT / 2);
 
-	/* play_sample(player.snd_fire, 255,128,1000, FALSE); */
+	/* play_sample(player.snd_fired, 255,128,1000, FALSE); */
 }
 
-void player_get_coord(int *x, int *y) {
+void player_get_spaceship_coord(int *x, int *y) {
 	*x = player -> x;
 	*y = player -> y;
+}
+
+void player_get_bullet_coord(int *x, int *y) {
+	*x = player -> bullet_x;
+	*y = player -> bullet_y;
+}
+
+void player_reset_bullet() {
+	player -> bullet_x = -200;
+	player -> bullet_x = -200;
+
+	player -> fired = 0;
 }

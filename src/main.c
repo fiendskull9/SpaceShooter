@@ -33,7 +33,10 @@ int main() {
 
 		foes_respawn();
 		foes_move_spaceship();
+		foes_fire_bullet();
 		foes_move_bullet();
+
+		foes_check_collision();
 
 		/* game rendering */
 		window_clear();
