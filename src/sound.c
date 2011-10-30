@@ -5,6 +5,8 @@
 
 #include <sndfile.h>
 
+#include "debug.h"
+
 static ALuint		source;
 
 static ALCdevice	*device;

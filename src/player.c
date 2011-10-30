@@ -2,6 +2,7 @@
 
 #include <GL/glfw.h>
 
+#include "debug.h"
 #include "foes.h"
 #include "sound.h"
 #include "texture.h"

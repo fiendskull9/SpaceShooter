@@ -1,5 +1,7 @@
 #include <GL/glfw.h>
 
+#include "debug.h"
+
 void window_init(int width, int height, const char *title) {
 	int err;
 

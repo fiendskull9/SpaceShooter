@@ -1,5 +1,7 @@
 #include <GL/glfw.h>
 
+#include "debug.h"
+
 unsigned int texture_load(const char *path) {
 	int err;
 	GLuint texture;

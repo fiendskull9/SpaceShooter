@@ -23,7 +23,7 @@ PREFIX?=/usr/local
 BINDIR?=$(DESTDIR)$(PREFIX)/games
 MANDIR?=$(DESTDIR)$(PREFIX)/share/man/man6
 
-OBJS=src/background.o src/foes.o src/main.o src/player.o src/sound.o src/texture.o src/window.o
+OBJS=src/background.o src/debug.o src/foes.o src/main.o src/player.o src/sound.o src/texture.o src/window.o
 
 .PHONY: all install uninstall clean
 
@@ -49,7 +49,9 @@ clean:
 src/background.o: src/background.c \
 	src/texture.h \
 	src/window.h
+src/debug.o: src/debug.c
 src/foes.o: src/foes.c \
+	src/debug.h \
 	src/foes.h \
 	src/player.h \
 	src/sound.h \
@@ -57,15 +59,20 @@ src/foes.o: src/foes.c \
 	src/window.h
 src/main.o: src/main.c \
 	src/background.h \
+	src/debug.h \
 	src/foes.h \
 	src/player.h \
 	src/sound.h \
 	src/window.h
 src/player.o: src/player.c \
+	src/debug.h \
 	src/foes.h \
 	src/sound.h \
 	src/texture.h \
 	src/window.h
-src/sound.o: src/sound.c
-src/texture.o: src/texture.c
-src/window.o: src/window.c
+src/sound.o: src/sound.c \
+	src/debug.h
+src/texture.o: src/texture.c \
+	src/debug.h
+src/window.o: src/window.c \
+	src/debug.h
