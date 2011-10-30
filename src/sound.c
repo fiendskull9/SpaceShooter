@@ -7,8 +7,6 @@
 
 #include "debug.h"
 
-static ALuint		source;
-
 static ALCdevice	*device;
 static ALCcontext	*context;
 
@@ -21,19 +19,9 @@ void sound_init() {
 	alListener3f(AL_POSITION, 0, 0, 0);
 	alListener3f(AL_VELOCITY, 0, 0, 0);
 	alListener3f(AL_ORIENTATION, 0, 0, -1);
-
-	alGenSources(1, &source);
-
-	alSourcef(source, AL_PITCH, 1);
-	alSourcef(source, AL_GAIN, 1);
-	alSource3f(source, AL_POSITION, 0, 0, 0);
-	alSource3f(source, AL_VELOCITY, 0, 0, 0);
-	alSourcei(source, AL_LOOPING, AL_FALSE);
 }
 
 void sound_close() {
-	alDeleteSources(1, &source);
-
 	alcDestroyContext(context);
 	alcCloseDevice(device);
 }
@@ -53,8 +41,8 @@ unsigned int sample_load(const char *path) {
 
 	alGenBuffers(1, &sample);
 
-	/* load data to buffer */
 	snd_input = sf_open(path, SFM_READ, &snd_info);
+	if (snd_input == NULL) fail_printf("%s", sf_strerror(snd_input));
 
 	channels	= snd_info.channels;
 	frames		= snd_info.frames;
@@ -64,11 +52,10 @@ unsigned int sample_load(const char *path) {
 	buffer_size	= samples * sizeof(short);
 
 	input_buffer = malloc(buffer_size);
+	if (input_buffer == NULL) fail_printf("Out of memory");
 
 	err = sf_read_short(snd_input, input_buffer, frames);
-
-	if (err != frames)
-		printf("error: %s\n", sf_strerror(snd_input));
+	if (err != frames) fail_printf("%s", sf_strerror(snd_input));
 
 	sf_close(snd_input);
 
@@ -84,14 +71,30 @@ unsigned int sample_load(const char *path) {
 }
 
 void sample_play(unsigned int sample) {
+	ALuint source;
+
+	alGenSources(1, &source);
+
+	alSourcef(source, AL_PITCH, 1);
+	alSourcef(source, AL_GAIN, 1);
+	alSource3f(source, AL_POSITION, 0, 0, 0);
+	alSource3f(source, AL_VELOCITY, 0, 0, 0);
+	alSourcei(source, AL_LOOPING, AL_FALSE);
+
 	alSourcei(source, AL_BUFFER, sample);
 
 	alSourcePlay(source);
+
+	/*alDeleteSources(1, &source);*/
 }
 
 void sample_free(unsigned int sample) {
+	ALuint source;
+
+	alGenSources(1, &source);
+
 	alSourcei(source, AL_BUFFER, sample);
 
 	alDeleteBuffers(1, &sample);
+	alDeleteSources(1, &source);
 }
-

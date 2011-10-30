@@ -38,13 +38,15 @@ typedef struct SPACESHIP {
 
 spaceship_t *foes[FOES];
 
-static unsigned int texture_sheet, bullet_texture;
+static unsigned int texture_sheet, bullet_texture, bullet_sample;
 
 void foes_load_data() {
 	int i = 0;
 
 	texture_sheet = texture_load("data/graphics/enemies.tga");
 	bullet_texture = texture_load("data/graphics/rocket.tga");
+
+	bullet_sample = sample_load("data/sounds/rocket.wav");
 
 	for (i = 0; i < FOES; i++) {
 		foes[i]			= malloc(sizeof(spaceship_t));
@@ -174,7 +176,7 @@ void foes_fire_bullet() {
 			foes[i] -> bullet_y	= foes[i] -> y + (FOE_HEIGHT / 2);
 			foes[i] -> fired	= 1;
 
-			/* TODO: play_sample(player.snd_fire, 255,128,1000, FALSE); */
+			sample_play(bullet_sample);
 		}
 	}
 }
@@ -185,7 +187,6 @@ void foes_respawn() {
 	for (i = 0; i < FOES; i++) {
 		if (!foes[i] -> death) continue;
 
-		/*foes[i] -> fired	= 0;*/
 		foes[i] -> death	= 0;
 		foes[i] -> x		= SCREEN_WIDTH - FOE_HEIGHT;
 		foes[i] -> y		= GEN_RAND(SCREEN_HEIGHT);
