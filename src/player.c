@@ -8,12 +8,14 @@
 #include "texture.h"
 #include "window.h"
 
-#define PLAYER_WIDTH 		43
-#define PLAYER_HEIGHT 		48
+#define PLAYER_WIDTH		43
+#define PLAYER_HEIGHT		48
 
-#define PLAYER_BULLET_WIDTH 	7
-#define PLAYER_BULLET_HEIGHT 	7
-#define PLAYER_BULLET_SPEED 	12
+#define	PLAYER_FIRE_RATE	(1.0 / 30.0)
+
+#define PLAYER_BULLET_WIDTH	7
+#define PLAYER_BULLET_HEIGHT	7
+#define PLAYER_BULLET_SPEED	12
 
 typedef struct SPACESHIP {
 	int x, y;
@@ -91,14 +93,25 @@ void player_check_collision() {
 }
 
 void player_fire_bullet() {
+	double new_fire;
+	static double old_fire = 0;
+
 	if (player -> fired)
 		return;
+
+	new_fire = glfwGetTime();
+
+	if ((new_fire - old_fire) < PLAYER_FIRE_RATE)
+		goto update_time;
 
 	player -> fired		= 1;
 	player -> bullet_x	= player -> x + PLAYER_WIDTH;
 	player -> bullet_y	= player -> y + (PLAYER_HEIGHT / 2);
 
 	sample_play(player -> bullet_sample);
+
+update_time:
+	old_fire = new_fire;
 }
 
 void player_get_spaceship_coord(int *x, int *y) {
