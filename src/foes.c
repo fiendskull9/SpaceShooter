@@ -9,20 +9,22 @@
 #include "texture.h"
 #include "window.h"
 
-#define FOE_WIDTH 		57
-#define FOE_HEIGHT 		40
-#define FOE_MAX_SPEED 	7
-#define FOE_MIN_SPEED 	4
+#define FOE_WIDTH		57
+#define FOE_HEIGHT		40
+#define FOE_MAX_SPEED		7
+#define FOE_MIN_SPEED		4
 
-#define FOE_DEATH_SCORES 	5
-#define FOE_OVERTAKE_SCORES 	-1
+#define FOE_TEXTURES_PER_SHEET	3
 
-#define FOE_DAMAGE 		10
-#define FOE_BULLET_DAMAGE 	2
+#define FOE_DEATH_SCORES	5
+#define FOE_OVERTAKE_SCORES	-1
 
-#define FOE_BULLET_WIDTH 	17
-#define FOE_BULLET_HEIGHT 	8
-#define FOE_BULLET_SPEED 	9
+#define FOE_DAMAGE		10
+#define FOE_BULLET_DAMAGE	2
+
+#define FOE_BULLET_WIDTH	17
+#define FOE_BULLET_HEIGHT	8
+#define FOE_BULLET_SPEED	9
 
 #define GEN_RAND(SEED)		rand() % SEED
 
@@ -58,13 +60,18 @@ void foes_load_data() {
 void foes_draw() {
 	int i = 0;
 
-	float cell_division = 1.0 / FOES;
+	float cell_division = 1.0 / FOE_TEXTURES_PER_SHEET;
 
 	for (i = 0; i < FOES; i++) {
 		float x_cell, x_cell2;
 
 		if (!foes[i] -> death) {
-			x_cell	= i * cell_division;
+			x_cell	= (
+				i < FOE_TEXTURES_PER_SHEET ?
+					i :
+					i - FOE_TEXTURES_PER_SHEET
+				) * cell_division;
+
 			x_cell2	= x_cell + cell_division;
 
 			glBindTexture(GL_TEXTURE_2D, texture_sheet);

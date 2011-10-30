@@ -1,4 +1,4 @@
-#define FOES 		3
+#define FOES 		3 /* must be (1 < x < 6) */
 
 extern void foes_load_data();
 
