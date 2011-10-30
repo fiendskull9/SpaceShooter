@@ -14,7 +14,7 @@ PREFIX?=/usr/local
 BINDIR?=$(DESTDIR)$(PREFIX)/games
 MANDIR?=$(DESTDIR)$(PREFIX)/share/man/man6
 
-OBJS=src/main.o src/player.o src/texture.o src/window.o
+OBJS=src/background.o src/foes.o src/main.o src/player.o src/texture.o src/window.o
 
 .PHONY: all install uninstall clean
 
@@ -37,11 +37,19 @@ clean:
 	$(RM) -rf spaceshooter src/*.o
 	$(RM) -rf man/spaceshooter.6.gz
 
+src/background.o: src/background.c \
+	src/texture.h \
+	src/window.h
+src/foes.o: src/foes.c \
+	src/texture.h \
+	src/window.h
 src/main.o: src/main.c \
+	src/background.h \
+	src/foes.h \
 	src/player.h \
 	src/window.h
 src/player.o: src/player.c \
-	src/player.h \
-	src/texture.h
+	src/texture.h \
+	src/window.h
 src/texture.o: src/texture.c
 src/window.o: src/window.c

@@ -1,0 +1,157 @@
+#include <stdlib.h>
+
+#include <GL/glfw.h>
+
+#include "player.h"
+#include "texture.h"
+#include "window.h"
+
+#define FOES 		3
+
+#define FOE_WIDTH 		57
+#define FOE_HEIGHT 		40
+#define FOE_MAX_SPEED 	5
+#define FOE_MIN_SPEED 	3
+
+#define FOE_DEATH_SCORES 	5
+#define FOE_OVERTAKE_SCORES 	-1
+
+#define FOE_DAMAGE 		10
+#define FOE_BULLET_DAMAGE 	2
+
+#define FOE_BULLET_WIDTH 	17
+#define FOE_BULLET_HEIGHT 	8
+#define FOE_BULLET_SPEED 	6
+
+#define GEN_RAND(SEED)		rand() % SEED
+
+typedef struct SPACESHIP {
+	int x, y;
+	unsigned int fired;
+	unsigned int death;
+	unsigned int direc;
+	unsigned int speed;
+
+	int bullet_x, bullet_y;
+} spaceship_t;
+
+spaceship_t *foes[FOES];
+
+static unsigned int texture_sheet, bullet_texture;
+
+void foes_load_data() {
+	int i = 0;
+
+	texture_sheet = texture_load("data/graphics/enemies.tga");
+	bullet_texture = texture_load("data/graphics/rocket.tga");
+
+	for (i = 0; i < FOES; i++) {
+		foes[i]			= malloc(sizeof(spaceship_t));
+		foes[i] -> death	= 1;
+	}
+}
+
+void foes_draw() {
+	int i = 0;
+
+	float cell_division = 1.0 / FOES;
+
+	for (i = 0; i < FOES; i++) {
+		float x_cell, x_cell2;
+
+		if (foes[i] -> death) continue;
+
+		x_cell	= i * cell_division;
+		x_cell2	= x_cell + cell_division;
+
+		glBindTexture(GL_TEXTURE_2D, texture_sheet);
+
+		glBegin(GL_QUADS);
+			glTexCoord2f(x_cell, 0.0f);
+			glVertex2f(foes[i] -> x, foes[i] -> y + FOE_HEIGHT);
+
+			glTexCoord2f(x_cell2, 0.0f);
+			glVertex2f(foes[i] -> x + FOE_WIDTH, foes[i] -> y + FOE_HEIGHT);
+
+			glTexCoord2f(x_cell2, 1.0f);
+			glVertex2f(foes[i] -> x + FOE_WIDTH, foes[i] -> y);
+
+			glTexCoord2f(x_cell, 1.0f);
+			glVertex2f(foes[i] -> x, foes[i] -> y);
+		glEnd();
+
+		if (foes[i] -> fired) {
+			texture_draw(
+				bullet_texture,
+				foes[i] -> bullet_x, foes[i] -> bullet_y,
+				FOE_BULLET_WIDTH, FOE_BULLET_WIDTH
+			);
+		}
+	}
+}
+
+void foes_move_spaceship() {
+	int i = 0;
+
+	for (i = 0; i < FOES; i++) {
+		if (foes[i] -> death) continue;
+
+		if (foes[i] -> y >= (SCREEN_HEIGHT - FOE_HEIGHT))
+			foes[i] -> direc = 0;
+		else if (foes[i] -> y <= 0)
+			foes[i] -> direc = 1;
+
+		if (foes[i] -> direc == 0)
+			foes[i] -> y--;
+		else
+			foes[i] -> y++;
+
+		foes[i] -> x -= foes[i] -> speed;
+
+		if (foes[i] -> x <= -64) {
+			foes[i] -> death = 1;
+
+			/* TODO: score += FOE_OVERTAKE_SCORES */
+		}
+	}
+}
+
+void foes_move_bullet() {
+	int i, player_x, player_y;
+
+	player_get_coord(&player_x, &player_y);
+
+	for (i = 0; i < FOES; i++) {
+		if (!foes[i] -> fired && (foes[i] -> x > player_x) && !foes[i] -> death) {
+			foes[i] -> bullet_x	= foes[i] -> x;
+			foes[i] -> bullet_y	= foes[i] -> y + (FOE_HEIGHT / 2);
+			foes[i] -> fired	= 1;
+		}
+
+		if (!foes[i] -> fired) continue;
+
+		foes[i] -> bullet_x -= FOE_BULLET_SPEED;
+
+		if(player_y > foes[i] -> bullet_y)
+			foes[i] -> bullet_y++;
+		else
+			foes[i] -> bullet_y--;
+
+		if (foes[i] -> bullet_x <= 0)
+			foes[i] -> fired = 0;
+	}
+}
+
+void foes_respawn() {
+	int i = 0;
+
+	for (i = 0; i < FOES; i++) {
+		if (!foes[i] -> death) continue;
+
+		foes[i] -> fired	= 0;
+		foes[i] -> death	= 0;
+		foes[i] -> x		= SCREEN_WIDTH - FOE_HEIGHT;
+		foes[i] -> y		= GEN_RAND(SCREEN_HEIGHT);
+		foes[i] -> speed 	= GEN_RAND(FOE_MAX_SPEED) + FOE_MIN_SPEED;
+	}
+}

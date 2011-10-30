@@ -1,14 +1,10 @@
-typedef struct SPACESHIP {
-	int x, y;
-	int fire;
-	int health;
-	unsigned int texture;
-
-
-	int bullet_x, bullet_y;
-	unsigned int bullet_texture;
-} spaceship_t;
-
-extern spaceship_t *player_load();
+extern void player_load_data();
 
 extern void player_draw();
+
+extern void player_move_spaceship();
+extern void player_move_bullet();
+
+extern void player_fire_bullet();
+
+extern void player_get_coord(int *x, int *y);
