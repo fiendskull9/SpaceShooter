@@ -4,6 +4,7 @@
 
 #include "foes.h"
 #include "player.h"
+#include "sound.h"
 #include "texture.h"
 #include "window.h"
 

@@ -7,14 +7,23 @@ RMDIR=rmdir
 MKDIR=mkdir
 INSTALL=install
 
-CFLAGS+=-Wall -pedantic -O3 -fPIE `pkg-config --cflags libglfw`
-LDFLAGS=`pkg-config --libs libglfw`
+GLFW_CFLAGS=`pkg-config --cflags libglfw`
+GLFW_LDFLAGS=`pkg-config --libs libglfw`
+
+SNDFILE_CFLAGS=`pkg-config --cflags sndfile`
+SNDFILE_LDFLAGS=`pkg-config --libs sndfile`
+
+OPENAL_CFLAGS=`pkg-config --cflags openal`
+OPENAL_LDFLAGS=`pkg-config --libs openal`
+
+CFLAGS+=-Wall -pedantic -O3 -fPIE $(GLFW_CFLAGS) $(SNDFILE_CFLAGS) $(OPENAL_CFLAGS)
+LDFLAGS=$(GLFW_LDFLAGS) $(SNDFILE_LDFLAGS) $(OPENAL_LDFLAGS)
 
 PREFIX?=/usr/local
 BINDIR?=$(DESTDIR)$(PREFIX)/games
 MANDIR?=$(DESTDIR)$(PREFIX)/share/man/man6
 
-OBJS=src/background.o src/foes.o src/main.o src/player.o src/texture.o src/window.o
+OBJS=src/background.o src/foes.o src/main.o src/player.o src/sound.o src/texture.o src/window.o
 
 .PHONY: all install uninstall clean
 
@@ -41,15 +50,22 @@ src/background.o: src/background.c \
 	src/texture.h \
 	src/window.h
 src/foes.o: src/foes.c \
+	src/foes.h \
+	src/player.h \
+	src/sound.h \
 	src/texture.h \
 	src/window.h
 src/main.o: src/main.c \
 	src/background.h \
 	src/foes.h \
 	src/player.h \
+	src/sound.h \
 	src/window.h
 src/player.o: src/player.c \
+	src/foes.h \
+	src/sound.h \
 	src/texture.h \
 	src/window.h
+src/sound.o: src/sound.c
 src/texture.o: src/texture.c
 src/window.o: src/window.c

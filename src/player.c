@@ -3,6 +3,7 @@
 #include <GL/glfw.h>
 
 #include "foes.h"
+#include "sound.h"
 #include "texture.h"
 #include "window.h"
 
@@ -19,9 +20,9 @@ typedef struct SPACESHIP {
 	int health;
 	unsigned int texture;
 
-
 	int bullet_x, bullet_y;
 	unsigned int bullet_texture;
+	unsigned int bullet_sample;
 } spaceship_t;
 
 spaceship_t *player = NULL;
@@ -36,6 +37,8 @@ void player_load_data() {
 
 	player -> texture = texture_load("data/graphics/spaceship.tga");
 	player -> bullet_texture = texture_load("data/graphics/bullet.tga");
+
+	player -> bullet_sample = sample_load("data/sounds/fire.wav");
 
 	player -> bullet_x = -200;
 	player -> bullet_y = -200;
@@ -94,7 +97,7 @@ void player_fire_bullet() {
 	player -> bullet_x	= player -> x + PLAYER_WIDTH;
 	player -> bullet_y	= player -> y + (PLAYER_HEIGHT / 2);
 
-	/* play_sample(player.snd_fired, 255,128,1000, FALSE); */
+	sample_play(player -> bullet_sample);
 }
 
 void player_get_spaceship_coord(int *x, int *y) {

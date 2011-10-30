@@ -5,6 +5,7 @@
 #include "background.h"
 #include "foes.h"
 #include "player.h"
+#include "sound.h"
 #include "window.h"
 
 #define ENEMY_BULLET_WIDTH 	17
@@ -13,6 +14,8 @@
 int main() {
 	/* init */
 	window_init(SCREEN_WIDTH, SCREEN_HEIGHT, "SpaceShooter");
+
+	sound_init();
 
 	/* load data */
 	background_load_data();
@@ -49,4 +52,7 @@ int main() {
 	}
 
 	window_close();
+	sound_close();
+
+	return 0;
 }
