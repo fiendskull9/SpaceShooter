@@ -57,8 +57,6 @@
 #define FOE_DAMAGE		10
 #define FOE_BULLET_DAMAGE	2
 
-#define FOE_BULLET_WIDTH	17
-#define FOE_BULLET_HEIGHT	8
 #define FOE_BULLET_SPEED	9
 
 #define GEN_RAND(SEED)		rand() % SEED
@@ -236,26 +234,18 @@ void foes_respawn() {
 	}
 }
 
-void foes_get_spaceship_coord(int *x, int *y) {
-	int i, arx[FOES], ary[FOES];
+void foes_get_spaceship_coord(int n, int *x, int *y) {
+	if (n > FOES)
+		return;
 
-	for (i = 0; i < FOES; i++) {
-		arx[i] = foes[i] -> x;
-		ary[i] = foes[i] -> y;
-	}
-
-	x = arx;
-	y = ary;
+	*x = foes[n] -> x;
+	*y = foes[n] -> y;
 }
 
-void foes_get_bullet_coord(int *x, int *y) {
-	int i, arx[FOES], ary[FOES];
+void foes_get_bullet_coord(int n, int *x, int *y) {
+	if (n > FOES)
+		return;
 
-	for (i = 0; i < FOES; i++) {
-		arx[i] = foes[i] -> bullet_x;
-		ary[i] = foes[i] -> bullet_y;
-	}
-
-	x = arx;
-	y = ary;
+	*x = foes[n] -> bullet_x;
+	*y = foes[n] -> bullet_y;
 }

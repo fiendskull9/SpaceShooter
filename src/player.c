@@ -124,7 +124,24 @@ void player_move_bullet() {
 }
 
 void player_check_collision() {
+	int i;
 
+	for (i = 0; i < FOES; i++) {
+		int foe_x, foe_y, foe_bullet_x, foe_bullet_y;
+
+		foes_get_spaceship_coord(i, &foe_x, &foe_y);
+		foes_get_bullet_coord(i, &foe_bullet_x, &foe_bullet_y);
+
+		if (
+			((foe_bullet_x + FOE_BULLET_WIDTH) >= player -> x) &&
+			((foe_bullet_x <= (player -> x + PLAYER_WIDTH))) &&
+			((foe_bullet_y + FOE_BULLET_HEIGHT) >= player -> y) &&
+			((foe_bullet_y <= (player -> y + PLAYER_HEIGHT)))
+		) {
+			/* TODO: health -= FOE_DAMAGE; */
+			/* TODO: play_sample */
+		}
+	}
 }
 
 void player_fire_bullet() {

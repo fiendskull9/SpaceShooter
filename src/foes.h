@@ -33,7 +33,10 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define FOES 		3 /* must be (1 < x < 6) */
+#define FOES 			3 /* must be (1 < x < 6) */
+
+#define FOE_BULLET_WIDTH	17
+#define FOE_BULLET_HEIGHT	8
 
 extern void foes_load_data();
 
@@ -48,5 +51,5 @@ extern void foes_respawn();
 
 extern void foes_check_collision();
 
-extern void foes_get_spaceship_coord(int *x, int *y);
-extern void foes_get_bullet_coord(int *x, int *y);
+extern void foes_get_spaceship_coord(int n, int *x, int *y);
+extern void foes_get_bullet_coord(int n, int *x, int *y);

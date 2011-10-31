@@ -85,6 +85,7 @@ int main() {
 			foes_fire_bullet();
 			foes_move_bullet();
 
+			player_check_collision();
 			foes_check_collision();
 		}
 
