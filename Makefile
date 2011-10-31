@@ -7,23 +7,30 @@ RMDIR=rmdir
 MKDIR=mkdir
 INSTALL=install
 
-GLFW_CFLAGS=`pkg-config --cflags libglfw`
-GLFW_LDFLAGS=`pkg-config --libs libglfw`
+CFLAGS+=-Wall -pedantic -O3 -fPIE
+LDFLAGS=
 
-SNDFILE_CFLAGS=`pkg-config --cflags sndfile`
-SNDFILE_LDFLAGS=`pkg-config --libs sndfile`
+# glfw
+CFLAGS+= `pkg-config --cflags libglfw`
+LDFLAGS+= `pkg-config --libs libglfw`
 
-OPENAL_CFLAGS=`pkg-config --cflags openal`
-OPENAL_LDFLAGS=`pkg-config --libs openal`
+# sndfile
+CFLAGS+=`pkg-config --cflags sndfile`
+LDFLAGS+=`pkg-config --libs sndfile`
 
-CFLAGS+=-Wall -pedantic -O3 -fPIE $(GLFW_CFLAGS) $(SNDFILE_CFLAGS) $(OPENAL_CFLAGS)
-LDFLAGS=$(GLFW_LDFLAGS) $(SNDFILE_LDFLAGS) $(OPENAL_LDFLAGS)
+# openal
+CFLAGS+=`pkg-config --cflags openal`
+LDFLAGS+=`pkg-config --libs openal`
+
+# freetype2
+CFLAGS+=`pkg-config --cflags freetype2`
+LDFLAGS+=`pkg-config --libs freetype2`
 
 PREFIX?=/usr/local
 BINDIR?=$(DESTDIR)$(PREFIX)/games
 MANDIR?=$(DESTDIR)$(PREFIX)/share/man/man6
 
-OBJS=src/background.o src/debug.o src/foes.o src/main.o src/player.o src/sound.o src/texture.o src/window.o
+OBJS=src/background.o src/debug.o src/foes.o src/main.o src/player.o src/sound.o src/text.o src/texture.o src/window.o
 
 .PHONY: all install uninstall clean
 
@@ -63,6 +70,7 @@ src/main.o: src/main.c \
 	src/foes.h \
 	src/player.h \
 	src/sound.h \
+	src/text.h \
 	src/window.h
 src/player.o: src/player.c \
 	src/debug.h \
@@ -72,6 +80,7 @@ src/player.o: src/player.c \
 	src/window.h
 src/sound.o: src/sound.c \
 	src/debug.h
+src/text.o: src/text.c
 src/texture.o: src/texture.c \
 	src/debug.h
 src/window.o: src/window.c \
