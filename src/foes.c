@@ -44,8 +44,6 @@
 #include "texture.h"
 #include "window.h"
 
-#define FOE_WIDTH		57
-#define FOE_HEIGHT		40
 #define FOE_MAX_SPEED		7
 #define FOE_MIN_SPEED		4
 
@@ -53,9 +51,6 @@
 
 #define FOE_DEATH_SCORES	5
 #define FOE_OVERTAKE_SCORES	-1
-
-#define FOE_DAMAGE		10
-#define FOE_BULLET_DAMAGE	2
 
 #define FOE_BULLET_SPEED	9
 
@@ -160,6 +155,8 @@ void foes_move_spaceship() {
 	}
 }
 
+void foes_reset_spaceship(int n) { foes[n] -> death = 1; }
+
 void foes_move_bullet() {
 	int i, player_x, player_y;
 
@@ -220,6 +217,8 @@ void foes_fire_bullet() {
 		}
 	}
 }
+
+void foes_reset_bullet(int n) { foes[n] -> bullet_x = -50; }
 
 void foes_respawn() {
 	int i = 0;

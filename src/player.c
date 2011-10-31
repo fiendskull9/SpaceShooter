@@ -138,10 +138,24 @@ void player_check_collision() {
 			((foe_bullet_y + FOE_BULLET_HEIGHT) >= player -> y) &&
 			((foe_bullet_y <= (player -> y + PLAYER_HEIGHT)))
 		) {
-			/* TODO: health -= FOE_DAMAGE; */
-			/* TODO: play_sample */
+			foes_reset_bullet(i);
+			player -> health -= FOE_BULLET_DAMAGE;
+		}
+
+		if (
+			((foe_x + FOE_WIDTH) >= player -> x) &&
+			((foe_x <= (player -> x + PLAYER_WIDTH))) &&
+			((foe_y + FOE_HEIGHT) >= player -> y) &&
+			((foe_y <= (player -> y + PLAYER_HEIGHT)))
+		) {
+			foes_reset_spaceship(i);
+			player -> health -= FOE_DAMAGE;
 		}
 	}
+
+	if (player -> health <= 0)
+		/* TODO: gameover */
+		fail_printf("gameover");
 }
 
 void player_fire_bullet() {
@@ -164,6 +178,10 @@ void player_fire_bullet() {
 
 update_time:
 	old_fire = new_fire;
+}
+
+void player_get_health(int *x) {
+	*x = player -> health;
 }
 
 void player_get_spaceship_coord(int *x, int *y) {

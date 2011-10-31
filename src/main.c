@@ -96,7 +96,12 @@ int main() {
 		foes_draw();
 		player_draw();
 
-		font_draw(50, 50, "asd: %d", 5);
+		{
+			int health;
+
+			player_get_health(&health);
+			font_draw(10, 20, "Health: %d", health);
+		}
 
 		window_swap_buf();
 	}
