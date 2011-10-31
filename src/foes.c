@@ -68,7 +68,7 @@ typedef struct SPACESHIP {
 
 spaceship_t *foes[FOES];
 
-static unsigned int texture_sheet, bullet_texture, bullet_sample;
+static unsigned int texture_sheet, bullet_texture, bullet_sample, explosion_sample;
 
 void foes_load_data() {
 	int i = 0;
@@ -77,6 +77,7 @@ void foes_load_data() {
 	bullet_texture = texture_load("data/graphics/rocket.tga");
 
 	bullet_sample = sample_load("data/sounds/rocket.wav");
+	explosion_sample = sample_load("data/sounds/explosion.wav");
 
 	for (i = 0; i < FOES; i++) {
 		foes[i]			= malloc(sizeof(spaceship_t));
@@ -149,8 +150,7 @@ void foes_move_spaceship() {
 
 		if (foes[i] -> x <= -64) {
 			foes[i] -> death = 1;
-
-			/* TODO: score += FOE_OVERTAKE_SCORES */
+			player_inc_points(FOE_OVERTAKE_SCORES);
 		}
 	}
 }
@@ -192,12 +192,11 @@ void foes_check_collision() {
 			((player_bullet_y + PLAYER_BULLET_HEIGHT) >= foes[i] -> y) &&
 			((player_bullet_y <= (foes[i] -> y + FOE_HEIGHT)))
 		) {
-			/* TODO: score += ENEMY_DEATH_SCORES; */
-
 			foes[i] -> death = 1;
 			player_reset_bullet();
 
-			/* TODO: play_sample */
+			player_inc_points(FOE_DEATH_SCORES);
+			sample_play(explosion_sample);
 		}
 	}
 }

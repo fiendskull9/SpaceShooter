@@ -55,8 +55,9 @@
 typedef struct SPACESHIP {
 	int x, y;
 	int fired;
-	int health;
+	int health, score;
 	unsigned int texture;
+	unsigned int death_sample;
 
 	int bullet_x, bullet_y;
 	unsigned int bullet_texture;
@@ -72,11 +73,13 @@ void player_load_data() {
 	player -> y		= 0;
 	player -> health	= 50;
 	player -> fired		= 0;
+	player -> score		= 0;
 
 	player -> texture = texture_load("data/graphics/spaceship.tga");
 	player -> bullet_texture = texture_load("data/graphics/bullet.tga");
 
 	player -> bullet_sample = sample_load("data/sounds/fire.wav");
+	/*player -> death_sample = sample_load("data/sounds/gameover.wav");*/
 
 	player -> bullet_x = -200;
 	player -> bullet_y = -200;
@@ -153,9 +156,10 @@ void player_check_collision() {
 		}
 	}
 
-	if (player -> health <= 0)
+	if (player -> health <= 0) {
 		/* TODO: gameover */
-		fail_printf("gameover");
+		/*sample_play(player -> death_sample);*/
+	}
 }
 
 void player_fire_bullet() {
@@ -182,6 +186,14 @@ update_time:
 
 void player_get_health(int *x) {
 	*x = player -> health;
+}
+
+void player_get_points(int *x) {
+	*x = player -> score;
+}
+
+void player_inc_points(int x) {
+	player -> score += x;
 }
 
 void player_get_spaceship_coord(int *x, int *y) {

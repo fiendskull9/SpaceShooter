@@ -97,10 +97,13 @@ int main() {
 		player_draw();
 
 		{
-			int health;
+			int health, points;
 
 			player_get_health(&health);
+			player_get_points(&points);
+
 			font_draw(10, 20, "Health: %d", health);
+			font_draw(10, 40, "Points: %d", points);
 		}
 
 		window_swap_buf();

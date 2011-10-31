@@ -48,6 +48,11 @@ extern void player_fire_bullet();
 extern void player_check_collision();
 
 extern void player_get_health(int *x);
+extern void player_get_points(int *x);
+
+extern void player_dec_health(int x);
+extern void player_inc_points(int x);
+
 extern void player_get_spaceship_coord(int *x, int *y);
 extern void player_get_bullet_coord(int *x, int *y);
 
