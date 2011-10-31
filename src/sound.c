@@ -64,7 +64,7 @@ void sound_close() {
 unsigned int sample_load(const char *path) {
 	int err;
 
-	unsigned int	sample;
+	unsigned int	sample, source;
 
 	SF_INFO		snd_info;
 	SNDFILE		*snd_input;
@@ -100,14 +100,6 @@ unsigned int sample_load(const char *path) {
 		input_buffer, buffer_size, sample_rate
 	);
 
-	free(input_buffer);
-
-	return sample;
-}
-
-void sample_play(unsigned int sample) {
-	ALuint source;
-
 	alGenSources(1, &source);
 
 	alSourcef(source, AL_PITCH, 1);
@@ -118,7 +110,14 @@ void sample_play(unsigned int sample) {
 
 	alSourcei(source, AL_BUFFER, sample);
 
-	alSourcePlay(source);
+	free(input_buffer);
+
+	return source;
+}
+
+void sample_play(unsigned int sample) {
+
+	alSourcePlay(sample);
 
 	/*alDeleteSources(1, &source);*/
 }
