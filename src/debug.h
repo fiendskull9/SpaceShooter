@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 /*
     This file is part of SpaceShooter.
     Copyright (C) 2010 Alessandro Ghedini <al3xbio@gmail.com>
@@ -25,14 +23,3 @@
 extern int config_debug;
 
 extern void printd(char* format, ...);
-=======
-=======
->>>>>>> Stashed changes
-extern void ok_printf(const char *fmt, ...);
-extern void debug_printf(const char *fmt, ...);
-extern void err_printf(const char *fmt, ...);
-extern void fail_printf(const char *fmt, ...);
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
