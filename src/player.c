@@ -39,6 +39,7 @@
 
 #include "debug.h"
 #include "foes.h"
+#include "player.h"
 #include "sound.h"
 #include "texture.h"
 #include "window.h"
@@ -57,7 +58,6 @@ typedef struct SPACESHIP {
 	int fired;
 	int health, score;
 	unsigned int texture;
-	unsigned int death_sample;
 
 	int bullet_x, bullet_y;
 	unsigned int bullet_texture;
@@ -69,20 +69,13 @@ spaceship_t *player = NULL;
 void player_load_data() {
 	player = malloc(sizeof(spaceship_t));
 
-	player -> x		= 0;
-	player -> y		= 0;
-	player -> health	= 50;
-	player -> fired		= 0;
-	player -> score		= 0;
+	player_reset_spaceship();
+	player_reset_bullet();
 
 	player -> texture = texture_load("data/graphics/spaceship.tga");
 	player -> bullet_texture = texture_load("data/graphics/bullet.tga");
 
 	player -> bullet_sample = sample_load("data/sounds/fire.wav");
-	/*player -> death_sample = sample_load("data/sounds/gameover.wav");*/
-
-	player -> bullet_x = -200;
-	player -> bullet_y = -200;
 }
 
 void player_draw(spaceship_t *asd) {
@@ -155,11 +148,6 @@ void player_check_collision() {
 			player -> health -= FOE_DAMAGE;
 		}
 	}
-
-	if (player -> health <= 0) {
-		/* TODO: gameover */
-		/*sample_play(player -> death_sample);*/
-	}
 }
 
 void player_fire_bullet() {
@@ -204,6 +192,14 @@ void player_get_spaceship_coord(int *x, int *y) {
 void player_get_bullet_coord(int *x, int *y) {
 	*x = player -> bullet_x;
 	*y = player -> bullet_y;
+}
+
+void player_reset_spaceship() {
+	player -> x		= 0;
+	player -> y		= 0;
+	player -> health	= 50;
+	player -> fired		= 0;
+	player -> score		= 0;
 }
 
 void player_reset_bullet() {

@@ -43,12 +43,16 @@
 #include "player.h"
 #include "sound.h"
 #include "text.h"
+#include "texture.h"
 #include "window.h"
 
 #define	UPDATE_RATE (1.0 / 120.0)
 
 int main() {
 	double old_time;
+	static unsigned int game_status = 0;
+
+	unsigned int title_texture, gameover_sample;
 
 	/* init */
 	window_init(SCREEN_WIDTH, SCREEN_HEIGHT, "SpaceShooter");
@@ -61,16 +65,59 @@ int main() {
 	player_load_data();
 	font_load_data();
 
+	title_texture = texture_load("data/graphics/title.tga");
+	gameover_sample = sample_load("data/sounds/gameover.wav");
+
 	old_time = glfwGetTime();
 
 	while (glfwGetKey(GLFW_KEY_ESC) != GLFW_PRESS) {
 		double new_time = glfwGetTime();
+
+		/* game rendering */
+		window_clear();
+
+		background_draw();
+
+		switch (game_status) {
+			case 0: {
+				texture_draw(title_texture, 50, 200, 550, 46);
+				font_draw(175, 450, "Press FIRE to start");
+
+				if (glfwGetMouseButton(GLFW_MOUSE_BUTTON_1) == GLFW_PRESS)
+					game_status = 1;
+
+				break;
+			}
+
+			case 1: {
+				foes_draw();
+				player_draw();
+
+				{
+					int health, points;
+
+					player_get_health(&health);
+					player_get_points(&points);
+
+					font_draw(10, 20, "Health: %d", health);
+					font_draw(10, 40, "Points: %d", points);
+				}
+
+				break;
+			}
+
+			default: { break; }
+		}
+
+		window_swap_buf();
 
 		if ((new_time - old_time) >= UPDATE_RATE) {
 			old_time = new_time;
 
 			/* game logic */
 			background_scroll();
+
+			if (game_status < 1) continue;
 
 			player_move_spaceship();
 
@@ -89,24 +136,17 @@ int main() {
 			foes_check_collision();
 		}
 
-		/* game rendering */
-		window_clear();
-
-		background_draw();
-		foes_draw();
-		player_draw();
-
 		{
-			int health, points;
+			int health;
 
 			player_get_health(&health);
-			player_get_points(&points);
 
-			font_draw(10, 20, "Health: %d", health);
-			font_draw(10, 40, "Points: %d", points);
+			if (health <= 0) {
+				game_status = 0;
+				sample_play(gameover_sample);
+				player_reset_spaceship();
+			}
 		}
-
-		window_swap_buf();
 	}
 
 	window_close();
