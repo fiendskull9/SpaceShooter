@@ -84,9 +84,9 @@ int main() {
 		switch (game_status) {
 			case GAME_STATUS_START: {
 				texture_draw(title_texture, 50, 200, 550, 46);
-				font_draw(175, 450, "Press FIRE to start");
+				font_draw(175, 450, "Press S to start");
 
-				if (glfwGetMouseButton(GLFW_MOUSE_BUTTON_2) == GLFW_PRESS)
+				if (glfwGetKey('S') == GLFW_PRESS)
 					game_status = GAME_STATUS_RUN;
 
 				break;
@@ -113,9 +113,9 @@ int main() {
 				player_get_points(&points);
 
 				font_draw(185, 250, "Final score: %d", points);
-				font_draw(175, 450, "Press FIRE to start");
+				font_draw(175, 450, "Press Q to start");
 
-				if (glfwGetMouseButton(GLFW_MOUSE_BUTTON_1) != GLFW_PRESS)
+				if (glfwGetKey('Q') != GLFW_PRESS)
 					break;
 
 				player_reset_spaceship();
