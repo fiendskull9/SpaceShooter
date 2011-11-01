@@ -81,8 +81,9 @@ void foes_load_data() {
 
 	for (i = 0; i < FOES; i++) {
 		foes[i]			= malloc(sizeof(spaceship_t));
-		foes[i] -> fired	= 0;
-		foes[i] -> death	= 1;
+
+		foes_reset_spaceship(i);
+		foes_reset_bullet(i);
 	}
 }
 
@@ -156,6 +157,7 @@ void foes_move_spaceship() {
 }
 
 void foes_reset_spaceship(int n) { foes[n] -> death = 1; }
+void foes_reset_bullet(int n) { foes[n] -> bullet_x = -50; }
 
 void foes_move_bullet() {
 	int i, player_x, player_y;
@@ -216,8 +218,6 @@ void foes_fire_bullet() {
 		}
 	}
 }
-
-void foes_reset_bullet(int n) { foes[n] -> bullet_x = -50; }
 
 void foes_respawn() {
 	int i = 0;

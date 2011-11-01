@@ -1,5 +1,3 @@
-#include <stdio.h>
-
 /*
  * Old-school space shooter game in 2D.
  *
@@ -46,6 +44,10 @@
 #include "texture.h"
 #include "window.h"
 
+#define GAME_STATUS_START	0
+#define GAME_STATUS_RUN		1
+#define GAME_STATUS_GAMEOVER	2
+
 #define	UPDATE_RATE (1.0 / 120.0)
 
 int main() {
@@ -71,6 +73,7 @@ int main() {
 	old_time = glfwGetTime();
 
 	while (glfwGetKey(GLFW_KEY_ESC) != GLFW_PRESS) {
+		int health;
 		double new_time = glfwGetTime();
 
 		/* game rendering */
@@ -79,34 +82,54 @@ int main() {
 		background_draw();
 
 		switch (game_status) {
-			case 0: {
+			case GAME_STATUS_START: {
 				texture_draw(title_texture, 50, 200, 550, 46);
 				font_draw(175, 450, "Press FIRE to start");
 
-				if (glfwGetMouseButton(GLFW_MOUSE_BUTTON_1) == GLFW_PRESS)
-					game_status = 1;
+				if (glfwGetMouseButton(GLFW_MOUSE_BUTTON_2) == GLFW_PRESS)
+					game_status = GAME_STATUS_RUN;
 
 				break;
 			}
 
-			case 1: {
+			case GAME_STATUS_RUN: {
+				int health, points;
+
 				foes_draw();
 				player_draw();
 
-				{
-					int health, points;
+				player_get_health(&health);
+				player_get_points(&points);
 
-					player_get_health(&health);
-					player_get_points(&points);
-
-					font_draw(10, 20, "Health: %d", health);
-					font_draw(10, 40, "Points: %d", points);
-				}
+				font_draw(10, 20, "Health: %d", health);
+				font_draw(10, 40, "Points: %d", points);
 
 				break;
 			}
 
-			default: { break; }
+			case GAME_STATUS_GAMEOVER: {
+				int i, points;
+
+				player_get_points(&points);
+
+				font_draw(185, 250, "Final score: %d", points);
+				font_draw(175, 450, "Press FIRE to start");
+
+				if (glfwGetMouseButton(GLFW_MOUSE_BUTTON_1) != GLFW_PRESS)
+					break;
+
+				player_reset_spaceship();
+				player_reset_bullet();
+
+				for (i = 0; i < FOES; i++) {
+					foes_reset_spaceship(i);
+					foes_reset_bullet(i);
+				}
+
+				game_status = GAME_STATUS_START;
+			}
+
+			default: { }
 		}
 
 		window_swap_buf();
@@ -117,7 +140,7 @@ int main() {
 			/* game logic */
 			background_scroll();
 
-			if (game_status < 1) continue;
+			if (game_status != GAME_STATUS_RUN) continue;
 
 			player_move_spaceship();
 
@@ -136,16 +159,11 @@ int main() {
 			foes_check_collision();
 		}
 
-		{
-			int health;
+		player_get_health(&health);
 
-			player_get_health(&health);
-
-			if (health <= 0) {
-				game_status = 0;
-				sample_play(gameover_sample);
-				player_reset_spaceship();
-			}
+		if ((health <= 0) && (game_status == GAME_STATUS_RUN)) {
+			game_status = GAME_STATUS_GAMEOVER;
+			sample_play(gameover_sample);
 		}
 	}
 
