@@ -42,7 +42,7 @@ void window_init(int width, int height, const char *title) {
 
 	err = glfwInit();
 
-	/* FIXME: make window non-resizable */
+	glfwOpenWindowHint(GLFW_WINDOW_NO_RESIZE, GL_TRUE);
 	err = glfwOpenWindow(width, height, 8, 8, 8, 8, 0, 0, GLFW_WINDOW);
 
 	glViewport(0, 0, width, height);
