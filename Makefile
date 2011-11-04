@@ -11,26 +11,26 @@ CFLAGS+=-Wall -pedantic -O3 -fPIE
 LDFLAGS=
 
 # glfw
-CFLAGS+= `pkg-config --cflags libglfw`
-LDFLAGS+= `pkg-config --libs libglfw`
+CFLAGS+= $(shell pkg-config --cflags libglfw)
+LDFLAGS+= $(shell pkg-config --libs libglfw)
 
 # sndfile
-CFLAGS+=`pkg-config --cflags sndfile`
-LDFLAGS+=`pkg-config --libs sndfile`
+CFLAGS+=$(shell pkg-config --cflags sndfile)
+LDFLAGS+=$(shell pkg-config --libs sndfile)
 
 # openal
-CFLAGS+=`pkg-config --cflags openal`
-LDFLAGS+=`pkg-config --libs openal`
+CFLAGS+=$(shell pkg-config --cflags openal)
+LDFLAGS+=$(shell pkg-config --libs openal)
 
 # freetype2
-CFLAGS+=`pkg-config --cflags freetype2`
-LDFLAGS+=`pkg-config --libs freetype2`
+CFLAGS+=$(shell pkg-config --cflags freetype2)
+LDFLAGS+=$(shell pkg-config --libs freetype2)
 
 PREFIX?=/usr/local
 BINDIR?=$(DESTDIR)$(PREFIX)/games
 MANDIR?=$(DESTDIR)$(PREFIX)/share/man/man6
 
-OBJS=src/background.o src/debug.o src/foes.o src/main.o src/player.o src/sound.o src/text.o src/texture.o src/window.o
+OBJS=src/sound.o src/player.o src/image.o src/foes.o src/main.o src/debug.o src/background.o src/window.o src/text.o
 
 .PHONY: all install uninstall clean
 
@@ -54,7 +54,7 @@ clean:
 	$(RM) -rf man/spaceshooter.6.gz
 
 src/background.o: src/background.c \
-	src/texture.h \
+	src/image.h \
 	src/window.h
 src/debug.o: src/debug.c
 src/foes.o: src/foes.c \
@@ -62,8 +62,10 @@ src/foes.o: src/foes.c \
 	src/foes.h \
 	src/player.h \
 	src/sound.h \
-	src/texture.h \
+	src/image.h \
 	src/window.h
+src/image.o: src/image.c \
+	src/debug.h
 src/main.o: src/main.c \
 	src/background.h \
 	src/debug.h \
@@ -71,17 +73,18 @@ src/main.o: src/main.c \
 	src/player.h \
 	src/sound.h \
 	src/text.h \
+	src/image.h \
 	src/window.h
 src/player.o: src/player.c \
 	src/debug.h \
 	src/foes.h \
+	src/player.h \
 	src/sound.h \
-	src/texture.h \
+	src/image.h \
 	src/window.h
 src/sound.o: src/sound.c \
 	src/debug.h
 src/text.o: src/text.c
-src/texture.o: src/texture.c \
-	src/debug.h
 src/window.o: src/window.c \
 	src/debug.h
+
