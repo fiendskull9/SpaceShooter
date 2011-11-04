@@ -89,6 +89,8 @@ int main() {
 
 				if (glfwGetKey('S') == GLFW_PRESS)
 					game_status = GAME_STATUS_RUN;
+				/* TODO: implement initial count-down */
+				/* TODO: implement diffent difficulty levels */
 
 				break;
 			}
