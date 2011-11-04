@@ -35,7 +35,7 @@
 
 #include <stdlib.h>
 
-#include "texture.h"
+#include "image.h"
 #include "window.h"
 
 #define BACKGROUND_WIDTH	1280
@@ -54,17 +54,17 @@ void background_load_data() {
 	background = malloc(sizeof(background_t));
 
 	background -> xscroll	= 0;
-	background -> texture	= texture_load("data/graphics/background.tga");
+	background -> texture	= tga_load("data/graphics/background.tga");
 }
 
 void background_draw() {
-	texture_draw(
+	tga_draw(
 		background -> texture,
 		background -> xscroll, 0,
 		BACKGROUND_WIDTH, BACKGROUND_HEIGHT
 	);
 
-	texture_draw(
+	tga_draw(
 		background -> texture,
 		background -> xscroll + BACKGROUND_WIDTH, 0,
 		BACKGROUND_WIDTH, BACKGROUND_HEIGHT

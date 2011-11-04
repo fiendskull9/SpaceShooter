@@ -41,7 +41,7 @@
 #include "foes.h"
 #include "player.h"
 #include "sound.h"
-#include "texture.h"
+#include "image.h"
 #include "window.h"
 
 #define PLAYER_WIDTH		43
@@ -72,21 +72,21 @@ void player_load_data() {
 	player_reset_spaceship();
 	player_reset_bullet();
 
-	player -> texture = texture_load("data/graphics/spaceship.tga");
-	player -> bullet_texture = texture_load("data/graphics/bullet.tga");
+	player -> texture = tga_load("data/graphics/spaceship.tga");
+	player -> bullet_texture = tga_load("data/graphics/bullet.tga");
 
 	player -> bullet_sample = sample_load("data/sounds/fire.wav");
 }
 
 void player_draw(spaceship_t *asd) {
-	texture_draw(
+	tga_draw(
 		player -> texture,
 		player -> x, player -> y,
 		PLAYER_WIDTH, PLAYER_HEIGHT
 	);
 
 	if (player -> fired) {
-		texture_draw(
+		tga_draw(
 			player -> bullet_texture,
 			player -> bullet_x, player -> bullet_y,
 			PLAYER_BULLET_WIDTH, PLAYER_BULLET_HEIGHT

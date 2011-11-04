@@ -41,7 +41,7 @@
 #include "player.h"
 #include "sound.h"
 #include "text.h"
-#include "texture.h"
+#include "image.h"
 #include "window.h"
 
 #define GAME_STATUS_START	0
@@ -67,7 +67,7 @@ int main() {
 	player_load_data();
 	font_load_data();
 
-	title_texture = texture_load("data/graphics/title.tga");
+	title_texture = tga_load("data/graphics/title.tga");
 	gameover_sample = sample_load("data/sounds/gameover.wav");
 
 	old_time = glfwGetTime();
@@ -83,7 +83,7 @@ int main() {
 
 		switch (game_status) {
 			case GAME_STATUS_START: {
-				texture_draw(title_texture, 50, 200, 550, 46);
+				tga_draw(title_texture, 50, 200, 550, 46);
 				font_draw(175, 450, "Press S to start");
 
 				if (glfwGetKey('S') == GLFW_PRESS)

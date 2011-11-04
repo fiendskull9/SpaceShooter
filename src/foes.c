@@ -41,7 +41,7 @@
 #include "foes.h"
 #include "player.h"
 #include "sound.h"
-#include "texture.h"
+#include "image.h"
 #include "window.h"
 
 #define FOE_MAX_SPEED		7
@@ -73,8 +73,8 @@ static unsigned int texture_sheet, bullet_texture, bullet_sample, explosion_samp
 void foes_load_data() {
 	int i = 0;
 
-	texture_sheet = texture_load("data/graphics/enemies.tga");
-	bullet_texture = texture_load("data/graphics/rocket.tga");
+	texture_sheet = tga_load("data/graphics/enemies.tga");
+	bullet_texture = tga_load("data/graphics/rocket.tga");
 
 	bullet_sample = sample_load("data/sounds/rocket.wav");
 	explosion_sample = sample_load("data/sounds/explosion.wav");
@@ -122,7 +122,7 @@ void foes_draw() {
 		}
 
 		if (foes[i] -> fired) {
-			texture_draw(
+			tga_draw(
 				bullet_texture,
 				foes[i] -> bullet_x, foes[i] -> bullet_y,
 				FOE_BULLET_WIDTH, FOE_BULLET_WIDTH
