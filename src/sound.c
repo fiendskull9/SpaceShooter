@@ -61,6 +61,7 @@ void sound_close() {
 	alcCloseDevice(device);
 }
 
+/* TODO: if possible drop sndfile and roll own wav loading function */
 unsigned int wav_load(const char *path) {
 	int err;
 

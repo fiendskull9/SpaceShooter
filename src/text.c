@@ -124,6 +124,7 @@ static char_t **font_load(const char *path) {
 	return new_chars;
 }
 
+/* TODO: apply texture to text */
 void font_draw(int x, int y, const char *fmt, ...) {
 	va_list	args;
 

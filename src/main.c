@@ -68,6 +68,7 @@ int main() {
 	font_load_data();
 
 	title_texture = tga_load("data/graphics/title.tga");
+	/* FIXME: find a better gameover sound */
 	gameover_sample = wav_load("data/sounds/gameover.wav");
 
 	old_time = glfwGetTime();
@@ -115,6 +116,7 @@ int main() {
 				font_draw(185, 250, "Final score: %d", points);
 				font_draw(175, 450, "Press Q to start");
 
+				/* FIXME: find a better way to restart the game */
 				if (glfwGetKey('Q') != GLFW_PRESS)
 					break;
 
