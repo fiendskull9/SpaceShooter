@@ -75,7 +75,7 @@ void player_load_data() {
 	player -> texture = tga_load("data/graphics/spaceship.tga");
 	player -> bullet_texture = tga_load("data/graphics/bullet.tga");
 
-	player -> bullet_sample = sample_load("data/sounds/fire.wav");
+	player -> bullet_sample = wav_load("data/sounds/fire.wav");
 }
 
 void player_draw(spaceship_t *asd) {
@@ -166,7 +166,7 @@ void player_fire_bullet() {
 	player -> bullet_x	= player -> x + PLAYER_WIDTH;
 	player -> bullet_y	= player -> y + (PLAYER_HEIGHT / 2);
 
-	sample_play(player -> bullet_sample);
+	wav_play(player -> bullet_sample);
 
 update_time:
 	old_fire = new_fire;

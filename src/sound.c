@@ -61,7 +61,7 @@ void sound_close() {
 	alcCloseDevice(device);
 }
 
-unsigned int sample_load(const char *path) {
+unsigned int wav_load(const char *path) {
 	int err;
 
 	unsigned int	sample, source;
@@ -115,14 +115,14 @@ unsigned int sample_load(const char *path) {
 	return source;
 }
 
-void sample_play(unsigned int sample) {
+void wav_play(unsigned int sample) {
 
 	alSourcePlay(sample);
 
 	/*alDeleteSources(1, &source);*/
 }
 
-void sample_free(unsigned int sample) {
+void wav_free(unsigned int sample) {
 	ALuint source;
 
 	alGenSources(1, &source);

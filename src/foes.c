@@ -76,8 +76,8 @@ void foes_load_data() {
 	texture_sheet = tga_load("data/graphics/enemies.tga");
 	bullet_texture = tga_load("data/graphics/rocket.tga");
 
-	bullet_sample = sample_load("data/sounds/rocket.wav");
-	explosion_sample = sample_load("data/sounds/explosion.wav");
+	bullet_sample = wav_load("data/sounds/rocket.wav");
+	explosion_sample = wav_load("data/sounds/explosion.wav");
 
 	for (i = 0; i < FOES; i++) {
 		foes[i]			= malloc(sizeof(spaceship_t));
@@ -198,7 +198,7 @@ void foes_check_collision() {
 			player_reset_bullet();
 
 			player_inc_points(FOE_DEATH_SCORES);
-			sample_play(explosion_sample);
+			wav_play(explosion_sample);
 		}
 	}
 }
@@ -214,7 +214,7 @@ void foes_fire_bullet() {
 			foes[i] -> bullet_y	= foes[i] -> y + (FOE_HEIGHT / 2);
 			foes[i] -> fired	= 1;
 
-			sample_play(bullet_sample);
+			wav_play(bullet_sample);
 		}
 	}
 }

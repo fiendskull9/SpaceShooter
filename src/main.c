@@ -68,7 +68,7 @@ int main() {
 	font_load_data();
 
 	title_texture = tga_load("data/graphics/title.tga");
-	gameover_sample = sample_load("data/sounds/gameover.wav");
+	gameover_sample = wav_load("data/sounds/gameover.wav");
 
 	old_time = glfwGetTime();
 
@@ -163,7 +163,7 @@ int main() {
 
 		if ((health <= 0) && (game_status == GAME_STATUS_RUN)) {
 			game_status = GAME_STATUS_GAMEOVER;
-			sample_play(gameover_sample);
+			wav_play(gameover_sample);
 		}
 	}
 
