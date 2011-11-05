@@ -199,6 +199,7 @@ void foes_check_collision() {
 			player_reset_bullet();
 
 			player_inc_points(FOE_DEATH_SCORES);
+			/* TODO: implement explosion animation */
 			wav_play(explosion_sample);
 		}
 	}
