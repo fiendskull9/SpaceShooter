@@ -43,7 +43,7 @@
 
 #define BACKGROUND_SCROLL_SPEED	2
 
-typedef struct SPACESHIP {
+typedef struct BACKGROUND {
 	int xscroll;
 	unsigned int texture;
 } background_t;
