@@ -47,6 +47,7 @@
 #define GAME_STATUS_START	0
 #define GAME_STATUS_RUN		1
 #define GAME_STATUS_GAMEOVER	2
+#define GAME_STATUS_COUNTDOWN	3
 
 #define	UPDATE_RATE (1.0 / 120.0)
 
@@ -87,9 +88,30 @@ int main() {
 				font_draw(175, 450, "Press S to start");
 
 				if (glfwGetKey('S') == GLFW_PRESS)
-					game_status = GAME_STATUS_RUN;
-				/* TODO: implement initial count-down */
+					game_status = GAME_STATUS_COUNTDOWN;
+
 				/* TODO: implement diffent difficulty levels */
+
+				break;
+			}
+
+			case GAME_STATUS_COUNTDOWN: {
+				double new_time;
+
+				static int counter_state = 4;
+				static double old_time = 0.0;
+
+				new_time = glfwGetTime();
+
+				if ((new_time - old_time) >= 1.0) {
+					counter_state--;
+					old_time = new_time;
+				}
+
+				if (counter_state == 0)
+					game_status = GAME_STATUS_RUN;
+				else
+					font_draw(320, 240, "%d", counter_state);
 
 				break;
 			}
