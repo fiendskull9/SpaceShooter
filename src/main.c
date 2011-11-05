@@ -44,18 +44,20 @@
 #include "image.h"
 #include "window.h"
 
-#define GAME_STATUS_START	0
-#define GAME_STATUS_RUN		1
-#define GAME_STATUS_GAMEOVER	2
-#define GAME_STATUS_COUNTDOWN	3
-
 #define	UPDATE_RATE (1.0 / 120.0)
+
+enum game_status_t {
+	GAME_STATUS_START,
+	GAME_STATUS_COUNTDOWN,
+	GAME_STATUS_RUN,
+	GAME_STATUS_GAMEOVER
+};
 
 int main() {
 	double old_time;
-	static unsigned int game_status = 0;
 
 	unsigned int title_texture, gameover_sample;
+	enum game_status_t game_status = GAME_STATUS_START;
 
 	/* init */
 	window_init(SCREEN_WIDTH, SCREEN_HEIGHT, "SpaceShooter");
