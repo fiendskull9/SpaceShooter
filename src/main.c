@@ -199,7 +199,6 @@ int main() {
 
 			player_move_spaceship();
 
-			/* FIXME: move mouse and key check elsewhere */
 			if (glfwGetMouseButton(GLFW_MOUSE_BUTTON_1) == GLFW_PRESS)
 				player_fire_bullet();
 
