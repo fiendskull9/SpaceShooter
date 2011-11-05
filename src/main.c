@@ -68,7 +68,6 @@ int main() {
 	font_load_data();
 
 	title_texture = tga_load("data/graphics/title.tga");
-	/* FIXME: find a better gameover sound */
 	gameover_sample = wav_load("data/sounds/gameover.wav");
 
 	old_time = glfwGetTime();
