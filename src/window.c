@@ -51,8 +51,6 @@ void window_init(int width, int height, const char *title) {
 	glLoadIdentity();
 	glOrtho(0, width, height, 0, 0, 1);
 
-	glfwDisable(GLFW_MOUSE_CURSOR);
-
 	glShadeModel(GL_SMOOTH);
 
 	glEnable(GL_BLEND);

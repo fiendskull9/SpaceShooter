@@ -93,8 +93,10 @@ int main() {
 				tga_draw(title_texture, 50, 200, 550, 46);
 				font_draw(175, 450, "Press S to start");
 
-				if (glfwGetKey('S') == GLFW_PRESS)
+				if (glfwGetKey('S') == GLFW_PRESS) {
 					game_status = COUNTDOWN;
+					glfwDisable(GLFW_MOUSE_CURSOR);
+				}
 
 				/* TODO: implement diffent difficulty levels */
 
