@@ -54,7 +54,8 @@
 
 #define FOE_BULLET_SPEED	9
 
-#define GEN_RAND(SEED)		rand() % SEED
+#define GEN_RAND(SEED)			(rand() % SEED)
+#define GEN_RAND_RANGE(MIN, MAX)	(rand() % (MAX - MIN + 1)) + MIN;
 
 typedef struct SPACESHIP {
 	int x, y;
@@ -228,7 +229,7 @@ void foes_respawn() {
 		foes[i] -> death	= 0;
 		foes[i] -> x		= SCREEN_WIDTH - FOE_HEIGHT;
 		foes[i] -> y		= GEN_RAND(SCREEN_HEIGHT);
-		foes[i] -> speed 	= GEN_RAND(FOE_MAX_SPEED) + FOE_MIN_SPEED;
+		foes[i] -> speed 	= GEN_RAND_RANGE(FOE_MIN_SPEED, FOE_MAX_SPEED);
 	}
 }
 
