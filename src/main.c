@@ -111,10 +111,10 @@ int main() {
 					old_time = new_time;
 				}
 
-				if (counter_state == 0)
+				if (counter_state == 0) {
 					game_status = GAME_STATUS_RUN;
-				else
-					font_draw(320, 240, "%d", counter_state);
+					counter_state = 4;
+				} else font_draw(320, 240, "%d", counter_state);
 
 				break;
 			}
@@ -140,10 +140,9 @@ int main() {
 				player_get_points(&points);
 
 				font_draw(185, 250, "Final score: %d", points);
-				font_draw(175, 450, "Press Q to start");
+				font_draw(175, 450, "Press S to restart");
 
-				/* FIXME: find a better way to restart the game */
-				if (glfwGetKey('Q') != GLFW_PRESS)
+				if (glfwGetKey('S') != GLFW_PRESS)
 					break;
 
 				player_reset_spaceship();
@@ -154,7 +153,7 @@ int main() {
 					foes_reset_bullet(i);
 				}
 
-				game_status = GAME_STATUS_START;
+				game_status = GAME_STATUS_COUNTDOWN;
 			}
 
 			default: { }
