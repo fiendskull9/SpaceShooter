@@ -73,10 +73,10 @@ void player_load_data() {
 	player_reset_spaceship();
 	player_reset_bullet();
 
-	player -> texture = tga_load("data/graphics/spaceship.tga");
-	player -> bullet_texture = tga_load("data/graphics/bullet.tga");
+	player -> texture = tga_load("spaceship.tga");
+	player -> bullet_texture = tga_load("bullet.tga");
 
-	player -> bullet_sample = wav_load("data/sounds/fire.wav");
+	player -> bullet_sample = wav_load("fire.wav");
 }
 
 void player_draw(spaceship_t *asd) {

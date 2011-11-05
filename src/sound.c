@@ -34,6 +34,7 @@
  */
 
 #include <stdlib.h>
+#include <string.h>
 
 #include <AL/al.h>
 #include <AL/alc.h>
@@ -41,6 +42,12 @@
 #include <sndfile.h>
 
 #include "debug.h"
+
+#ifndef DATA_PATH
+# define DATA_PATH ""
+#endif
+
+#define SOUND_DATA_PATH		DATA_PATH "/sounds"
 
 static ALCdevice	*device;
 static ALCcontext	*context;
@@ -75,9 +82,14 @@ unsigned int wav_load(const char *path) {
 
 	unsigned int	channels, frames, sample_rate, samples;
 
+	char *full_path;
+
+	full_path = malloc(strlen(path) + strlen(SOUND_DATA_PATH) + 2);
+	sprintf(full_path, "%s/%s", SOUND_DATA_PATH, path);
+
 	alGenBuffers(1, &sample);
 
-	snd_input = sf_open(path, SFM_READ, &snd_info);
+	snd_input = sf_open(full_path, SFM_READ, &snd_info);
 	if (snd_input == NULL) fail_printf("%s", sf_strerror(snd_input));
 
 	channels	= snd_info.channels;
@@ -112,6 +124,8 @@ unsigned int wav_load(const char *path) {
 	alSourcei(source, AL_BUFFER, sample);
 
 	free(input_buffer);
+
+	ok_printf("Loaded '%s'", full_path);
 
 	return source;
 }

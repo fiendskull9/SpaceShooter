@@ -33,19 +33,34 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
 #include <GL/glfw.h>
 
 #include "debug.h"
+
+#ifndef DATA_PATH
+# define DATA_PATH ""
+#endif
+
+#define IMAGE_DATA_PATH		DATA_PATH "/graphics"
 
 unsigned int tga_load(const char *path) {
 	int err;
 	GLuint texture;
 
+	char *full_path;
+
+	full_path = malloc(strlen(path) + strlen(IMAGE_DATA_PATH) + 2);
+	sprintf(full_path, "%s/%s", IMAGE_DATA_PATH, path);
+
 	glGenTextures(1, &texture);
 
 	glBindTexture(GL_TEXTURE_2D, texture);
 
-	err = glfwLoadTexture2D(path, 0);
+	err = glfwLoadTexture2D(full_path, 0);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -53,6 +68,8 @@ unsigned int tga_load(const char *path) {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+
+	ok_printf("Loaded '%s'", full_path);
 
 	return texture;
 }

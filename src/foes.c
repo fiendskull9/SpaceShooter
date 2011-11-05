@@ -73,11 +73,11 @@ static unsigned int texture_sheet, bullet_texture, bullet_sample, explosion_samp
 void foes_load_data() {
 	int i = 0;
 
-	texture_sheet = tga_load("data/graphics/enemies.tga");
-	bullet_texture = tga_load("data/graphics/rocket.tga");
+	texture_sheet = tga_load("enemies.tga");
+	bullet_texture = tga_load("rocket.tga");
 
-	bullet_sample = wav_load("data/sounds/rocket.wav");
-	explosion_sample = wav_load("data/sounds/explosion.wav");
+	bullet_sample = wav_load("rocket.wav");
+	explosion_sample = wav_load("explosion.wav");
 
 	for (i = 0; i < FOES; i++) {
 		foes[i]			= malloc(sizeof(spaceship_t));

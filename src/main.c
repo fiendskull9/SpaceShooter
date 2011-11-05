@@ -71,9 +71,9 @@ int main() {
 	player_load_data();
 	font_load_data();
 
-	title_texture = tga_load("data/graphics/title.tga");
-	pause_sample = wav_load("data/sounds/pause.wav");
-	gameover_sample = wav_load("data/sounds/gameover.wav");
+	title_texture = tga_load("title.tga");
+	pause_sample = wav_load("pause.wav");
+	gameover_sample = wav_load("gameover.wav");
 
 	old_time = glfwGetTime();
 

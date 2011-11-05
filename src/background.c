@@ -54,7 +54,7 @@ void background_load_data() {
 	background = malloc(sizeof(background_t));
 
 	background -> xscroll	= 0;
-	background -> texture	= tga_load("data/graphics/background.tga");
+	background -> texture	= tga_load("background.tga");
 }
 
 void background_draw() {
