@@ -58,7 +58,7 @@ int main() {
 	double old_time;
 
 	enum game_status_t game_status = START;
-	unsigned int title_texture, pause_sample, gameover_sample;
+	unsigned int game_record = 0, title_texture, pause_sample, gameover_sample;
 
 	/* init */
 	window_init(SCREEN_WIDTH, SCREEN_HEIGHT, "SpaceShooter");
@@ -133,6 +133,7 @@ int main() {
 
 				font_draw(10, 20, "Health: %d", health);
 				font_draw(10, 40, "Points: %d", points);
+				font_draw(10, 60, "Record: %d", game_record);
 
 				if (glfwGetKey('P') == GLFW_PRESS) {
 					wav_play(pause_sample);
@@ -162,11 +163,15 @@ int main() {
 
 				player_get_points(&points);
 
-				font_draw(185, 250, "Final score: %d", points);
+				font_draw(195, 250, "Final score: %d", points);
 				font_draw(175, 450, "Press S to restart");
+
+				if (points > game_record) font_draw(205, 220, "New record!!!");
 
 				if (glfwGetKey('S') != GLFW_PRESS)
 					break;
+
+				if (points > game_record) game_record = points;
 
 				player_reset_spaceship();
 				player_reset_bullet();

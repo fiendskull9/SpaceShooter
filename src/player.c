@@ -53,7 +53,6 @@
 #define PLAYER_BULLET_HEIGHT	7
 #define PLAYER_BULLET_SPEED	12
 
-/* TODO: implement player record */
 typedef struct SPACESHIP {
 	int x, y;
 	int fired;
