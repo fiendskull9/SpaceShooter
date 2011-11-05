@@ -33,10 +33,6 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-extern void sound_init();
-extern void sound_close();
+extern void font_load_data();
 
-extern unsigned int wav_load(const char *path);
-
-extern void wav_play(unsigned int sample);
-extern void wav_free(unsigned int sample);
+extern void font_draw(int x, int y, const char *fmt, ...);

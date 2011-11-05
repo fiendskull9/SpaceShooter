@@ -1,132 +1,210 @@
 /*
-    This file is part of SpaceShooter.
-    Copyright (C) 2010 Alessandro Ghedini <al3xbio@gmail.com>
+ * Old-school space shooter game in 2D.
+ *
+ * Copyright (c) 2011, Alessandro Ghedini
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *
+ *     * Neither the name of the SpaceShooter project, Alessandro Ghedini, nor
+ *       the names of its contributors may be used to endorse or promote
+ *       products derived from this software without specific prior written
+ *       permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+ * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+#include <stdlib.h>
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+#include <GL/glfw.h>
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
-#include <allegro.h>
-
-#include "config.h"
 #include "debug.h"
-#include "screen.h"
-#include "game_data.h"
-#include "user_data.h"
-#include "enemies.h"
-
-#define  __PLAYER_C__
+#include "foes.h"
 #include "player.h"
+#include "sound.h"
+#include "image.h"
+#include "window.h"
 
-hero player;
+#define PLAYER_WIDTH		43
+#define PLAYER_HEIGHT		48
 
-extern int game_status, gameover;
+#define	PLAYER_FIRE_RATE	(1.0 / 5.0)
 
-void reset_player();
+#define PLAYER_BULLET_WIDTH	7
+#define PLAYER_BULLET_HEIGHT	7
+#define PLAYER_BULLET_SPEED	12
 
-void load_player() {
-	BITMAP *tmp_player, *tmp_bullet;
+typedef struct SPACESHIP {
+	int x, y;
+	int fired;
+	int health, score;
+	unsigned int texture;
 
-	tmp_player	= load_tga(DATA_PATH "/graphics/spaceship.tga", NULL);
-	tmp_bullet 	= load_tga(DATA_PATH "/graphics/bullet.tga", NULL);
+	int bullet_x, bullet_y;
+	unsigned int bullet_texture;
+	unsigned int bullet_sample;
+} spaceship_t;
 
-	player.sprite	= get_rle_sprite(tmp_player);
-	player.bullet	= get_rle_sprite(tmp_bullet);
-	
-	player.snd_fire = load_wav(DATA_PATH "/sounds/fire.wav");
+spaceship_t *player = NULL;
 
-	reset_player();
+void player_load_data() {
+	player = malloc(sizeof(spaceship_t));
 
-	destroy_bitmap(tmp_player);
-	destroy_bitmap(tmp_bullet);
+	player_reset_spaceship();
+	player_reset_bullet();
 
-	printd(DEBUG_INFO "Player data loaded");
+	player -> texture = tga_load("spaceship.tga");
+	player -> bullet_texture = tga_load("bullet.tga");
+
+	player -> bullet_sample = wav_load("fire.wav");
 }
 
-void draw_player() {
+void player_draw(spaceship_t *asd) {
+	tga_draw(
+		player -> texture,
+		player -> x, player -> y,
+		PLAYER_WIDTH, PLAYER_HEIGHT
+	);
 
-	if (player.health <= 0) {
-		gameover = 1;
+	if (player -> fired) {
+		tga_draw(
+			player -> bullet_texture,
+			player -> bullet_x, player -> bullet_y,
+			PLAYER_BULLET_WIDTH, PLAYER_BULLET_HEIGHT
+		);
+	}
+}
+
+void player_move_spaceship() {
+	int x, y;
+
+	glfwGetMousePos(&x, &y);
+
+	if (x < 0) x = 0;
+	if (y < 0) y = 0;
+
+	player -> x = x;
+	player -> y = y;
+}
+
+void player_move_bullet() {
+	if (!player -> fired)
 		return;
-	}
 
-	player.x = mouse_x;
+	player -> bullet_x += PLAYER_BULLET_SPEED;
 
-	if ( (mouse_y + PLAYER_HEIGHT) <= SCREEN_HEIGHT)
-		player.y = mouse_y;
-	else
-		player.y = SCREEN_HEIGHT - PLAYER_HEIGHT;
-
-	draw_rle_trans(player.sprite, player.x, player.y);
-}
-
-void player_fire() {
-	if ((mouse_b & 1) /*&& (game_status == STATUS_RUN)*/)
-		if (player.fire == 0) { 
-			player.fire 	= 1;
-			player.bullet_x = player.x + PLAYER_WIDTH;
-			player.bullet_y = player.y;
-
-			play_sample(player.snd_fire, 255,128,1000, FALSE);
-		}
-
-	if (player.fire == 1) {
-		draw_rle_trans(player.bullet, player.bullet_x, player.bullet_y);
-		player.bullet_x += PLAYER_BULLET_SPEED;
-
-		if (player.bullet_x > SCREEN_WIDTH) {
-			player.bullet_x = 0;
-			player.bullet_y = 0;
-			player.fire 	= 0;
-		}
+	if (player -> bullet_x > SCREEN_WIDTH) {
+		player -> bullet_x	= -200;
+		player -> bullet_y	= -200;
+		player -> fired		= 0;
 	}
 }
 
-void player_collision(int n) {
-	if (((player.x + PLAYER_WIDTH) >= enemies[n].x) &&
-	     (player.x <= (enemies[n].x + ENEMY_WIDTH)) &&
-	      enemies[n].death == 0)
-		if (((player.y + PLAYER_HEIGHT) >= enemies[n].y) &&
-		     ((player.y <= enemies[n].y + ENEMY_HEIGHT))) {
-			player.health 	-= ENEMY_DAMAGE;
-			enemies[n].death = 1;
+void player_check_collision() {
+	int i;
+
+	for (i = 0; i < FOES; i++) {
+		int foe_x, foe_y, foe_bullet_x, foe_bullet_y;
+
+		foes_get_spaceship_coord(i, &foe_x, &foe_y);
+		foes_get_bullet_coord(i, &foe_bullet_x, &foe_bullet_y);
+
+		if (
+			((foe_bullet_x + FOE_BULLET_WIDTH) >= player -> x) &&
+			((foe_bullet_x <= (player -> x + PLAYER_WIDTH))) &&
+			((foe_bullet_y + FOE_BULLET_HEIGHT) >= player -> y) &&
+			((foe_bullet_y <= (player -> y + PLAYER_HEIGHT)))
+		) {
+			foes_reset_bullet(i);
+			player -> health -= FOE_BULLET_DAMAGE;
 		}
 
-	if (((player.x + PLAYER_WIDTH) >= enemies[n].bullet_x) &&
-	     (player.x <= (enemies[n].bullet_x + ENEMY_BULLET_WIDTH))) 
-		if (((player.y + PLAYER_HEIGHT) >= enemies[n].bullet_y) &&
-		    ((player.y <= enemies[n].bullet_y + ENEMY_BULLET_HEIGHT))) {
-			player.health -= ENEMY_BULLET_DAMAGE;
-
-			reset_enemy_bullet(n);
+		if (
+			((foe_x + FOE_WIDTH) >= player -> x) &&
+			((foe_x <= (player -> x + PLAYER_WIDTH))) &&
+			((foe_y + FOE_HEIGHT) >= player -> y) &&
+			((foe_y <= (player -> y + PLAYER_HEIGHT)))
+		) {
+			foes_reset_spaceship(i);
+			player -> health -= FOE_DAMAGE;
 		}
+	}
 }
 
-void reset_player_bullet() {
-	player.fire 	= 0;
-	player.bullet_x = -100;
-	player.bullet_y = -100;
+void player_fire_bullet() {
+	double new_fire;
+	static double old_fire = 0;
+
+	if (player -> fired)
+		return;
+
+	new_fire = glfwGetTime();
+
+	if ((new_fire - old_fire) < PLAYER_FIRE_RATE)
+		goto update_time;
+
+	player -> fired		= 1;
+	player -> bullet_x	= player -> x + PLAYER_WIDTH;
+	player -> bullet_y	= player -> y + (PLAYER_HEIGHT / 2);
+
+	wav_play(player -> bullet_sample);
+
+update_time:
+	old_fire = new_fire;
 }
 
-void reset_player() {
-	player.x 	= 0;
-	player.y 	= 0;
-	player.health 	= PLAYER_HEALTH;
-
-	reset_player_bullet();
+void player_get_health(int *x) {
+	*x = player -> health;
 }
 
-void destroy_player() {
-	destroy_rle_sprite(player.sprite);
-	destroy_rle_sprite(player.bullet);
+void player_get_points(int *x) {
+	*x = player -> score;
+}
+
+void player_inc_points(int x) {
+	player -> score += x;
+}
+
+void player_get_spaceship_coord(int *x, int *y) {
+	*x = player -> x;
+	*y = player -> y;
+}
+
+void player_get_bullet_coord(int *x, int *y) {
+	*x = player -> bullet_x;
+	*y = player -> bullet_y;
+}
+
+void player_reset_spaceship() {
+	player -> x		= 0;
+	player -> y		= 0;
+	player -> health	= 50;
+	player -> fired		= 0;
+	player -> score		= 0;
+}
+
+void player_reset_bullet() {
+	player -> bullet_x = -200;
+	player -> bullet_x = -200;
+
+	player -> fired = 0;
 }

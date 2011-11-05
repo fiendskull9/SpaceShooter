@@ -1,327 +1,228 @@
 /*
-    SpaceShooter is an old-school space shooter game in 2D.
-    Copyright (C) 2010 Alessandro Ghedini <al3xbio@gmail.com>
+ * Old-school space shooter game in 2D.
+ *
+ * Copyright (c) 2011, Alessandro Ghedini
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *
+ *     * Neither the name of the SpaceShooter project, Alessandro Ghedini, nor
+ *       the names of its contributors may be used to endorse or promote
+ *       products derived from this software without specific prior written
+ *       permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+ * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+#include <GL/glfw.h>
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
-#include <allegro.h>
-#include <semaphore.h>
-#include <unistd.h>
-
-#include "config.h"
+#include "background.h"
 #include "debug.h"
-#include "game_data.h"
-#include "user_data.h"
-#include "screen.h"
-#include "sound.h"
-#include "timers.h"
-#include "enemies.h"
+#include "foes.h"
 #include "player.h"
+#include "sound.h"
+#include "text.h"
+#include "image.h"
+#include "window.h"
 
-#include "data/spaceshooter.xpm"
+#define	UPDATE_RATE (1.0 / 120.0)
 
-#define SET_GAME_STATUS(STATUS) game_status = STATUS;
+enum game_status_t {
+	START,
+	COUNTDOWN,
+	RUN,
+	PAUSE,
+	GAMEOVER
+};
 
-#define STATUS_RUN 		0
-#define STATUS_START 		1
-#define STATUS_PAUSE 		2
-#define STATUS_GAMEOVER 	3
-#define STATUS_HELP 		4
-#define STATUS_STARTING		5
+int main() {
+	double old_time;
 
-int gameover, game_status, fps;
+	enum game_status_t game_status = START;
+	unsigned int game_record = 0, title_texture, pause_sample, gameover_sample;
 
-void reset_variables();
-void check_game_status();
-void print_game_info();
-void check_for_key();
+	/* init */
+	window_init(SCREEN_WIDTH, SCREEN_HEIGHT, "SpaceShooter");
 
-int main(int argc, char **argv) {
-	int i, opt;
+	sound_init();
 
-	read_config();
+	/* load data */
+	background_load_data();
+	foes_load_data();
+	player_load_data();
+	font_load_data();
 
-	while ((opt = getopt(argc, argv, "daf")) != -1)
-		switch (opt) {
-			case 'd':
-				config_debug = 1;
-				printd(DEBUG_INFO "Config override config_debug");
+	title_texture = tga_load("title.tga");
+	pause_sample = wav_load("pause.wav");
+	gameover_sample = wav_load("gameover.wav");
+
+	old_time = glfwGetTime();
+
+	while (glfwGetKey(GLFW_KEY_ESC) != GLFW_PRESS) {
+		int health;
+		double new_time = glfwGetTime();
+
+		static int paused_x, paused_y;
+
+		/* game rendering */
+		window_clear();
+
+		background_draw();
+
+		switch (game_status) {
+			case START: {
+				tga_draw(title_texture, 50, 200, 550, 46);
+				font_draw(175, 450, "Press S to start");
+
+				if (glfwGetKey('S') == GLFW_PRESS)
+					game_status = COUNTDOWN;
+
+				/* TODO: implement diffent difficulty levels */
+
 				break;
-
-			case 'a':
-				config_disable_audio = 1;
-				printd(DEBUG_INFO "Config override config_disable_audio");
-				break;
-
-			case 'f':
-				config_fullscreen = 1;
-				printd(DEBUG_INFO "Config override config_fullscreen");
-				break;
-
-			case '?':
-				printd(DEBUG_ERR "Unknown option %x", optopt);
-
-		}
-
-	/* Set window icon */
-	allegro_icon = spaceship_xpm;
-
-	/* Initialize Allegro and variables*/
-	allegro_init();
-	reset_variables();
-	printd(DEBUG_INFO "Allegro initialized");
-
-	/* Set-up input devices */
-	install_keyboard();
-	install_mouse();
-	printd(DEBUG_INFO "Input devices installed");
-
-	/* Set-up sound card */
-	init_sound();
-
-	/* Set-up and initialize timers */
-	init_timers();
-
-	/* Set screen */
-	init_screen();
-
-	/* Load data */
-	load_game_data();
-
-	load_player();
-
-	for (i = 0; i < ENEMIES; i++)
-		load_enemy(i);
-
-	/* Main loop */
-	while (!key[KEY_ESC]) {
-		sem_wait(&sem_rest);
-
-		while (ticks > 0) {
-			int old_ticks = ticks;
-
-			ticks--;
-
-			if(old_ticks <= ticks)
-				break;
-
-			set_bg();
-
-			check_for_key();
-
-			if ((game_status == STATUS_RUN) && (gameover == 1)) {
-				/* Game Over */
-				play_sample(snd_gameover, 255,128,1000, FALSE);
-				SET_GAME_STATUS(STATUS_GAMEOVER);
 			}
 
-			check_game_status();
+			case COUNTDOWN: {
+				double new_time;
 
-			if (game_status == STATUS_RUN) {
-				/* For each enemy do... */
-				for (i = 0; i < ENEMIES; i++) {
+				static int counter_state = 4;
+				static double old_time = 0.0;
 
-					/* Check for respawn... */
-					if (enemies[i].death == 1)
-						enemy_respawn(i);
+				new_time = glfwGetTime();
 
-					enemy_motion(i);
-					enemy_collision(i);
-
-					/* Check for player collision */
-					player_collision(i);
+				if ((new_time - old_time) >= 1.0) {
+					counter_state--;
+					old_time = new_time;
 				}
+
+				if (counter_state == 0) {
+					game_status = RUN;
+					counter_state = 4;
+				} else font_draw(320, 240, "%d", counter_state);
+
+				break;
 			}
+
+			case RUN: {
+				int health, points;
+
+				foes_draw();
+				player_draw();
+
+				player_get_health(&health);
+				player_get_points(&points);
+
+				font_draw(10, 20, "Health: %d", health);
+				font_draw(10, 40, "Points: %d", points);
+				font_draw(10, 60, "Record: %d", game_record);
+
+				if (glfwGetKey('P') == GLFW_PRESS) {
+					wav_play(pause_sample);
+					game_status = PAUSE;
+					glfwGetMousePos(&paused_x, &paused_y);
+				}
+
+				break;
+			}
+
+			case PAUSE: {
+				font_draw(175, 450, "Press S to start");
+
+				foes_draw();
+				player_draw();
+
+				if (glfwGetKey('S') == GLFW_PRESS) {
+					game_status = RUN;
+					glfwSetMousePos(paused_x, paused_y);
+				}
+
+				break;
+			}
+
+			case GAMEOVER: {
+				int i, points;
+
+				player_get_points(&points);
+
+				font_draw(195, 250, "Final score: %d", points);
+				font_draw(175, 450, "Press S to restart");
+
+				if (points > game_record) font_draw(205, 220, "New record!!!");
+
+				if (glfwGetKey('S') != GLFW_PRESS)
+					break;
+
+				if (points > game_record) game_record = points;
+
+				player_reset_spaceship();
+				player_reset_bullet();
+
+				for (i = 0; i < FOES; i++) {
+					foes_reset_spaceship(i);
+					foes_reset_bullet(i);
+				}
+
+				game_status = COUNTDOWN;
+			}
+
+			default: { }
 		}
 
-		update_screen();
+		window_swap_buf();
+
+		if ((new_time - old_time) >= UPDATE_RATE) {
+			old_time = new_time;
+
+			/* game logic */
+			background_scroll();
+
+			if (game_status != RUN) continue;
+
+			player_move_spaceship();
+
+			if (glfwGetMouseButton(GLFW_MOUSE_BUTTON_1) == GLFW_PRESS)
+				player_fire_bullet();
+
+			player_move_bullet();
+
+			foes_respawn();
+			foes_move_spaceship();
+			foes_fire_bullet();
+			foes_move_bullet();
+
+			player_check_collision();
+			foes_check_collision();
+		}
+
+		player_get_health(&health);
+
+		if ((health <= 0) && (game_status == RUN)) {
+			game_status = GAMEOVER;
+			wav_play(gameover_sample);
+		}
 	}
 
-	remove_int(ticker);
-
-	/* Destroy the semaphore */
-        sem_destroy(&sem_rest);
-
-	/* Unload datafile, bitmaps and sounds */
-	set_gfx_mode(GFX_TEXT, 0, 0, 0, 0);
-	destroy_bitmap(background);
-	destroy_bitmap(buf);
-
-
-	return 0;
-}
-
-END_OF_MAIN();
-
-/*
- * Check for pressed key, and change status accordingly
- */
-
-void check_for_key() {
-	if(key[KEY_S])
-		take_screenshot();
-
-	if(key[KEY_ALTGR] && key[KEY_G])
-		gameover = 2;
-
-	if((game_status == STATUS_RUN) && key[KEY_P]) {
-		/* Game pause */
-		SET_GAME_STATUS(STATUS_PAUSE);
-		play_sample(snd_pause, 255,128,1000, FALSE);
-	}
-}
-
-/*
- * Show game information
- */
-
-void print_game_info() {
-	int margin = 10;
-
-	/* Show scores... */
-	prints('l', margin, margin, "Score:  %i", score);
-
-	/* ...player lives... */
-	prints('l', margin, margin + TEXT_LINE_HEIGHT, "Health: %i/%i",
-					player.health, PLAYER_HEALTH);
-
-	/* ..record...*/
-	prints('l', margin, margin + TEXT_LINE_HEIGHT*2, "Record: %i",
-							user_record);
-}
-
-/*
- * Reset game variabled to default
- */
-
-void reset_variables() {
-	int i;
-
-	score 		 = 0;
-	gameover 	 = 0;
-	record_is_broken = 0;
-
-	for (i = 0; i < ENEMIES; i++)
-		reset_enemy(i);
-
-	read_record();
-	reset_player();
-
-	start_ticks = START_TIMEOUT_DEFAULT;
-
-	srand(time(NULL));
-
-	SET_GAME_STATUS(STATUS_START);
-}
-
-void check_game_status() {
-	int w, h, i;
-	w = SCREEN_WIDTH/2;  /* Screen width middle */
-	h = SCREEN_HEIGHT/2; /* Screen height middle */
-
-	switch (game_status) {
-		case STATUS_START:
-			draw_rle_trans(title, w-275, h-23);
-			prints('c', w, SCREEN_HEIGHT-TEXT_LINE_HEIGHT*2,
-					"Press FIRE to start or H for help.");
-
-			if (mouse_b & 1) {
-				SET_GAME_STATUS(STATUS_STARTING);
-
-				LOCK_VARIABLE(start_ticks);
-				LOCK_FUNCTION(start_ticker);
-				install_int_ex(start_ticker, SECS_TO_TIMER(1));
-			}
-
-			if (key[KEY_H])
-				SET_GAME_STATUS(STATUS_HELP);
-
-			break;
-
-		case STATUS_STARTING:
-			if (start_ticks < 1) {
-				remove_int(start_ticker);
-				SET_GAME_STATUS(STATUS_RUN);
-			}
-
-			prints('c', SCREEN_WIDTH/2, SCREEN_HEIGHT/2, "%i", start_ticks);
-
-			break;
-
-		case STATUS_RUN:
-			/* Draw spaceship sprite at mouse position */
-			draw_player();
-
-			/* And bullet, if fired */
-			player_fire();
-
-			/* Draw enemies */
-			for (i = 0; i < ENEMIES; i++) {
-				draw_enemy(i);
-				enemy_fire(i);
-			}
-
-			print_game_info();
-
-			break;
-
-		case STATUS_HELP:
-			w -= 100;
-			prints('l', w, h-TEXT_LINE_HEIGHT*5, "MOUSE = Control spaceship");
-			prints('l', w, h-TEXT_LINE_HEIGHT*4, "LEFT BTN = Fire");
-			prints('l', w, h-TEXT_LINE_HEIGHT*3, "P = Pause");
-			prints('l', w, h-TEXT_LINE_HEIGHT*2, "S = Take a screenshot");
-			prints('l', w, h-TEXT_LINE_HEIGHT, "ESC = Quit");
-			prints('l', w, h+TEXT_LINE_HEIGHT, "Press ENTER to continue.");
-
-			if(key[KEY_ENTER])
-				SET_GAME_STATUS(STATUS_START);
-
-			w += 100;
-
-			break;
-
-		case STATUS_PAUSE:
-			prints('c', w, h-TEXT_LINE_HEIGHT, "Game paused.");
-			prints('c', w, h, "Press ENTER to resume.");
-
-			if (key[KEY_ENTER])
-				SET_GAME_STATUS(STATUS_RUN);
-
-			break;
-
-		case STATUS_GAMEOVER:
-			check_record();
-
-			if (record_is_broken == 1)
-				prints('c', w, h-TEXT_LINE_HEIGHT*2,
-					"Congratulations! You've broken the record.");
-
-			prints('c', w, h-TEXT_LINE_HEIGHT, "Game Over! Score: %d", score);
-			prints('c', w, h, "Press ENTER to continue.");
-
-			if(key[KEY_ENTER])
-				reset_variables();
-
-			break;
-	}
-}
-
-int game_running() {
-	if (game_status == STATUS_RUN)
-		return 1;
+	window_close();
+	sound_close();
 
 	return 0;
 }

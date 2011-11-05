@@ -33,10 +33,31 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-extern void sound_init();
-extern void sound_close();
+#define FOES 			3 /* must be (1 < x < 6) */
 
-extern unsigned int wav_load(const char *path);
+#define FOE_WIDTH		57
+#define FOE_HEIGHT		40
 
-extern void wav_play(unsigned int sample);
-extern void wav_free(unsigned int sample);
+#define FOE_BULLET_WIDTH	17
+#define FOE_BULLET_HEIGHT	8
+
+#define FOE_DAMAGE		10
+#define FOE_BULLET_DAMAGE	2
+
+extern void foes_load_data();
+
+extern void foes_draw();
+
+extern void foes_move_spaceship();
+extern void foes_move_bullet();
+
+extern void foes_fire_bullet();
+extern void foes_reset_bullet(int n);
+extern void foes_reset_spaceship(int n);
+
+extern void foes_respawn();
+
+extern void foes_check_collision();
+
+extern void foes_get_spaceship_coord(int n, int *x, int *y);
+extern void foes_get_bullet_coord(int n, int *x, int *y);

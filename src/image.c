@@ -33,10 +33,66 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-extern void sound_init();
-extern void sound_close();
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
-extern unsigned int wav_load(const char *path);
+#include <GL/glfw.h>
 
-extern void wav_play(unsigned int sample);
-extern void wav_free(unsigned int sample);
+#include "debug.h"
+
+#ifndef DATA_PATH
+# define DATA_PATH ""
+#endif
+
+#define IMAGE_DATA_PATH		DATA_PATH "/graphics"
+
+unsigned int tga_load(const char *path) {
+	int err;
+	GLuint texture;
+
+	char *full_path;
+
+	full_path = malloc(strlen(path) + strlen(IMAGE_DATA_PATH) + 2);
+	sprintf(full_path, "%s/%s", IMAGE_DATA_PATH, path);
+
+	glGenTextures(1, &texture);
+
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	err = glfwLoadTexture2D(full_path, 0);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+
+	ok_printf("Loaded '%s'", full_path);
+
+	return texture;
+}
+
+void tga_free(unsigned int texture) {
+	return;
+}
+
+void tga_draw(unsigned int texture, int x, int y,
+			unsigned int width, unsigned int height) {
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	glBegin(GL_QUADS);
+		glTexCoord2f(0.0f, 0.0f);
+		glVertex2f(x, y + height);
+
+		glTexCoord2f(1.0f, 0.0f);
+		glVertex2f(x + width, y + height);
+
+		glTexCoord2f(1.0f, 1.0f);
+		glVertex2f(x + width, y);
+
+		glTexCoord2f(0.0f, 1.0f);
+		glVertex2f(x, y);
+	glEnd();
+}

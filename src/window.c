@@ -33,10 +33,53 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-extern void sound_init();
-extern void sound_close();
+#include <GL/glfw.h>
 
-extern unsigned int wav_load(const char *path);
+#include "debug.h"
 
-extern void wav_play(unsigned int sample);
-extern void wav_free(unsigned int sample);
+void window_init(int width, int height, const char *title) {
+	int err;
+
+	err = glfwInit();
+
+	glfwOpenWindowHint(GLFW_WINDOW_NO_RESIZE, GL_TRUE);
+	err = glfwOpenWindow(width, height, 8, 8, 8, 8, 0, 0, GLFW_WINDOW);
+
+	glViewport(0, 0, width, height);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0, width, height, 0, 0, 1);
+
+	glfwDisable(GLFW_MOUSE_CURSOR);
+
+	glShadeModel(GL_SMOOTH);
+
+	glEnable(GL_BLEND);
+
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
+
+	glEnable(GL_TEXTURE_2D);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
+	glfwSetWindowTitle(title);
+}
+
+void window_clear() {
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+}
+
+void window_swap_buf() {
+	glfwSwapBuffers();
+}
+
+void window_close() {
+	glfwCloseWindow();
+	glfwTerminate();
+}

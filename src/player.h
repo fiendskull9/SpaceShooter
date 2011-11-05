@@ -1,51 +1,60 @@
 /*
-    This file is part of SpaceShooter.
-    Copyright (C) 2010 Alessandro Ghedini <al3xbio@gmail.com>
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
-#define PLAYER_WIDTH 		43
-#define PLAYER_HEIGHT 		48
-
-#define PLAYER_HEALTH 		20
+ * Old-school space shooter game in 2D.
+ *
+ * Copyright (c) 2011, Alessandro Ghedini
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *
+ *     * Neither the name of the SpaceShooter project, Alessandro Ghedini, nor
+ *       the names of its contributors may be used to endorse or promote
+ *       products derived from this software without specific prior written
+ *       permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+ * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #define PLAYER_BULLET_WIDTH 	7
 #define PLAYER_BULLET_HEIGHT 	7
-#define PLAYER_BULLET_SPEED 	12
 
-typedef struct {
-	int x, y;
-	int fire;
-	int health;
-	RLE_SPRITE *sprite;
+extern void player_load_data();
 
-	SAMPLE *snd_fire;
+extern void player_draw();
 
-	int bullet_x, bullet_y;
-	RLE_SPRITE *bullet;
-} hero;
+extern void player_move_spaceship();
+extern void player_move_bullet();
 
-#ifndef __PLAYER_C__
-extern hero player;
+extern void player_fire_bullet();
 
-extern void load_player();
-extern void draw_player();
-extern void player_fire();
-extern void player_collision(int n);
-extern void player_death();
-extern void reset_player();
-extern void reset_player_bullet();
-extern void destroy_player();
-#endif
+extern void player_check_collision();
+
+extern void player_get_health(int *x);
+extern void player_get_points(int *x);
+
+extern void player_dec_health(int x);
+extern void player_inc_points(int x);
+
+extern void player_get_spaceship_coord(int *x, int *y);
+extern void player_get_bullet_coord(int *x, int *y);
+
+extern void player_reset_spaceship();
+extern void player_reset_bullet();

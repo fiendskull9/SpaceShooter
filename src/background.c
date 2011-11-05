@@ -33,10 +33,47 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-extern void sound_init();
-extern void sound_close();
+#include <stdlib.h>
 
-extern unsigned int wav_load(const char *path);
+#include "image.h"
+#include "window.h"
 
-extern void wav_play(unsigned int sample);
-extern void wav_free(unsigned int sample);
+#define BACKGROUND_WIDTH	1280
+#define BACKGROUND_HEIGHT	480
+
+#define BACKGROUND_SCROLL_SPEED	2
+
+typedef struct SPACESHIP {
+	int xscroll;
+	unsigned int texture;
+} background_t;
+
+background_t *background = NULL;
+
+void background_load_data() {
+	background = malloc(sizeof(background_t));
+
+	background -> xscroll	= 0;
+	background -> texture	= tga_load("background.tga");
+}
+
+void background_draw() {
+	tga_draw(
+		background -> texture,
+		background -> xscroll, 0,
+		BACKGROUND_WIDTH, BACKGROUND_HEIGHT
+	);
+
+	tga_draw(
+		background -> texture,
+		background -> xscroll + BACKGROUND_WIDTH, 0,
+		BACKGROUND_WIDTH, BACKGROUND_HEIGHT
+	);
+}
+
+void background_scroll() {
+	if (background -> xscroll <= -BACKGROUND_WIDTH)
+		background -> xscroll = 0;
+
+	background -> xscroll -= BACKGROUND_SCROLL_SPEED;
+}

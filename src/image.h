@@ -33,10 +33,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-extern void sound_init();
-extern void sound_close();
+extern unsigned int tga_load(const char *path);
 
-extern unsigned int wav_load(const char *path);
-
-extern void wav_play(unsigned int sample);
-extern void wav_free(unsigned int sample);
+extern void tga_free(unsigned int texture);
+extern void tga_draw(unsigned int texture, int x, int y, unsigned int width, unsigned int height);
