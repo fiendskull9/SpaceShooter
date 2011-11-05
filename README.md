@@ -19,6 +19,10 @@ $ spaceshooter
 
 ![In game](http://i.imgur.com/1kj54.png)
 
+![In game](http://i.imgur.com/2Rz9S.png)
+
+![Game over](http://i.imgur.com/ObiX1.png)
+
 ## COMMANDS
 
  * Move the spaceship with the `mouse`.
