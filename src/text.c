@@ -77,8 +77,6 @@ static char_t **font_load(const char *path) {
 	full_path = malloc(strlen(path) + strlen(FONT_DATA_PATH) + 2);
 	sprintf(full_path, "%s/%s", FONT_DATA_PATH, path);
 
-	ok_printf("Loaded '%s'", full_path);
-
 	FT_Init_FreeType(&library);
 
 	FT_New_Face(library, full_path, 0, &face);
