@@ -30,6 +30,8 @@ PREFIX?=/usr/local
 BINDIR?=$(DESTDIR)$(PREFIX)/games
 MANDIR?=$(DESTDIR)$(PREFIX)/share/man/man6
 DATDIR?=$(DESTDIR)$(PREFIX)/share/games/spaceshooter
+APPDIR?=$(DESTDIR)$(PREFIX)/share/applications
+ICODIR?=$(DESTDIR)$(PREFIX)/share/pixmaps
 
 CFLAGS+=-DDATA_PATH="\"$(DATDIR)\""
 
@@ -43,16 +45,20 @@ spaceshooter: $(OBJS)
 	$(CC) $(CFLAGS) -o spaceshooter $(OBJS) $(LDFLAGS)
 
 install: all
-	mkdir -p $(BINDIR) $(MANDIR) $(DATDIR)/graphics	$(DATDIR)/sounds
+	mkdir -p $(BINDIR) $(MANDIR) $(ICODIR) $(APPDIR) $(DATDIR)/graphics $(DATDIR)/sounds
 	$(INSTALL) -m 4755 -o 0 -g 0 spaceshooter $(BINDIR)/spaceshooter
 	$(INSTALL) -m 0644 -o 0 -g 0 data/graphics/* $(DATDIR)/graphics
 	$(INSTALL) -m 0644 -o 0 -g 0 data/sounds/* $(DATDIR)/sounds
 	gzip -9 --stdout < man/spaceshooter.6 > man/spaceshooter.6.gz
 	$(INSTALL) -m 0644 -o 0 -g 0 man/spaceshooter.6.gz $(MANDIR)/spaceshooter.6.gz
+	$(INSTALL) -m 0644 -o 0 -g 0 spaceshooter.desktop $(APPDIR)
+	$(INSTALL) -m 0644 -o 0 -g 0 data/spaceshooter.xpm $(ICODIR)
 
 uninstall:
 	$(RM) -f $(BINDIR)/spaceshooter
 	$(RM) -f $(MANDIR)/spaceshooter.6.gz
+	$(RM) -f $(APPDIR)/spaceshooter.desktop
+	$(RM) -f $(ICODIR)/spaceshooter.xpm
 	$(RM) -rf $(DATDIR)
 
 clean:
