@@ -38,7 +38,7 @@
 #include "image.h"
 #include "window.h"
 
-#define BACKGROUND_WIDTH	1280
+#define BACKGROUND_WIDTH	640
 #define BACKGROUND_HEIGHT	480
 
 #define BACKGROUND_SCROLL_SPEED	2
