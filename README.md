@@ -13,6 +13,12 @@ many as possible.
 $ spaceshooter
 ~~~~
 
+## SCREENSHOTS
+
+![Start screen](http://i.imgur.com/GWZps.png)
+
+![In game](http://i.imgur.com/1kj54.png)
+
 ## COMMANDS
 
  * Move the spaceship with the `mouse`.
