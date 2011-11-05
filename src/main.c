@@ -93,6 +93,7 @@ int main() {
 					game_status = GAME_STATUS_COUNTDOWN;
 
 				/* TODO: implement diffent difficulty levels */
+				/* TODO: implement pause */
 
 				break;
 			}
