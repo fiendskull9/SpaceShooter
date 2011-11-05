@@ -47,17 +47,18 @@
 #define	UPDATE_RATE (1.0 / 120.0)
 
 enum game_status_t {
-	GAME_STATUS_START,
-	GAME_STATUS_COUNTDOWN,
-	GAME_STATUS_RUN,
-	GAME_STATUS_GAMEOVER
+	START,
+	COUNTDOWN,
+	RUN,
+	PAUSE,
+	GAMEOVER
 };
 
 int main() {
 	double old_time;
 
-	unsigned int title_texture, gameover_sample;
-	enum game_status_t game_status = GAME_STATUS_START;
+	enum game_status_t game_status = START;
+	unsigned int title_texture, pause_sample, gameover_sample;
 
 	/* init */
 	window_init(SCREEN_WIDTH, SCREEN_HEIGHT, "SpaceShooter");
@@ -71,6 +72,7 @@ int main() {
 	font_load_data();
 
 	title_texture = tga_load("data/graphics/title.tga");
+	pause_sample = wav_load("data/sounds/pause.wav");
 	gameover_sample = wav_load("data/sounds/gameover.wav");
 
 	old_time = glfwGetTime();
@@ -79,26 +81,27 @@ int main() {
 		int health;
 		double new_time = glfwGetTime();
 
+		static int paused_x, paused_y;
+
 		/* game rendering */
 		window_clear();
 
 		background_draw();
 
 		switch (game_status) {
-			case GAME_STATUS_START: {
+			case START: {
 				tga_draw(title_texture, 50, 200, 550, 46);
 				font_draw(175, 450, "Press S to start");
 
 				if (glfwGetKey('S') == GLFW_PRESS)
-					game_status = GAME_STATUS_COUNTDOWN;
+					game_status = COUNTDOWN;
 
 				/* TODO: implement diffent difficulty levels */
-				/* TODO: implement pause */
 
 				break;
 			}
 
-			case GAME_STATUS_COUNTDOWN: {
+			case COUNTDOWN: {
 				double new_time;
 
 				static int counter_state = 4;
@@ -112,14 +115,14 @@ int main() {
 				}
 
 				if (counter_state == 0) {
-					game_status = GAME_STATUS_RUN;
+					game_status = RUN;
 					counter_state = 4;
 				} else font_draw(320, 240, "%d", counter_state);
 
 				break;
 			}
 
-			case GAME_STATUS_RUN: {
+			case RUN: {
 				int health, points;
 
 				foes_draw();
@@ -131,10 +134,30 @@ int main() {
 				font_draw(10, 20, "Health: %d", health);
 				font_draw(10, 40, "Points: %d", points);
 
+				if (glfwGetKey('P') == GLFW_PRESS) {
+					wav_play(pause_sample);
+					game_status = PAUSE;
+					glfwGetMousePos(&paused_x, &paused_y);
+				}
+
 				break;
 			}
 
-			case GAME_STATUS_GAMEOVER: {
+			case PAUSE: {
+				font_draw(175, 450, "Press S to start");
+
+				foes_draw();
+				player_draw();
+
+				if (glfwGetKey('S') == GLFW_PRESS) {
+					game_status = RUN;
+					glfwSetMousePos(paused_x, paused_y);
+				}
+
+				break;
+			}
+
+			case GAMEOVER: {
 				int i, points;
 
 				player_get_points(&points);
@@ -153,7 +176,7 @@ int main() {
 					foes_reset_bullet(i);
 				}
 
-				game_status = GAME_STATUS_COUNTDOWN;
+				game_status = COUNTDOWN;
 			}
 
 			default: { }
@@ -167,7 +190,7 @@ int main() {
 			/* game logic */
 			background_scroll();
 
-			if (game_status != GAME_STATUS_RUN) continue;
+			if (game_status != RUN) continue;
 
 			player_move_spaceship();
 
@@ -188,8 +211,8 @@ int main() {
 
 		player_get_health(&health);
 
-		if ((health <= 0) && (game_status == GAME_STATUS_RUN)) {
-			game_status = GAME_STATUS_GAMEOVER;
+		if ((health <= 0) && (game_status == RUN)) {
+			game_status = GAMEOVER;
 			wav_play(gameover_sample);
 		}
 	}
