@@ -46,7 +46,7 @@ spaceshooter: $(OBJS)
 
 install: all
 	mkdir -p $(BINDIR) $(MANDIR) $(ICODIR) $(APPDIR) $(DATDIR)/graphics $(DATDIR)/sounds
-	$(INSTALL) -m 4755 -o 0 -g 0 spaceshooter $(BINDIR)/spaceshooter
+	$(INSTALL) -m 0755 -o 0 -g 0 spaceshooter $(BINDIR)/spaceshooter
 	$(INSTALL) -m 0644 -o 0 -g 0 data/graphics/* $(DATDIR)/graphics
 	$(INSTALL) -m 0644 -o 0 -g 0 data/sounds/* $(DATDIR)/sounds
 	gzip -9 --stdout < man/spaceshooter.6 > man/spaceshooter.6.gz
