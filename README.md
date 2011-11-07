@@ -25,8 +25,8 @@ $ spaceshooter
 
 ## COMMANDS
 
- * Move the spaceship with the `mouse`.
- * Fire with the `mouse left button`.
+ * Move the spaceship with the `keyboard arrows`.
+ * Fire with `Z`.
  * Pause the game with `P`.
  * Exit the game with `ESC`.
 

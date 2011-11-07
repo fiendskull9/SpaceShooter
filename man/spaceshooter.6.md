@@ -13,8 +13,8 @@ many as possible.
 
 ## CONTROLS ##
 
-You can move the spaceship with the *mouse*, fire with the mouse *left button*,
-pause the game with *P*, and exit the game with *ESC*.
+You can move the spaceship with the *UP*, *DOWN*, *LEFT*, *RIGHT* keys, 
+fire with *Z*, pause the game with *P*, and exit the game with *ESC*.
 
 ## SCORE ##
 

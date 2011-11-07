@@ -201,7 +201,7 @@ int main() {
 
 			player_move_spaceship();
 
-			if (glfwGetMouseButton(GLFW_MOUSE_BUTTON_1) == GLFW_PRESS)
+			if (glfwGetKey('Z') == GLFW_PRESS)
 				player_fire_bullet();
 
 			player_move_bullet();

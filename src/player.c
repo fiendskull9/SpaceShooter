@@ -114,9 +114,16 @@ void player_draw(spaceship_t *asd) {
 }
 
 void player_move_spaceship() {
+	#define SPEED	5
 	int x, y;
 
-	glfwGetMousePos(&x, &y);
+	x = player -> x;
+	y = player -> y;
+
+	if (glfwGetKey(GLFW_KEY_UP)	== GLFW_PRESS)	y -= SPEED;
+	if (glfwGetKey(GLFW_KEY_DOWN)	== GLFW_PRESS)	y += SPEED;
+	if (glfwGetKey(GLFW_KEY_LEFT)	== GLFW_PRESS)	x -= SPEED;
+	if (glfwGetKey(GLFW_KEY_RIGHT)	== GLFW_PRESS)	x += SPEED;
 
 	if (x < 0) x = 0;
 	if (y < 0) y = 0;
