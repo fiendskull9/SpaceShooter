@@ -17,9 +17,11 @@ $ spaceshooter
 
 ![Start screen](http://i.imgur.com/GWZps.png)
 
-![In game](http://i.imgur.com/1kj54.png)
+![In game](http://i.imgur.com/5sOwg.png)
 
-![In game](http://i.imgur.com/2Rz9S.png)
+![In game](http://i.imgur.com/HciLP.png)
+
+![In game](http://i.imgur.com/YTA0n.png)
 
 ![Game over](http://i.imgur.com/ObiX1.png)
 
