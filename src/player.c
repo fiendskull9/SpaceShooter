@@ -47,7 +47,7 @@
 #define PLAYER_WIDTH		66
 #define PLAYER_HEIGHT		61
 
-#define	PLAYER_FIRE_RATE	(1.0 / 30.0)
+#define	PLAYER_FIRE_RATE	(1.0 / 50.0)
 
 #define PLAYER_BULLET_WIDTH	7
 #define PLAYER_BULLET_HEIGHT	7
