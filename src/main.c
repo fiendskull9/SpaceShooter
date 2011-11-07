@@ -176,7 +176,8 @@ int main() {
 				if (points > game_record) game_record = points;
 
 				player_reset_spaceship();
-				player_reset_bullet();
+				for (i = 0; i < PLAYER_BULLETS; i++)
+					player_reset_bullet(i);
 
 				for (i = 0; i < FOES; i++) {
 					foes_reset_spaceship(i);

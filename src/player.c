@@ -47,11 +47,15 @@
 #define PLAYER_WIDTH		66
 #define PLAYER_HEIGHT		61
 
-#define	PLAYER_FIRE_RATE	(1.0 / 5.0)
+#define	PLAYER_FIRE_RATE	(1.0 / 30.0)
 
 #define PLAYER_BULLET_WIDTH	7
 #define PLAYER_BULLET_HEIGHT	7
 #define PLAYER_BULLET_SPEED	12
+
+typedef struct BULLET {
+	int x, y, fired;
+} bullet_t;
 
 typedef struct SPACESHIP {
 	int x, y, old_x, old_y;
@@ -59,7 +63,7 @@ typedef struct SPACESHIP {
 	int health, score;
 	unsigned int texture_l, texture_r, texture;
 
-	int bullet_x, bullet_y;
+	bullet_t bullets[PLAYER_BULLETS];
 	unsigned int bullet_texture;
 	unsigned int bullet_sample;
 } spaceship_t;
@@ -67,21 +71,25 @@ typedef struct SPACESHIP {
 spaceship_t *player = NULL;
 
 void player_load_data() {
+	int i;
 	player = malloc(sizeof(spaceship_t));
 
 	player_reset_spaceship();
-	player_reset_bullet();
+
+	for (i = 0; i < PLAYER_BULLETS; i++)
+		player_reset_bullet(i);
 
 	player -> texture = tga_load("spaceship.tga");
 	player -> texture_r = tga_load("spaceship_r.tga");
 	player -> texture_l = tga_load("spaceship_l.tga");
-	player -> bullet_texture = tga_load("bullet.tga");
 
+	player -> bullet_texture = tga_load("bullet.tga");
 	player -> bullet_sample = wav_load("fire.wav");
 }
 
 void player_draw(spaceship_t *asd) {
 	#define DELTA 1
+	int i;
 
 	int delta = player -> y - player -> old_y;
 
@@ -104,12 +112,14 @@ void player_draw(spaceship_t *asd) {
 			PLAYER_WIDTH, PLAYER_HEIGHT
 		);
 
-	if (player -> fired) {
-		tga_draw(
-			player -> bullet_texture,
-			player -> bullet_x, player -> bullet_y,
-			PLAYER_BULLET_WIDTH, PLAYER_BULLET_HEIGHT
-		);
+	for (i = 0; i < PLAYER_BULLETS; i++) {
+		if (player -> bullets[i].fired == 1) {
+			tga_draw(
+				player -> bullet_texture,
+				player -> bullets[i].x, player -> bullets[i].y,
+				PLAYER_BULLET_WIDTH, PLAYER_BULLET_HEIGHT
+			);
+		}
 	}
 }
 
@@ -136,15 +146,14 @@ void player_move_spaceship() {
 }
 
 void player_move_bullet() {
-	if (!player -> fired)
-		return;
+	int i;
 
-	player -> bullet_x += PLAYER_BULLET_SPEED;
+	for (i = 0; i < PLAYER_BULLETS; i++) {
+		if (player -> bullets[i].fired == 1)
+			player -> bullets[i].x += PLAYER_BULLET_SPEED;
 
-	if (player -> bullet_x > SCREEN_WIDTH) {
-		player -> bullet_x	= -200;
-		player -> bullet_y	= -200;
-		player -> fired		= 0;
+		if (player -> bullets[i].x > SCREEN_WIDTH)
+			player_reset_bullet(i);
 	}
 }
 
@@ -180,6 +189,7 @@ void player_check_collision() {
 }
 
 void player_fire_bullet() {
+	int i;
 	double new_fire;
 	static double old_fire = 0;
 
@@ -191,11 +201,18 @@ void player_fire_bullet() {
 	if ((new_fire - old_fire) < PLAYER_FIRE_RATE)
 		goto update_time;
 
-	player -> fired		= 1;
-	player -> bullet_x	= player -> x + PLAYER_WIDTH;
-	player -> bullet_y	= player -> y + (PLAYER_HEIGHT / 2);
+	for (i = 0; i < PLAYER_BULLETS; i++) {
+		if (player -> bullets[i].fired == 0) {
+			player -> bullets[i].fired	= 1;
+			player -> bullets[i].x		=
+						player -> x + PLAYER_WIDTH;
+			player -> bullets[i].y		=
+						player -> y + (PLAYER_HEIGHT / 2);
 
-	wav_play(player -> bullet_sample);
+			wav_play(player -> bullet_sample);
+			break;
+		}
+	}
 
 update_time:
 	old_fire = new_fire;
@@ -218,9 +235,9 @@ void player_get_spaceship_coord(int *x, int *y) {
 	*y = player -> y;
 }
 
-void player_get_bullet_coord(int *x, int *y) {
-	*x = player -> bullet_x;
-	*y = player -> bullet_y;
+void player_get_bullet_coord(int n, int *x, int *y) {
+	*x = player -> bullets[n].x;
+	*y = player -> bullets[n].y;
 }
 
 void player_reset_spaceship() {
@@ -231,9 +248,8 @@ void player_reset_spaceship() {
 	player -> score		= 0;
 }
 
-void player_reset_bullet() {
-	player -> bullet_x = -200;
-	player -> bullet_x = -200;
-
-	player -> fired = 0;
+void player_reset_bullet(int n) {
+	player -> bullets[n].x		= -200;
+	player -> bullets[n].y		= -200;
+	player -> bullets[n].fired	= 0;
 }

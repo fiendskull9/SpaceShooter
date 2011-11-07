@@ -181,26 +181,33 @@ void foes_move_bullet() {
 }
 
 void foes_check_collision() {
-	int i, player_x, player_y, player_bullet_x, player_bullet_y;
+	int i, j, player_x, player_y;
 
 	player_get_spaceship_coord(&player_x, &player_y);
-	player_get_bullet_coord(&player_bullet_x, &player_bullet_y);
 
 	for (i = 0; i < FOES; i++) {
+
+
 		if (foes[i] -> death) continue;
 
-		if (
-			((player_bullet_x + PLAYER_BULLET_WIDTH) >= foes[i] -> x) &&
-			((player_bullet_x <= (foes[i] -> x + FOE_WIDTH))) &&
-			((player_bullet_y + PLAYER_BULLET_HEIGHT) >= foes[i] -> y) &&
-			((player_bullet_y <= (foes[i] -> y + FOE_HEIGHT)))
-		) {
-			foes[i] -> death = 1;
-			player_reset_bullet();
+		for (j = 0; j < PLAYER_BULLETS; j++) {
+			int player_bullet_x, player_bullet_y;
 
-			player_inc_points(FOE_DEATH_SCORES);
-			/* TODO: implement explosion animation */
-			wav_play(explosion_sample);
+			player_get_bullet_coord(j, &player_bullet_x, &player_bullet_y);
+
+			if (
+				((player_bullet_x + PLAYER_BULLET_WIDTH) >= foes[i] -> x) &&
+				((player_bullet_x <= (foes[i] -> x + FOE_WIDTH))) &&
+				((player_bullet_y + PLAYER_BULLET_HEIGHT) >= foes[i] -> y) &&
+				((player_bullet_y <= (foes[i] -> y + FOE_HEIGHT)))
+			) {
+				foes[i] -> death = 1;
+				player_reset_bullet(j);
+
+				player_inc_points(FOE_DEATH_SCORES);
+				/* TODO: implement explosion animation */
+				wav_play(explosion_sample);
+			}
 		}
 	}
 }

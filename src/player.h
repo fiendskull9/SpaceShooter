@@ -36,6 +36,8 @@
 #define PLAYER_BULLET_WIDTH 	7
 #define PLAYER_BULLET_HEIGHT 	7
 
+#define PLAYER_BULLETS	6
+
 extern void player_load_data();
 
 extern void player_draw();
@@ -54,7 +56,7 @@ extern void player_dec_health(int x);
 extern void player_inc_points(int x);
 
 extern void player_get_spaceship_coord(int *x, int *y);
-extern void player_get_bullet_coord(int *x, int *y);
+extern void player_get_bullet_coord(int n, int *x, int *y);
 
 extern void player_reset_spaceship();
-extern void player_reset_bullet();
+extern void player_reset_bullet(int n);
