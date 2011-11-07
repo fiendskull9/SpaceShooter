@@ -224,8 +224,8 @@ void player_get_bullet_coord(int *x, int *y) {
 }
 
 void player_reset_spaceship() {
-	player -> x		= 0;
-	player -> y		= 0;
+	player -> x		= 50;
+	player -> y		= (SCREEN_HEIGHT / 2) - (PLAYER_HEIGHT / 2);
 	player -> health	= 50;
 	player -> fired		= 0;
 	player -> score		= 0;
