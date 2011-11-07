@@ -96,3 +96,29 @@ void tga_draw(unsigned int texture, int x, int y,
 		glVertex2f(x, y);
 	glEnd();
 }
+
+void tga_draw_from_sheet(unsigned int texture, int x, int y,
+			unsigned int width, unsigned int height, int max, int n) {
+
+	float x_cell, x_cell2;
+	float cell_division = 1.0 / max;
+
+	x_cell	= n * cell_division;
+	x_cell2	= x_cell + cell_division;
+
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	glBegin(GL_QUADS);
+		glTexCoord2f(x_cell, 0.0f);
+		glVertex2f(x, y + height);
+
+		glTexCoord2f(x_cell2, 0.0f);
+		glVertex2f(x + width, y + height);
+
+		glTexCoord2f(x_cell2, 1.0f);
+		glVertex2f(x + width, y);
+
+		glTexCoord2f(x_cell, 1.0f);
+		glVertex2f(x, y);
+	glEnd();
+}

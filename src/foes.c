@@ -91,35 +91,18 @@ void foes_load_data() {
 void foes_draw() {
 	int i = 0;
 
-	float cell_division = 1.0 / FOE_TEXTURES_PER_SHEET;
-
 	for (i = 0; i < FOES; i++) {
-		float x_cell, x_cell2;
-
 		if (!foes[i] -> death) {
-			x_cell	= (
-				i < FOE_TEXTURES_PER_SHEET ?
+			int n = i < FOE_TEXTURES_PER_SHEET ?
 					i :
-					i - FOE_TEXTURES_PER_SHEET
-				) * cell_division;
+					i - FOE_TEXTURES_PER_SHEET;
 
-			x_cell2	= x_cell + cell_division;
-
-			glBindTexture(GL_TEXTURE_2D, texture_sheet);
-
-			glBegin(GL_QUADS);
-				glTexCoord2f(x_cell, 0.0f);
-				glVertex2f(foes[i] -> x, foes[i] -> y + FOE_HEIGHT);
-
-				glTexCoord2f(x_cell2, 0.0f);
-				glVertex2f(foes[i] -> x + FOE_WIDTH, foes[i] -> y + FOE_HEIGHT);
-
-				glTexCoord2f(x_cell2, 1.0f);
-				glVertex2f(foes[i] -> x + FOE_WIDTH, foes[i] -> y);
-
-				glTexCoord2f(x_cell, 1.0f);
-				glVertex2f(foes[i] -> x, foes[i] -> y);
-			glEnd();
+			tga_draw_from_sheet(
+				texture_sheet,
+				foes[i] -> x, foes[i] -> y,
+				FOE_WIDTH, FOE_HEIGHT,
+				FOE_TEXTURES_PER_SHEET, n
+			);
 		}
 
 		if (foes[i] -> fired) {

@@ -37,3 +37,4 @@ extern unsigned int tga_load(const char *path);
 
 extern void tga_free(unsigned int texture);
 extern void tga_draw(unsigned int texture, int x, int y, unsigned int width, unsigned int height);
+extern void tga_draw_from_sheet(unsigned int texture, int x, int y, unsigned int width, unsigned int height, int max, int n);

@@ -61,7 +61,7 @@ typedef struct SPACESHIP {
 	int x, y, old_x, old_y;
 	int fired;
 	int health, score;
-	unsigned int texture_l, texture_r, texture;
+	unsigned int texture;
 
 	bullet_t bullets[PLAYER_BULLETS];
 	unsigned int bullet_texture;
@@ -80,8 +80,6 @@ void player_load_data() {
 		player_reset_bullet(i);
 
 	player -> texture = tga_load("spaceship.tga");
-	player -> texture_r = tga_load("spaceship_r.tga");
-	player -> texture_l = tga_load("spaceship_l.tga");
 
 	player -> bullet_texture = tga_load("bullet.tga");
 	player -> bullet_sample = wav_load("fire.wav");
@@ -89,28 +87,20 @@ void player_load_data() {
 
 void player_draw(spaceship_t *asd) {
 	#define DELTA 1
-	int i;
+	int i, n;
 
 	int delta = player -> y - player -> old_y;
 
-	if (delta > DELTA)
-		tga_draw(
-			player -> texture_r,
-			player -> x, player -> y,
-			PLAYER_WIDTH, PLAYER_HEIGHT
-		);
-	else if (delta < -DELTA)
-		tga_draw(
-			player -> texture_l,
-			player -> x, player -> y,
-			PLAYER_WIDTH, PLAYER_HEIGHT
-		);
-	else
-		tga_draw(
-			player -> texture,
-			player -> x, player -> y,
-			PLAYER_WIDTH, PLAYER_HEIGHT
-		);
+	if (delta > DELTA)		n = 1;
+	else if (delta < -DELTA)	n = 2;
+	else 				n = 0;
+
+	tga_draw_from_sheet(
+		player -> texture,
+		player -> x, player -> y,
+		PLAYER_WIDTH, PLAYER_HEIGHT,
+		3, n
+	);
 
 	for (i = 0; i < PLAYER_BULLETS; i++) {
 		if (player -> bullets[i].fired == 1) {
