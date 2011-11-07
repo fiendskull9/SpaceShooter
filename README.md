@@ -50,6 +50,7 @@ SpaceShooter is distributed as source code. Install with:
 
 ~~~~
 $ git clone git://github.com/AlexBio/SpaceShooter.git && cd SpaceShooter
+$ cmake .
 $ make
 # make install
 ~~~~
