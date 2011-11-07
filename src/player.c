@@ -44,8 +44,8 @@
 #include "image.h"
 #include "window.h"
 
-#define PLAYER_WIDTH		43
-#define PLAYER_HEIGHT		48
+#define PLAYER_WIDTH		66
+#define PLAYER_HEIGHT		61
 
 #define	PLAYER_FIRE_RATE	(1.0 / 5.0)
 
@@ -54,10 +54,10 @@
 #define PLAYER_BULLET_SPEED	12
 
 typedef struct SPACESHIP {
-	int x, y;
+	int x, y, old_x, old_y;
 	int fired;
 	int health, score;
-	unsigned int texture;
+	unsigned int texture_l, texture_r, texture;
 
 	int bullet_x, bullet_y;
 	unsigned int bullet_texture;
@@ -73,17 +73,36 @@ void player_load_data() {
 	player_reset_bullet();
 
 	player -> texture = tga_load("spaceship.tga");
+	player -> texture_r = tga_load("spaceship_r.tga");
+	player -> texture_l = tga_load("spaceship_l.tga");
 	player -> bullet_texture = tga_load("bullet.tga");
 
 	player -> bullet_sample = wav_load("fire.wav");
 }
 
 void player_draw(spaceship_t *asd) {
-	tga_draw(
-		player -> texture,
-		player -> x, player -> y,
-		PLAYER_WIDTH, PLAYER_HEIGHT
-	);
+	#define DELTA 1
+
+	int delta = player -> y - player -> old_y;
+
+	if (delta > DELTA)
+		tga_draw(
+			player -> texture_r,
+			player -> x, player -> y,
+			PLAYER_WIDTH, PLAYER_HEIGHT
+		);
+	else if (delta < -DELTA)
+		tga_draw(
+			player -> texture_l,
+			player -> x, player -> y,
+			PLAYER_WIDTH, PLAYER_HEIGHT
+		);
+	else
+		tga_draw(
+			player -> texture,
+			player -> x, player -> y,
+			PLAYER_WIDTH, PLAYER_HEIGHT
+		);
 
 	if (player -> fired) {
 		tga_draw(
@@ -101,6 +120,9 @@ void player_move_spaceship() {
 
 	if (x < 0) x = 0;
 	if (y < 0) y = 0;
+
+	player -> old_x = player -> x;
+	player -> old_y = player -> y;
 
 	player -> x = x;
 	player -> y = y;
