@@ -39,13 +39,10 @@
 
 #include <GL/glfw.h>
 
+#include "config.h"
 #include "debug.h"
 
-#ifndef DATA_PATH
-# define DATA_PATH ""
-#endif
-
-#define IMAGE_DATA_PATH		DATA_PATH "/graphics"
+#define IMAGE_DATA_PATH		"/graphics"
 
 unsigned int tga_load(const char *path) {
 	int err;
@@ -53,8 +50,8 @@ unsigned int tga_load(const char *path) {
 
 	char *full_path;
 
-	full_path = malloc(strlen(path) + strlen(IMAGE_DATA_PATH) + 2);
-	sprintf(full_path, "%s/%s", IMAGE_DATA_PATH, path);
+	full_path = malloc(strlen(path) + strlen(IMAGE_DATA_PATH) + strlen(DATA_PATH) + 3);
+	sprintf(full_path, "%s/%s/%s", DATA_PATH, IMAGE_DATA_PATH, path);
 
 	glGenTextures(1, &texture);
 

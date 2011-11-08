@@ -43,13 +43,10 @@
 #include <freetype/ftoutln.h>
 #include <freetype/fttrigon.h>
 
+#include "config.h"
 #include "debug.h"
 
-#ifndef DATA_PATH
-# define DATA_PATH ""
-#endif
-
-#define FONT_DATA_PATH		DATA_PATH "/graphics"
+#define FONT_DATA_PATH		"/graphics"
 
 typedef struct CHAR {
 	int		w,h;
@@ -74,8 +71,8 @@ static char_t **font_load(const char *path) {
 
 	char *full_path;
 
-	full_path = malloc(strlen(path) + strlen(FONT_DATA_PATH) + 2);
-	sprintf(full_path, "%s/%s", FONT_DATA_PATH, path);
+	full_path = malloc(strlen(path) + strlen(FONT_DATA_PATH) + strlen(DATA_PATH) + 3);
+	sprintf(full_path, "%s/%s/%s", DATA_PATH, FONT_DATA_PATH, path);
 
 	FT_Init_FreeType(&library);
 

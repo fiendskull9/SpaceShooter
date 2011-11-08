@@ -41,13 +41,10 @@
 
 #include <sndfile.h>
 
+#include "config.h"
 #include "debug.h"
 
-#ifndef DATA_PATH
-# define DATA_PATH ""
-#endif
-
-#define SOUND_DATA_PATH		DATA_PATH "/sounds"
+#define SOUND_DATA_PATH		"/sounds"
 
 static ALCdevice	*device;
 static ALCcontext	*context;
@@ -84,8 +81,8 @@ unsigned int wav_load(const char *path) {
 
 	char *full_path;
 
-	full_path = malloc(strlen(path) + strlen(SOUND_DATA_PATH) + 2);
-	sprintf(full_path, "%s/%s", SOUND_DATA_PATH, path);
+	full_path = malloc(strlen(path) + strlen(SOUND_DATA_PATH) + strlen(DATA_PATH) + 3);
+	sprintf(full_path, "%s/%s/%s", DATA_PATH, SOUND_DATA_PATH, path);
 
 	alGenBuffers(1, &sample);
 
