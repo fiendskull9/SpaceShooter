@@ -68,7 +68,7 @@ typedef struct SPACESHIP {
 	unsigned int bullet_sample;
 } spaceship_t;
 
-spaceship_t *player = NULL;
+static spaceship_t *player = NULL;
 
 void player_load_data() {
 	int i;

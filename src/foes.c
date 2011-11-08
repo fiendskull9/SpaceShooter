@@ -67,7 +67,7 @@ typedef struct SPACESHIP {
 	int bullet_x, bullet_y;
 } spaceship_t;
 
-spaceship_t *foes[FOES];
+static spaceship_t *foes[FOES];
 
 static unsigned int texture_sheet, bullet_texture, bullet_sample, explosion_sample;
 
