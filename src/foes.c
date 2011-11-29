@@ -186,7 +186,7 @@ void foes_check_collision() {
 			) {
 				foes[i] -> death = 1;
 				player_reset_bullet(j);
-
+        foes_reset_bullet(i); /* 11-29-2011 fixed bug where foes bullets remain on screen after death */
 				player_inc_points(FOE_DEATH_SCORES);
 				/* TODO: implement explosion animation */
 				wav_play(explosion_sample);
